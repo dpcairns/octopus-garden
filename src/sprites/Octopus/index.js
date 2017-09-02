@@ -1,6 +1,11 @@
 import Phaser from 'phaser'
 
 const CHARGE_MOVE_DURATION = 25
+const INITIAL_GRAVITY = 2000
+const MAX_VELOCITY = 2000
+const MAX_NORMAL_VELOCITY = 800
+const MIN_NORMAL_VELOCITY = -200
+const INITIAL_VELOCITY_FACTOR = 200
 
 export default class extends Phaser.Sprite {
   constructor ({ game, x, y, world }) {
@@ -15,17 +20,18 @@ export default class extends Phaser.Sprite {
     this.game.add.existing(this)
     this.body.bounce.y = 10
     this.body.allowGravity = true
-    this.body.gravity.y = 2000
-    this.leftKeeper = 0
-    this.rightKeeper = 0
-    this.maxVelocity = 2000
-    this.maxNormalVelocity = 800
-    this.minNormalVelocity = -200
+
+    this.body.gravity.y = INITIAL_GRAVITY
+    this.maxVelocity = MAX_VELOCITY
+    this.maxNormalVelocity = MAX_NORMAL_VELOCITY
+    this.minNormalVelocity = MIN_NORMAL_VELOCITY
+    this.initialVelocityFactor = INITIAL_VELOCITY_FACTOR
     this.goForward = true
     this.charging = false
     this.charged = false
-    this.initialVelocityFactor = 100
     this.movingWhileChargedCounter = 0
+    this.leftKeeper = 0
+    this.rightKeeper = 0
 
     this.velocityFactor = this.initialVelocityFactor
     this.A = this.game.input.keyboard.addKey(Phaser.KeyCode.A)
@@ -79,7 +85,6 @@ export default class extends Phaser.Sprite {
   }
 
   update () {
-    console.log('counter', this.movingWhileChargedCounter)
     if (this.velocityFactor > this.maxNormalVelocity) {
       this.velocityFactor = this.maxNormalVelocity
     }
@@ -106,17 +111,6 @@ export default class extends Phaser.Sprite {
       this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.velocityFactor, this.body.velocity)
     } else {
       this.game.physics.arcade.velocityFromAngle(this.angle - 90, 0, this.body.velocity)
-    }
-
-    if (this.charged && !this.charging) {
-      if (this.movingWhileChargedCounter < CHARGE_MOVE_DURATION) {
-        this.movingWhileChargedCounter++
-        this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.charged, this.body.velocity)
-      } else {
-        this.movingWhileChargedCounter = 0
-        this.charged = 0
-        this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.velocityFactor, this.body.velocity)
-      }
     }
 
     // stop A ; (pinkies)
@@ -179,6 +173,7 @@ export default class extends Phaser.Sprite {
       this.charging = true
       this.clearLeft()
       this.clearRight()
+      this.goForward = false
       this.game.physics.arcade.velocityFromAngle(this.angle - 90, 0, this.body.velocity)
       if (this.charged < this.maxNormalVelocity) {
         this.charged = this.maxNormalVelocity
@@ -187,6 +182,7 @@ export default class extends Phaser.Sprite {
       this.game.camera.shake(0.005, 50)
     } else {
       this.charging = false
+      this.goForward = true
     }
 
     if (this.charging) {
@@ -200,6 +196,18 @@ export default class extends Phaser.Sprite {
       }
 
       this.game.add.tween(this).to(chargeProps, 10, 'Linear', true, 0, 2)
+    }
+
+    if (this.charged && !this.charging && this.goForward === true) {
+      if (this.movingWhileChargedCounter < CHARGE_MOVE_DURATION) {
+        this.movingWhileChargedCounter++
+        this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.charged, this.body.velocity)
+      } else {
+        this.movingWhileChargedCounter = 0
+        this.velocityFactor = this.initialVelocityFactor
+        this.charged = 0
+        this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.velocityFactor, this.body.velocity)
+      }
     }
 
     if (!this.charged &&
