@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 
 const CHARGE_MOVE_DURATION = 25
+const SHOT_COUNTER_LIMIT = 10
 const INITIAL_GRAVITY = 2000
 const MAX_VELOCITY = 2000
 const MAX_NORMAL_VELOCITY = 800
@@ -30,6 +31,7 @@ export default class extends Phaser.Sprite {
     this.charging = false
     this.charged = false
     this.movingWhileChargedCounter = 0
+    this.shotCounter = 0
     this.leftKeeper = 0
     this.rightKeeper = 0
 
@@ -85,28 +87,29 @@ export default class extends Phaser.Sprite {
   }
 
   update () {
+    // manage bespoke max velocity, so it doesn't interefere with charge max
     if (this.velocityFactor > this.maxNormalVelocity) {
       this.velocityFactor = this.maxNormalVelocity
     }
 
+    // manage bespoke min velocity
     if (this.velocityFactor < this.minNormalVelocity) {
       this.velocityFactor = this.minNormalVelocity
     }
 
-    if (!this.body.blocked.none) {
-      this.charging = false
-    }
-
+    // rotate left
     if (this.leftKeeper === 4) {
       this.game.add.tween(this).to({ angle: this.angle - 45 }, 100, 'Linear', true)
       this.clearLeft()
     }
 
+    // rotate right
     if (this.rightKeeper === 4) {
       this.game.add.tween(this).to({ angle: this.angle + 45 }, 100, 'Linear', true)
       this.clearRight()
     }
 
+    // goForward flag controls whether we're goiging or not
     if (this.goForward) {
       this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.velocityFactor, this.body.velocity)
     } else {
@@ -143,7 +146,7 @@ export default class extends Phaser.Sprite {
       this.goForward = true
     }
 
-    // speed up: S L (index fingers)
+    // pew pew: S L (index fingers)
     if (!this.A.isDown &&
           !this.S.isDown &&
           !this.D.isDown &&
@@ -152,6 +155,24 @@ export default class extends Phaser.Sprite {
           !this.L.isDown &&
           !this.K.isDown &&
           this.J.isDown) {
+      this.clearLeft()
+      this.clearRight()
+      if (this.shotCounter > SHOT_COUNTER_LIMIT) {
+        this.shotCounter = 0
+        console.log('pew' + Date.now())
+      }
+      this.shotCounter++
+    }
+
+    // speed up: K D (middle fingers)
+    if (!this.A.isDown &&
+          !this.S.isDown &&
+          this.D.isDown &&
+          !this.F.isDown &&
+          !this.COLON.isDown &&
+          !this.L.isDown &&
+          this.K.isDown &&
+          !this.J.isDown) {
       this.clearLeft()
       this.clearRight()
       if (this.velocityFactor < 0) {
@@ -185,19 +206,12 @@ export default class extends Phaser.Sprite {
       this.goForward = true
     }
 
+    // increment charged while charging
     if (this.charging) {
       this.charged++
     }
 
-    if (this.charging || this.charged) {
-      const chargeProps = {
-        tint: Math.random() * this.initialTint,
-        width: this.width * 0.993
-      }
-
-      this.game.add.tween(this).to(chargeProps, 10, 'Linear', true, 0, 2)
-    }
-
+    // keep track of charge duration so they cant move charged forever
     if (this.charged && !this.charging && this.goForward === true) {
       if (this.movingWhileChargedCounter < CHARGE_MOVE_DURATION) {
         this.movingWhileChargedCounter++
@@ -210,6 +224,22 @@ export default class extends Phaser.Sprite {
       }
     }
 
+    // do not charge if blocked. This helps manages color state
+    if (!this.body.blocked.none) {
+      this.charging = false
+    }
+
+    // manage colors and stretch while charging or moving while charged
+    if (this.charging || this.charged) {
+      const chargeProps = {
+        tint: Math.random() * this.initialTint,
+        width: this.width * 0.993
+      }
+
+      this.game.add.tween(this).to(chargeProps, 10, 'Linear', true, 0, 2)
+    }
+
+    // remove charge colors and stretch
     if (!this.charged &&
       !this.charging &&
       this.tint !== this.initialTint &&
