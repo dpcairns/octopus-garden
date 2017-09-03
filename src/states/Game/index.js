@@ -12,7 +12,6 @@ export default class extends Phaser.State {
 
   create () {
     this.score = 0
-    this.bannerText = 'Go dude go! '
 
     this.background = new Background({
       game: this.game,
@@ -48,6 +47,10 @@ export default class extends Phaser.State {
     }
 
     setTimerActions(this)
+
+    this.filter = new Phaser.Filter(this.game, null, this.game.cache.getShader('cells'))
+
+    this.filter.addToWorld(0, 0, 800, 600)
   }
 
   makeWall (x, y) {
@@ -67,7 +70,7 @@ export default class extends Phaser.State {
   }
 
   update () {
-
+    this.filter.update()
   }
 
   render () {
