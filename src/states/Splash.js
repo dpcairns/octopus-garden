@@ -16,7 +16,7 @@ export default class extends Phaser.State {
     this.load.shader('cells', 'assets/shaders/cells.frag')
     this.load.image('ocean', 'assets/images/ocean.gif')
     this.load.image('blob', 'assets/images/blob.png')
-    this.load.image('wall', 'assets/images/wall.png')
+    this.load.spritesheet('coral', 'assets/images/coral.jpg', 140, 140)
     this.load.image('octopus', 'assets/images/octopus.png')
     this.load.spritesheet('dude', 'assets/images/dude.png', 108, 140)
     this.load.spritesheet('coin', 'assets/images/coin.png', 100, 100)

@@ -93,7 +93,16 @@ export default class extends RootSprite {
   }
 
   destroyWall (destroyer, wall) {
-    if (destroyer.key !== 'octopus' || destroyer.charged > 1000) {
+    if (destroyer.key === 'octopus' && destroyer.charged > 1000) {
+      wall.HP -= destroyer.charged
+    }
+
+    if (destroyer.key === 'blob') {
+      wall.tint *= 100
+      wall.HP -= 3
+    }
+
+    if (wall.HP <= 0) {
       wall.body.allowGravity = true
       wall.body.immovable = false
       wall.body.collideWorldBounds = false
