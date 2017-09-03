@@ -32,8 +32,8 @@ export default class extends Phaser.Sprite {
     this.charged = false
     this.movingWhileChargedCounter = 0
     this.shotCounter = 0
-    this.leftKeeper = 0
-    this.rightKeeper = 0
+    this.leftKeeper = new Set()
+    this.rightKeeper = new Set()
 
     this.velocityFactor = this.initialVelocityFactor
     this.A = this.game.input.keyboard.addKey(Phaser.KeyCode.A)
@@ -55,26 +55,27 @@ export default class extends Phaser.Sprite {
     this.J.onDown.add(this.incrementRight, this)
   }
 
-  incrementLeft () {
-    if (this.rightKeeper > 0) {
+  incrementLeft (e) {
+    console.log(this.leftKeeper)
+    if (this.rightKeeper.size > 0) {
       this.clearRight()
     }
-    this.leftKeeper++
+    this.leftKeeper.add(e.keyCode)
   }
 
   clearLeft () {
-    this.leftKeeper = 0
+    this.leftKeeper.clear()
   }
 
-  incrementRight () {
-    if (this.leftKeeper > 0) {
+  incrementRight (e) {
+    if (this.leftKeeper.size > 0) {
       this.clearLeft()
     }
-    this.rightKeeper++
+    this.rightKeeper.add(e.keyCode)
   }
 
   clearRight () {
-    this.rightKeeper = 0
+    this.rightKeeper.clear()
   }
 
   resetWidthAndColor () {
@@ -98,13 +99,13 @@ export default class extends Phaser.Sprite {
     }
 
     // rotate left
-    if (this.leftKeeper === 4) {
+    if (this.leftKeeper.size === 4) {
       this.game.add.tween(this).to({ angle: this.angle - 45 }, 100, 'Linear', true)
       this.clearLeft()
     }
 
     // rotate right
-    if (this.rightKeeper === 4) {
+    if (this.rightKeeper.size === 4) {
       this.game.add.tween(this).to({ angle: this.angle + 45 }, 100, 'Linear', true)
       this.clearRight()
     }
