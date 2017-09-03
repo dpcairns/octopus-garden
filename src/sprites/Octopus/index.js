@@ -19,7 +19,8 @@ export default class extends RootSprite {
     world,
     coins,
     score,
-    walls
+    walls,
+    makeWall
   }) {
     super({ game, x, y, asset: 'octopus' })
     this.anchor.setTo(0.5)
@@ -45,8 +46,8 @@ export default class extends RootSprite {
     this.coins = coins
     this.score = score
     this.walls = walls
-
     this.velocityFactor = this.initialVelocityFactor
+    this.makeWall = makeWall
     bindKeys(this)
   }
 
@@ -89,6 +90,13 @@ export default class extends RootSprite {
     coin.angle += 100
     setTimeout(() => coin.destroy(), 200)
     this.score++
+  }
+
+  destroyWall (destroyer, wall) {
+    wall.body.allowGravity = true
+    wall.body.immovable = false
+    wall.body.collideWorldBounds = false
+    wall.body.gravity.y = 10000
   }
 
   shootInk () {

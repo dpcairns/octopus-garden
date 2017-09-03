@@ -43,6 +43,10 @@ export default class extends Phaser.State {
 
     this.game.camera.follow(this.octopus, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
+    for (let i = 0; i < 50; i++) {
+      this.makeWall((() => Math.random() * this.world.width)(), (() => Math.random() * this.world.height)())
+    }
+
     setTimerActions(this)
   }
 
@@ -67,6 +71,6 @@ export default class extends Phaser.State {
   }
 
   render () {
-    this.makeWall(100, 100)
+
   }
 }
