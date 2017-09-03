@@ -1,25 +1,32 @@
-import Phaser from 'phaser'
+import RootSprite from '../RootSprite'
+import InkMissile from './InkMissile'
+import updater from './updater'
+import bindKeys from './bindKeys'
 
-const CHARGE_MOVE_DURATION = 25
-const SHOT_COUNTER_LIMIT = 10
-const INITIAL_GRAVITY = 2000
-const MAX_VELOCITY = 2000
-const MAX_NORMAL_VELOCITY = 800
-const MIN_NORMAL_VELOCITY = -200
-const INITIAL_VELOCITY_FACTOR = 200
+import {
+  INITIAL_GRAVITY,
+  MAX_VELOCITY,
+  MAX_NORMAL_VELOCITY,
+  MIN_NORMAL_VELOCITY,
+  INITIAL_VELOCITY_FACTOR
+} from './constants'
 
-export default class extends Phaser.Sprite {
-  constructor ({ game, x, y, world }) {
-    super(game, x, y, 'octopus')
-    this.game.physics.arcade.enable(this)
-    this.body.collideWorldBounds = true
+export default class extends RootSprite {
+  constructor ({
+    game,
+    x,
+    y,
+    world,
+    coins,
+    score,
+    walls
+  }) {
+    super({ game, x, y, asset: 'octopus' })
     this.anchor.setTo(0.5)
     this.width = 100
     this.height = 100
     this.initialTint = this.tint
     this.initialWidth = this.width
-    this.game.add.existing(this)
-    this.body.bounce.y = 10
     this.body.allowGravity = true
 
     this.body.gravity.y = INITIAL_GRAVITY
@@ -34,29 +41,16 @@ export default class extends Phaser.Sprite {
     this.shotCounter = 0
     this.leftKeeper = new Set()
     this.rightKeeper = new Set()
+    this.inkMissiles = this.game.add.group()
+    this.coins = coins
+    this.score = score
+    this.walls = walls
 
     this.velocityFactor = this.initialVelocityFactor
-    this.A = this.game.input.keyboard.addKey(Phaser.KeyCode.A)
-    this.S = this.game.input.keyboard.addKey(Phaser.KeyCode.S)
-    this.D = this.game.input.keyboard.addKey(Phaser.KeyCode.D)
-    this.F = this.game.input.keyboard.addKey(Phaser.KeyCode.F)
-    this.COLON = this.game.input.keyboard.addKey(Phaser.KeyCode.COLON)
-    this.L = this.game.input.keyboard.addKey(Phaser.KeyCode.L)
-    this.K = this.game.input.keyboard.addKey(Phaser.KeyCode.K)
-    this.J = this.game.input.keyboard.addKey(Phaser.KeyCode.J)
-
-    this.A.onDown.add(this.incrementLeft, this)
-    this.S.onDown.add(this.incrementLeft, this)
-    this.D.onDown.add(this.incrementLeft, this)
-    this.F.onDown.add(this.incrementLeft, this)
-    this.COLON.onDown.add(this.incrementRight, this)
-    this.L.onDown.add(this.incrementRight, this)
-    this.K.onDown.add(this.incrementRight, this)
-    this.J.onDown.add(this.incrementRight, this)
+    bindKeys(this)
   }
 
   incrementLeft (e) {
-    console.log(this.leftKeeper)
     if (this.rightKeeper.size > 0) {
       this.clearRight()
     }
@@ -83,171 +77,32 @@ export default class extends Phaser.Sprite {
     this.width = this.initialWidth
   }
 
-  stopMoving () {
+  stopGoingForward () {
+    this.goForward = false
+  }
 
+  resetMovingWhileChargedCounter () {
+    this.movingWhileChargedCounter = 0
+  }
+
+  getCoin (getter, coin) {
+    coin.angle += 100
+    setTimeout(() => coin.destroy(), 200)
+    this.score++
+  }
+
+  shootInk () {
+    this.inkMissiles.add(new InkMissile({ // eslint-disable-line
+      game: this.game,
+      world: this.world,
+      x: this.x,
+      y: this.y,
+      octoAngle: this.angle,
+      octoSpeed: this.velocityFactor
+    }))
   }
 
   update () {
-    // manage bespoke max velocity, so it doesn't interefere with charge max
-    if (this.velocityFactor > this.maxNormalVelocity) {
-      this.velocityFactor = this.maxNormalVelocity
-    }
-
-    // manage bespoke min velocity
-    if (this.velocityFactor < this.minNormalVelocity) {
-      this.velocityFactor = this.minNormalVelocity
-    }
-
-    // rotate left
-    if (this.leftKeeper.size === 4) {
-      this.game.add.tween(this).to({ angle: this.angle - 45 }, 100, 'Linear', true)
-      this.clearLeft()
-    }
-
-    // rotate right
-    if (this.rightKeeper.size === 4) {
-      this.game.add.tween(this).to({ angle: this.angle + 45 }, 100, 'Linear', true)
-      this.clearRight()
-    }
-
-    // goForward flag controls whether we're goiging or not
-    if (this.goForward) {
-      this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.velocityFactor, this.body.velocity)
-    } else {
-      this.game.physics.arcade.velocityFromAngle(this.angle - 90, 0, this.body.velocity)
-    }
-
-    // stop A ; (pinkies)
-    if (this.A.isDown &&
-          !this.S.isDown &&
-          !this.D.isDown &&
-          !this.F.isDown &&
-          this.COLON.isDown &&
-          !this.L.isDown &&
-          !this.K.isDown &&
-          !this.J.isDown) {
-      this.clearLeft()
-      this.clearRight()
-      this.velocityFactor = 0
-      this.goForward = false
-    }
-
-    // slow down / reverse: F J (ring fingers)
-    if (!this.A.isDown &&
-          this.S.isDown &&
-          !this.D.isDown &&
-          !this.F.isDown &&
-          !this.COLON.isDown &&
-          this.L.isDown &&
-          !this.K.isDown &&
-          !this.J.isDown) {
-      this.clearLeft()
-      this.clearRight()
-      this.velocityFactor -= 50
-      this.goForward = true
-    }
-
-    // pew pew: S L (index fingers)
-    if (!this.A.isDown &&
-          !this.S.isDown &&
-          !this.D.isDown &&
-          this.F.isDown &&
-          !this.COLON.isDown &&
-          !this.L.isDown &&
-          !this.K.isDown &&
-          this.J.isDown) {
-      this.clearLeft()
-      this.clearRight()
-      if (this.shotCounter > SHOT_COUNTER_LIMIT) {
-        this.shotCounter = 0
-        console.log('pew' + Date.now())
-      }
-      this.shotCounter++
-    }
-
-    // speed up: K D (middle fingers)
-    if (!this.A.isDown &&
-          !this.S.isDown &&
-          this.D.isDown &&
-          !this.F.isDown &&
-          !this.COLON.isDown &&
-          !this.L.isDown &&
-          this.K.isDown &&
-          !this.J.isDown) {
-      this.clearLeft()
-      this.clearRight()
-      if (this.velocityFactor < 0) {
-        this.velocityFactor = this.initialVelocityFactor
-      }
-      this.velocityFactor += 10
-      this.goForward = true
-    }
-
-    // charge up!: ALL HOME KEYS
-    if (this.A.isDown &&
-          this.S.isDown &&
-          this.D.isDown &&
-          this.F.isDown &&
-          this.COLON.isDown &&
-          this.L.isDown &&
-          this.K.isDown &&
-          this.J.isDown) {
-      this.charging = true
-      this.clearLeft()
-      this.clearRight()
-      this.goForward = false
-      this.game.physics.arcade.velocityFromAngle(this.angle - 90, 0, this.body.velocity)
-      if (this.charged < this.maxNormalVelocity) {
-        this.charged = this.maxNormalVelocity
-      }
-      this.charged += 20
-      this.game.camera.shake(0.005, 50)
-    } else {
-      this.charging = false
-      this.goForward = true
-    }
-
-    // increment charged while charging
-    if (this.charging) {
-      this.charged++
-    }
-
-    // keep track of charge duration so they cant move charged forever
-    if (this.charged && !this.charging && this.goForward === true) {
-      if (this.movingWhileChargedCounter < CHARGE_MOVE_DURATION) {
-        this.movingWhileChargedCounter++
-        this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.charged, this.body.velocity)
-      } else {
-        this.movingWhileChargedCounter = 0
-        this.velocityFactor = this.initialVelocityFactor
-        this.charged = 0
-        this.game.physics.arcade.velocityFromAngle(this.angle - 90, this.velocityFactor, this.body.velocity)
-      }
-    }
-
-    // do not charge if blocked. This helps manages color state
-    if (!this.body.blocked.none) {
-      this.charging = false
-    }
-
-    // manage colors and stretch while charging or moving while charged
-    if (this.charging || this.charged) {
-      const chargeProps = {
-        tint: Math.random() * this.initialTint,
-        width: this.width * 0.993
-      }
-
-      this.game.add.tween(this).to(chargeProps, 10, 'Linear', true, 0, 2)
-    }
-
-    // remove charge colors and stretch
-    if (!this.charged &&
-      !this.charging &&
-      this.tint !== this.initialTint &&
-      this.width !== this.initialWidth
-    ) {
-      this.resetWidthAndColor()
-      this.movingWhileChargedCounter = 0
-    }
+    updater(this)
   }
 }
