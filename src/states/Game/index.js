@@ -29,7 +29,7 @@ export default class extends Phaser.State {
     this.walls = this.game.add.group()
 
     window.screen.orientation.onchange = () => {
-      this.angleOverride = screen.orientation.angle
+      this.game.angleOverride = window.screen.orientation.angle
     }
 
     this.coins.add(new Coin({ // eslint-disable-line
