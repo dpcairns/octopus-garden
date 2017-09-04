@@ -54,13 +54,18 @@ export const middleFingersDown = (_this) => (
 )
 
 export const swipeLeft = (_this) => {
-  if (_this.swipe.check() && _this.swipe.check() !== null && _this.swipe.check().direction) {
-    return _this.swipe.check().direction === _this.swipe.DIRECTION_LEFT
+  const check = _this.swipe.check()
+
+  console.log()
+  if (check !== null && check.direction) {
+    return check.direction === _this.swipe.DIRECTION_LEFT
   }
 }
 
 export const swipeRight = (_this) => {
-  if (_this.swipe.check() && _this.swipe.check() !== null && _this.swipe.check().direction) {
-    return _this.swipe.check().direction === _this.swipe.DIRECTION_RIGHT
+  const check = _this.swipe.check()
+
+  if (check !== null && check.direction) {
+    return check.direction === _this.swipe.DIRECTION_RIGHT
   }
 }

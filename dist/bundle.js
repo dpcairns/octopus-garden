@@ -10079,8 +10079,6 @@ var _class = function (_Phaser$State) {
   }, {
     key: 'create',
     value: function create() {
-      var _this2 = this;
-
       this.score = 0;
       this.game.world.setBounds(0, 0, 2500, 1500);
       this.game.physics.arcade.gravity.y = 10;
@@ -10093,10 +10091,6 @@ var _class = function (_Phaser$State) {
       this.seaweeds = this.game.add.group();
       this.corals = this.game.add.group();
       this.walls = this.game.add.group();
-
-      window.screen.orientation.onchange = function () {
-        _this2.game.angleOverride = window.screen.orientation.angle;
-      };
 
       this.coins.add(new _Coin2.default({ // eslint-disable-line
         game: this.game,
@@ -10888,14 +10882,19 @@ var middleFingersDown = exports.middleFingersDown = function middleFingersDown(_
 };
 
 var swipeLeft = exports.swipeLeft = function swipeLeft(_this) {
-  if (_this.swipe.check() && _this.swipe.check() !== null && _this.swipe.check().direction) {
-    return _this.swipe.check().direction === _this.swipe.DIRECTION_LEFT;
+  var check = _this.swipe.check();
+
+  console.log();
+  if (check !== null && check.direction) {
+    return check.direction === _this.swipe.DIRECTION_LEFT;
   }
 };
 
 var swipeRight = exports.swipeRight = function swipeRight(_this) {
-  if (_this.swipe.check() && _this.swipe.check() !== null && _this.swipe.check().direction) {
-    return _this.swipe.check().direction === _this.swipe.DIRECTION_RIGHT;
+  var check = _this.swipe.check();
+
+  if (check !== null && check.direction) {
+    return check.direction === _this.swipe.DIRECTION_RIGHT;
   }
 };
 
