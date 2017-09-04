@@ -1,18 +1,23 @@
-import RootSprite from '../RootSprite'
+import RootDecorationSprite from './RootDecorationSprite'
 
-export default class extends RootSprite {
-  constructor ({ game, world, x, y, walls }) {
-    super({ game, world, x, y, asset: 'coral' })
-    this.width = 80
-    this.height = 80
-    this.body.allowGravity = false
-    this.body.immovable = true
+export default class extends RootDecorationSprite {
+  constructor ({ game, world, x, y }) {
+    const height = Math.random() * 120
+    const width = Math.random() * 120
+    super({
+      game,
+      world,
+      x,
+      y: y - height,
+      asset: 'coral',
+      width,
+      height
+    })
 
     this.animations.add('coral')
     this.animations.play('coral', 5, true)
   }
 
   update () {
-
   }
 }

@@ -10837,9 +10837,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
+var _RootDecorationSprite2 = __webpack_require__(/*! ./RootDecorationSprite */ 330);
 
-var _RootSprite3 = _interopRequireDefault(_RootSprite2);
+var _RootDecorationSprite3 = _interopRequireDefault(_RootDecorationSprite2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10849,24 +10849,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _class = function (_RootSprite) {
-  _inherits(_class, _RootSprite);
+var _class = function (_RootDecorationSprite) {
+  _inherits(_class, _RootDecorationSprite);
 
   function _class(_ref) {
     var game = _ref.game,
         world = _ref.world,
         x = _ref.x,
-        y = _ref.y,
-        walls = _ref.walls;
+        y = _ref.y;
 
     _classCallCheck(this, _class);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, { game: game, world: world, x: x, y: y, asset: 'coral' }));
+    var height = Math.random() * 120;
+    var width = Math.random() * 120;
 
-    _this.width = 80;
-    _this.height = 80;
-    _this.body.allowGravity = false;
-    _this.body.immovable = true;
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, {
+      game: game,
+      world: world,
+      x: x,
+      y: y - height,
+      asset: 'coral',
+      width: width,
+      height: height
+    }));
 
     _this.animations.add('coral');
     _this.animations.play('coral', 5, true);
@@ -10879,7 +10884,7 @@ var _class = function (_RootSprite) {
   }]);
 
   return _class;
-}(_RootSprite3.default);
+}(_RootDecorationSprite3.default);
 
 exports.default = _class;
 
@@ -10901,9 +10906,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
+var _RootDecorationSprite2 = __webpack_require__(/*! ./RootDecorationSprite */ 330);
 
-var _RootSprite3 = _interopRequireDefault(_RootSprite2);
+var _RootDecorationSprite3 = _interopRequireDefault(_RootDecorationSprite2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10913,8 +10918,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _class = function (_RootSprite) {
-  _inherits(_class, _RootSprite);
+var _class = function (_RootDecorationSprite) {
+  _inherits(_class, _RootDecorationSprite);
 
   function _class(_ref) {
     var game = _ref.game,
@@ -10924,12 +10929,18 @@ var _class = function (_RootSprite) {
 
     _classCallCheck(this, _class);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, { game: game, world: world, x: x, y: y, asset: 'seaweed' }));
+    var height = Math.random() * 300;
+    var width = Math.random() * 100;
 
-    _this.width = 40;
-    _this.height = 200;
-    _this.body.allowGravity = false;
-    _this.body.immovable = true;
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, {
+      game: game,
+      world: world,
+      x: x,
+      y: y - height,
+      asset: 'seaweed',
+      width: width,
+      height: height
+    }));
 
     _this.animations.add('seaweed');
     _this.animations.play('seaweed', 3, true);
@@ -10942,7 +10953,7 @@ var _class = function (_RootSprite) {
   }]);
 
   return _class;
-}(_RootSprite3.default);
+}(_RootDecorationSprite3.default);
 
 exports.default = _class;
 
@@ -11085,12 +11096,12 @@ var makeBorderWallsAndDecoration = exports.makeBorderWallsAndDecoration = functi
     }
 
     if (i % 2 === 0) {
-      _this.makeCoral(i, height - 80);
+      _this.makeCoral(i, height);
     }
   }
 
   for (var _i = 0; _i < width; _i += 50) {
-    _this.makeSeaweed(Math.random() * width, height - 200);
+    _this.makeSeaweed(Math.random() * width, height);
   }
 
   for (var _i2 = 0; _i2 < height; _i2 += 50) {
@@ -11162,6 +11173,73 @@ exports.default = function (_this) {
 
   _this.timer.start();
 };
+
+/***/ }),
+/* 329 */,
+/* 330 */
+/*!********************************************************!*\
+  !*** ./src/sprites/Decoration/RootDecorationSprite.js ***!
+  \********************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
+
+var _RootSprite3 = _interopRequireDefault(_RootSprite2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_RootSprite) {
+  _inherits(_class, _RootSprite);
+
+  function _class(_ref) {
+    var game = _ref.game,
+        world = _ref.world,
+        x = _ref.x,
+        y = _ref.y,
+        asset = _ref.asset,
+        width = _ref.width,
+        height = _ref.height;
+
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, { game: game, world: world, x: x, y: y, asset: asset }));
+
+    _this.width = width;
+    _this.height = height;
+    _this.body.allowGravity = false;
+    _this.body.immovable = true;
+
+    _this.animations.add('seaweed');
+    _this.animations.play('seaweed', 3, true);
+    return _this;
+  }
+
+  _createClass(_class, [{
+    key: 'update',
+    value: function update() {}
+  }]);
+
+  return _class;
+}(_RootSprite3.default);
+
+exports.default = _class;
 
 /***/ })
 ],[120]);

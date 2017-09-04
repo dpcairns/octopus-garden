@@ -10,12 +10,12 @@ export const makeBorderWallsAndDecoration = (_this) => {
     }
 
     if (i % 2 === 0) {
-      _this.makeCoral(i, height - 80)
+      _this.makeCoral(i, height)
     }
   }
 
   for (let i = 0; i < width; i += 50) {
-    _this.makeSeaweed(Math.random() * width, height - 200)
+    _this.makeSeaweed(Math.random() * width, height)
   }
 
   for (let i = 0; i < height; i += 50) {
