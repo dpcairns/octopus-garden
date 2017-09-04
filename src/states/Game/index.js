@@ -52,6 +52,11 @@ export default class extends Phaser.State {
     makeRandomCorals(this)
     makeBorderWallsAndDecoration(this)
     setTimerActions(this)
+
+    const canvas = document.getElementsByTagName('canvas')[0]
+    canvas.style['touch-action'] = ''
+    canvas.addEventListener('touchstart', this.mobileTapped, false)
+    canvas.addEventListener('touchend', this.mobileUntapped, false)
   }
 
   makeSquareThing (x, y) {
@@ -107,7 +112,7 @@ export default class extends Phaser.State {
   }
 
   update () {
-
+    console.log(this.mobileHolding)
   }
 
   render () {
