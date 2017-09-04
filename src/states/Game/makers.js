@@ -2,7 +2,7 @@ export const makeBorderWallsAndDecoration = (_this) => {
   const height = _this.game.oceanBackground.height
   const width = _this.game.oceanBackground.width
 
-  for (let i = 0; i < width; i += 50) {
+  for (let i = 0; i < width; i += 45) {
     if (i < (width / 2) + 200 && i > (width / 2) - 200) {
       _this.makeWall(i, height, true)
     } else {
