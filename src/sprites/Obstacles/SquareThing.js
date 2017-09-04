@@ -3,16 +3,15 @@ import RootSprite from '../RootSprite'
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
     super({ game, world, x, y, asset: 'squareThings' })
-    this.width = 50
-    this.height = 50
+    this.width = 66
+    this.height = 90
     this.HP = 30
     this.destructable = true
     this.body.allowGravity = false
     this.body.immovable = true
-    this.animations.add('choose-1', [(() => Math.floor(Math.random() * 9))()])
-    this.animations.play('choose-1')
   }
 
   update () {
+    this.angle += Math.random() * 4 * (Math.random() * 100 < 50 ? 1 : -1)
   }
 }

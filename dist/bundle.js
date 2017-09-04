@@ -9888,7 +9888,7 @@ var _class = function (_Phaser$State) {
       this.load.image('ocean', 'assets/images/ocean.png');
       this.load.image('cave', 'assets/images/cave.png');
       this.load.image('blob', 'assets/images/blob.png');
-      this.load.spritesheet('squareThings', 'assets/images/squareThings.png', 140, 140);
+      this.load.image('squareThings', 'assets/images/shell.png');
       this.load.spritesheet('octopus', 'assets/images/OCTOONE.png', 160, 120);
       this.load.spritesheet('coral', 'assets/images/coral.png', 465, 465);
       this.load.spritesheet('seaweed', 'assets/images/seaweed-small.png', 75, 300);
@@ -10798,22 +10798,20 @@ var _class = function (_RootSprite) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, { game: game, world: world, x: x, y: y, asset: 'squareThings' }));
 
-    _this.width = 50;
-    _this.height = 50;
+    _this.width = 66;
+    _this.height = 90;
     _this.HP = 30;
     _this.destructable = true;
     _this.body.allowGravity = false;
     _this.body.immovable = true;
-    _this.animations.add('choose-1', [function () {
-      return Math.floor(Math.random() * 9);
-    }()]);
-    _this.animations.play('choose-1');
     return _this;
   }
 
   _createClass(_class, [{
     key: 'update',
-    value: function update() {}
+    value: function update() {
+      this.angle += Math.random() * 4 * (Math.random() * 100 < 50 ? 1 : -1);
+    }
   }]);
 
   return _class;
