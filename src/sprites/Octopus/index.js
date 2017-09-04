@@ -25,8 +25,8 @@ export default class extends RootSprite {
   }) {
     super({ game, x, y, asset: 'octopus' })
     this.anchor.setTo(0.5)
-    this.width = 100
-    this.height = 100
+    this.width = 200
+    this.height = 150
     this.initialTint = this.tint
     this.initialWidth = this.width
     this.body.allowGravity = true
@@ -50,6 +50,10 @@ export default class extends RootSprite {
     this.walls = walls
     this.velocityFactor = this.initialVelocityFactor
     this.makeCoral = makeCoral
+
+    this.animations.add('octodynamic-shuffle')
+    this.animations.play('octodynamic-shuffle', 15, true)
+
     bindKeys(this)
   }
 
