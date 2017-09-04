@@ -16,6 +16,7 @@ export default class extends Phaser.State {
 
   create () {
     this.score = 0
+    this.mobileHolding = false
     this.game.world.setBounds(0, 0, 2500, 1500)
     this.game.physics.arcade.gravity.y = 10
 
@@ -95,6 +96,14 @@ export default class extends Phaser.State {
       game: this.game,
       world: this.world
     }))
+  }
+
+  mobileTapped () {
+    this.mobileHolding = true
+  }
+
+  mobileUntapped () {
+    this.mobileHolding = false
   }
 
   update () {

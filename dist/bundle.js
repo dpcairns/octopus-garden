@@ -10078,6 +10078,7 @@ var _class = function (_Phaser$State) {
       var _this2 = this;
 
       this.score = 0;
+      this.mobileHolding = false;
       this.game.world.setBounds(0, 0, 2500, 1500);
       this.game.physics.arcade.gravity.y = 10;
 
@@ -10162,6 +10163,16 @@ var _class = function (_Phaser$State) {
         game: this.game,
         world: this.world
       }));
+    }
+  }, {
+    key: 'mobileTapped',
+    value: function mobileTapped() {
+      this.mobileHolding = true;
+    }
+  }, {
+    key: 'mobileUntapped',
+    value: function mobileUntapped() {
+      this.mobileHolding = false;
     }
   }, {
     key: 'update',
@@ -10489,7 +10500,7 @@ var updater = function updater(_this) {
 
     // rotate left human style
     if (_this.LEFT.isDown && !_this.RIGHT.isDown) {
-      _this.game.add.tween(_this).to({ angle: _this.angle - 20 }, 100, 'Linear', true);
+      _this.game.add.tween(_this).to({ angle: _this.angle - 30 }, 100, 'Linear', true);
       _this.clearLeft();
     }
 
@@ -10501,7 +10512,7 @@ var updater = function updater(_this) {
 
     // rotate right human style
     if (_this.RIGHT.isDown && !_this.LEFT.isDown) {
-      _this.game.add.tween(_this).to({ angle: _this.angle + 20 }, 100, 'Linear', true);
+      _this.game.add.tween(_this).to({ angle: _this.angle + 30 }, 100, 'Linear', true);
       _this.clearRight();
     }
 
@@ -10532,7 +10543,7 @@ var updater = function updater(_this) {
     }
 
     // slow down / reverse: F J (ring fingers)
-    if ((0, _downCheckers.indexFingersDown)(_this) || _this.DOWN.isDown) {
+    if ((0, _downCheckers.indexFingersDown)(_this) || _this.DOWN.isDown && !_this.LEFT.isDown && !_this.RIGHT.isDown) {
       _this.clearLeft();
       _this.clearRight();
       _this.velocityFactor -= 50;
@@ -10551,7 +10562,7 @@ var updater = function updater(_this) {
     }
 
     // charge up!: ALL HOME KEYS
-    if ((0, _downCheckers.homeRowDown)(_this) || _this.LEFT.isDown && _this.RIGHT.isDown || _this.X.isDown) {
+    if ((0, _downCheckers.homeRowDown)(_this) || _this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown || _this.X.isDown || _this.game.mobileHolding) {
       _this.charging = true;
       _this.clearLeft();
       _this.clearRight();
@@ -10701,6 +10712,10 @@ exports.default = function (_this) {
   _this.SPACEBAR = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.SPACEBAR);
   _this.Z = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.Z);
   _this.X = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.X);
+
+  var canvas = document.getElementsByTagName('canvas')[0];
+  canvas.addEventListener('touchstart', _this.mobileTapped, false);
+  canvas.addEventListener('touchend', _this.mobileUntapped, false);
 
   _this.A.onDown.add(_this.incrementLeft, _this);
   _this.S.onDown.add(_this.incrementLeft, _this);

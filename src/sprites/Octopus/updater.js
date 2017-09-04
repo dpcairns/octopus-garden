@@ -39,7 +39,7 @@ const updater = (_this) => () => {
 
   // rotate left human style
   if (_this.LEFT.isDown && !_this.RIGHT.isDown) {
-    _this.game.add.tween(_this).to({ angle: _this.angle - 20 }, 100, 'Linear', true)
+    _this.game.add.tween(_this).to({ angle: _this.angle - 30 }, 100, 'Linear', true)
     _this.clearLeft()
   }
 
@@ -51,7 +51,7 @@ const updater = (_this) => () => {
 
   // rotate right human style
   if (_this.RIGHT.isDown && !_this.LEFT.isDown) {
-    _this.game.add.tween(_this).to({ angle: _this.angle + 20 }, 100, 'Linear', true)
+    _this.game.add.tween(_this).to({ angle: _this.angle + 30 }, 100, 'Linear', true)
     _this.clearRight()
   }
 
@@ -82,7 +82,7 @@ const updater = (_this) => () => {
   }
 
   // slow down / reverse: F J (ring fingers)
-  if (indexFingersDown(_this) || _this.DOWN.isDown) {
+  if (indexFingersDown(_this) || (_this.DOWN.isDown && !_this.LEFT.isDown && !_this.RIGHT.isDown)) {
     _this.clearLeft()
     _this.clearRight()
     _this.velocityFactor -= 50
@@ -101,7 +101,11 @@ const updater = (_this) => () => {
   }
 
   // charge up!: ALL HOME KEYS
-  if (homeRowDown(_this) || (_this.LEFT.isDown && _this.RIGHT.isDown) || _this.X.isDown) {
+  if (homeRowDown(_this) ||
+  (_this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown) ||
+  _this.X.isDown ||
+  _this.game.mobileHolding
+  ) {
     _this.charging = true
     _this.clearLeft()
     _this.clearRight()
