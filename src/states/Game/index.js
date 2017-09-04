@@ -1,5 +1,6 @@
 /* globals __DEV__ */ // eslint-disable-line
 import Phaser from 'phaser'
+import Swipe from 'phaser-swipe'
 import Octopus from '../../sprites/Octopus/index'
 import Coin from '../../sprites/Gettables/Coin'
 import Wall from '../../sprites/Obstacles/Wall'
@@ -18,6 +19,7 @@ export default class extends Phaser.State {
     this.score = 0
     this.game.world.setBounds(0, 0, 2500, 1500)
     this.game.physics.arcade.gravity.y = 10
+    this.swipe = new Swipe(this.game)
 
     makeBackgrounds(this)
 
@@ -44,7 +46,8 @@ export default class extends Phaser.State {
       coins: this.coins,
       score: this.score,
       squareThings: this.squareThings,
-      walls: this.walls
+      walls: this.walls,
+      swipe: this.swipe
     })
 
     makeCamera(this)
@@ -98,7 +101,7 @@ export default class extends Phaser.State {
   }
 
   update () {
-    console.log(this.mobileHolding)
+
   }
 
   render () {

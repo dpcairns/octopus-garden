@@ -4,7 +4,9 @@ import {
   homeRowDown,
   indexFingersDown,
   ringFingersDown,
-  middleFingersDown
+  middleFingersDown,
+  swipeLeft,
+  swipeRight
 } from './downCheckers'
 import { disableCollisionIfDead } from './colissionHelpers'
 
@@ -32,7 +34,9 @@ const updater = (_this) => () => {
   }
 
   // rotate left octopus style
-  if (_this.leftKeeper.size === 4) {
+  if (_this.leftKeeper.size === 4 ||
+    swipeLeft(_this)
+  ) {
     _this.game.add.tween(_this).to({ angle: _this.angle - 45 }, 100, 'Linear', true)
     _this.clearLeft()
   }
@@ -43,8 +47,10 @@ const updater = (_this) => () => {
     _this.clearLeft()
   }
 
-  // rotate right
-  if (_this.rightKeeper.size === 4) {
+  // rotate octopus style right
+  if (_this.rightKeeper.size === 4 ||
+    swipeRight(_this)
+  ) {
     _this.game.add.tween(_this).to({ angle: _this.angle + 45 }, 100, 'Linear', true)
     _this.clearRight()
   }

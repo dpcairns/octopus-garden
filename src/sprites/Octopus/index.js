@@ -22,10 +22,12 @@ export default class extends RootSprite {
     squareThings,
     mobileHolding,
     walls,
+    swipe,
     makeSquareThing
   }) {
     super({ game, x, y, asset: 'octopus' })
     this.update = updater(this)
+    this.swipe = swipe
     this.anchor.setTo(0.5)
     this.width = 200
     this.height = 150

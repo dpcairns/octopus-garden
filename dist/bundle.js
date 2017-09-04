@@ -10016,35 +10016,39 @@ var _phaser = __webpack_require__(/*! phaser */ 24);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
-var _index = __webpack_require__(/*! ../../sprites/Octopus/index */ 314);
+var _phaserSwipe = __webpack_require__(/*! phaser-swipe */ 314);
+
+var _phaserSwipe2 = _interopRequireDefault(_phaserSwipe);
+
+var _index = __webpack_require__(/*! ../../sprites/Octopus/index */ 315);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _Coin = __webpack_require__(/*! ../../sprites/Gettables/Coin */ 320);
+var _Coin = __webpack_require__(/*! ../../sprites/Gettables/Coin */ 321);
 
 var _Coin2 = _interopRequireDefault(_Coin);
 
-var _Wall = __webpack_require__(/*! ../../sprites/Obstacles/Wall */ 321);
+var _Wall = __webpack_require__(/*! ../../sprites/Obstacles/Wall */ 322);
 
 var _Wall2 = _interopRequireDefault(_Wall);
 
-var _SquareThing = __webpack_require__(/*! ../../sprites/Obstacles/SquareThing */ 322);
+var _SquareThing = __webpack_require__(/*! ../../sprites/Obstacles/SquareThing */ 323);
 
 var _SquareThing2 = _interopRequireDefault(_SquareThing);
 
-var _Coral = __webpack_require__(/*! ../../sprites/Decoration/Coral */ 323);
+var _Coral = __webpack_require__(/*! ../../sprites/Decoration/Coral */ 324);
 
 var _Coral2 = _interopRequireDefault(_Coral);
 
-var _Seaweed = __webpack_require__(/*! ../../sprites/Decoration/Seaweed */ 324);
+var _Seaweed = __webpack_require__(/*! ../../sprites/Decoration/Seaweed */ 325);
 
 var _Seaweed2 = _interopRequireDefault(_Seaweed);
 
-var _makers = __webpack_require__(/*! ./makers */ 325);
+var _makers = __webpack_require__(/*! ./makers */ 326);
 
-var _camera = __webpack_require__(/*! ./camera */ 328);
+var _camera = __webpack_require__(/*! ./camera */ 329);
 
-var _index3 = __webpack_require__(/*! ../../timers/index */ 329);
+var _index3 = __webpack_require__(/*! ../../timers/index */ 330);
 
 var _index4 = _interopRequireDefault(_index3);
 
@@ -10080,6 +10084,7 @@ var _class = function (_Phaser$State) {
       this.score = 0;
       this.game.world.setBounds(0, 0, 2500, 1500);
       this.game.physics.arcade.gravity.y = 10;
+      this.swipe = new _phaserSwipe2.default(this.game);
 
       (0, _makers.makeBackgrounds)(this);
 
@@ -10106,7 +10111,8 @@ var _class = function (_Phaser$State) {
         coins: this.coins,
         score: this.score,
         squareThings: this.squareThings,
-        walls: this.walls
+        walls: this.walls,
+        swipe: this.swipe
       });
 
       (0, _camera.makeCamera)(this);
@@ -10165,9 +10171,7 @@ var _class = function (_Phaser$State) {
     }
   }, {
     key: 'update',
-    value: function update() {
-      console.log(this.mobileHolding);
-    }
+    value: function update() {}
   }, {
     key: 'render',
     value: function render() {}
@@ -10180,6 +10184,240 @@ exports.default = _class;
 
 /***/ }),
 /* 314 */
+/*!********************************************!*\
+  !*** ./node_modules/phaser-swipe/swipe.js ***!
+  \********************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Created by flogvit on 2015-11-03.
+ *
+ * @copyright Cellar Labs AS, 2015, www.cellarlabs.com, all rights reserved
+ * @file
+ * @license MIT
+ * @author Vegard Hanssen <Vegard.Hanssen@cellarlabs.com>
+ *
+ */
+
+
+function Swipe(game, model) {
+  var self = this;
+
+  self.DIRECTION_UP = 1;
+  self.DIRECTION_DOWN = 2;
+  self.DIRECTION_LEFT = 4;
+  self.DIRECTION_RIGHT = 8;
+  self.DIRECTION_UP_RIGHT = 16;
+  self.DIRECTION_UP_LEFT = 32;
+  self.DIRECTION_DOWN_RIGHT = 64;
+  self.DIRECTION_DOWN_LEFT = 128;
+
+  self.game = game;
+  self.model = model !== undefined ? model : null;
+  self.dragLength = 100;
+  self.diagonalDelta = 50;
+  self.swiping = false;
+  self.direction = null;
+  self.tmpDirection = null;
+  self.tmpCallback = null;
+  self.diagonalDisabled = false;
+
+  this.game.input.onDown.add(function () {
+    self.swiping = true;
+  });
+  this.game.input.onUp.add(function () {
+    self.swiping = false;
+  })
+
+  this.setupKeyboard();
+}
+
+Swipe.prototype.setupKeyboard = function() {
+  var self = this;
+  var up = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+  up.onDown.add(function () {
+    if (self.tmpDirection !== null) {
+      switch(self.tmpDirection) {
+        case self.DIRECTION_LEFT:
+          self.direction = self.DIRECTION_UP_LEFT;
+          self.model !== null && self.model.upLeft && self.model.upLeft();
+          break;
+        case self.DIRECTION_RIGHT:
+          self.direction = self.DIRECTION_UP_RIGHT;
+          self.model !== null && self.model.upRight && self.model.upRight();
+          break;
+        default:
+          self.direction = self.DIRECTION_UP;
+          self.model !== null && self.model.up && self.model.up();
+      }
+      self.tmpDirection = null;
+      self.tmpCallback = null;
+    } else {
+      self.tmpDirection = self.DIRECTION_UP;
+      self.tmpCallback = self.model !== null && self.model.up ? self.model.up : null;
+    }
+  })
+  up.onUp.add(this.keyUp, this);
+
+  var down = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+  down.onDown.add(function () {
+    if (self.tmpDirection !== null) {
+      switch(self.tmpDirection) {
+        case self.DIRECTION_LEFT:
+          self.direction = self.DIRECTION_DOWN_LEFT;
+          self.model !== null && self.model.downLeft && self.model.downLeft();
+          break;
+        case self.DIRECTION_RIGHT:
+          self.direction = self.DIRECTION_DOWN_RIGHT;
+          self.model !== null && self.model.downRight && self.model.downRight();
+          break;
+        default:
+          self.direction = self.DIRECTION_DOWN;
+          self.model !== null && self.model.down && self.model.down();
+      }
+      self.tmpDirection = null;
+      self.tmpCallback = null;
+    } else {
+      self.tmpDirection = self.DIRECTION_DOWN;
+      self.tmpCallback = self.model !== null && self.model.down ? self.model.down : null;
+    }
+  })
+  down.onUp.add(this.keyUp, this);
+
+  var left = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+  left.onDown.add(function () {
+    if (self.tmpDirection !== null) {
+      switch(self.tmpDirection) {
+        case self.DIRECTION_UP:
+          self.direction = self.DIRECTION_UP_LEFT;
+          self.model !== null && self.model.upLeft && self.model.upLeft();
+          break;
+        case self.DIRECTION_DOWN:
+          self.direction = self.DIRECTION_DOWN_LEFT;
+          self.model !== null && self.model.downLeft && self.model.downLeft();
+          break;
+        default:
+          self.direction = self.DIRECTION_LEFT;
+          self.model !== null && self.model.left && self.model.left();
+      }
+      self.tmpDirection = null;
+      self.tmpCallback = null;
+    } else {
+      self.tmpDirection = self.DIRECTION_LEFT;
+      self.tmpCallback = self.model !== null && self.model.left ? self.model.left : null;
+    }
+  })
+  left.onUp.add(this.keyUp, this);
+  var right = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+  right.onDown.add(function () {
+    if (self.tmpDirection !== null) {
+      switch(self.tmpDirection) {
+        case self.DIRECTION_UP:
+          self.direction = self.DIRECTION_UP_RIGHT;
+          self.model !== null && self.model.upRight && self.model.upRight();
+          break;
+        case self.DIRECTION_DOWN:
+          self.direction = self.DIRECTION_DOWN_RIGHT;
+          self.model !== null && self.model.downRight && self.model.downRight();
+          break;
+        default:
+          self.direction = self.DIRECTION_RIGHT;
+          self.model !== null && self.model.right && self.model.right();
+      }
+      self.tmpDirection = null;
+      self.tmpCallback = null;
+    } else {
+      self.tmpDirection = self.DIRECTION_RIGHT;
+      self.tmpCallback = self.model !== null && self.model.right ? self.model.right : null;
+    }
+  })
+  right.onUp.add(this.keyUp, this);
+}
+
+Swipe.prototype.keyUp = function() {
+  this.direction = this.tmpDirection;
+  this.tmpDirection = null;
+  if (this.tmpCallback !== null) {
+    this.tmpCallback.call(this.model);
+    this.tmpCallback = null;
+  }
+}
+
+Swipe.prototype.check = function () {
+  if (this.direction !== null) {
+    var result = {x: 0, y: 0, direction: this.direction};
+    this.direction = null;
+    return result;
+  }
+  if (!this.swiping) return null;
+
+  if (Phaser.Point.distance(this.game.input.activePointer.position, this.game.input.activePointer.positionDown) < this.dragLength) return null;
+
+  this.swiping = false;
+
+  var direction = null;
+  var deltaX = this.game.input.activePointer.position.x - this.game.input.activePointer.positionDown.x;
+  var deltaY = this.game.input.activePointer.position.y - this.game.input.activePointer.positionDown.y;
+
+  var result = {
+    x: this.game.input.activePointer.positionDown.x,
+    y: this.game.input.activePointer.positionDown.y
+  };
+
+  var deltaXabs = Math.abs(deltaX);
+  var deltaYabs = Math.abs(deltaY);
+
+  if (!this.diagonalDisabled && deltaXabs > (this.dragLength-this.diagonalDelta) && deltaYabs > (this.dragLength-this.diagonalDelta)) {
+    if (deltaX > 0 && deltaY > 0) {
+      direction = this.DIRECTION_DOWN_RIGHT;
+      this.model !== null && this.model.downRight && this.model.downRight(result);
+    } else if (deltaX > 0 && deltaY < 0) {
+      direction = this.DIRECTION_UP_RIGHT;
+      this.model !== null && this.model.upRight && this.model.upRight(result);
+    } else if (deltaX < 0 && deltaY > 0) {
+      direction = this.DIRECTION_DOWN_LEFT;
+      this.model !== null && this.model.downLeft && this.model.downLeft(result);
+    } else if (deltaX < 0 && deltaY < 0) {
+      direction = this.DIRECTION_UP_LEFT;
+      this.model !== null && this.model.upLeft && this.model.upLeft(result);
+    }
+  } else if (deltaXabs > this.dragLength || deltaYabs > this.dragLength) {
+    if (deltaXabs > deltaYabs) {
+      if (deltaX > 0) {
+        direction = this.DIRECTION_RIGHT;
+        this.model !== null && this.model.right && this.model.right(result);
+      } else if (deltaX < 0) {
+        direction = this.DIRECTION_LEFT;
+        this.model !== null && this.model.left && this.model.left(result);
+      }
+    } else {
+      if (deltaY > 0) {
+        direction = this.DIRECTION_DOWN;
+        this.model !== null && this.model.down && this.model.down(result);
+      } else if (deltaY < 0) {
+        direction = this.DIRECTION_UP;
+        this.model !== null && this.model.up && this.model.up(result);
+      }
+    }
+  }
+  if (direction !== null) {
+    result['direction'] = direction;
+    return result;
+  }
+  return null;
+}
+
+if (true) {
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Swipe;
+  }
+}
+
+
+/***/ }),
+/* 315 */
 /*!**************************************!*\
   !*** ./src/sprites/Octopus/index.js ***!
   \**************************************/
@@ -10200,15 +10438,15 @@ var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 46);
 
 var _RootSprite3 = _interopRequireDefault(_RootSprite2);
 
-var _InkMissile = __webpack_require__(/*! ./InkMissile */ 315);
+var _InkMissile = __webpack_require__(/*! ./InkMissile */ 316);
 
 var _InkMissile2 = _interopRequireDefault(_InkMissile);
 
-var _updater = __webpack_require__(/*! ./updater */ 316);
+var _updater = __webpack_require__(/*! ./updater */ 317);
 
 var _updater2 = _interopRequireDefault(_updater);
 
-var _bindKeys = __webpack_require__(/*! ./bindKeys */ 319);
+var _bindKeys = __webpack_require__(/*! ./bindKeys */ 320);
 
 var _bindKeys2 = _interopRequireDefault(_bindKeys);
 
@@ -10235,6 +10473,7 @@ var _class = function (_RootSprite) {
         squareThings = _ref.squareThings,
         mobileHolding = _ref.mobileHolding,
         walls = _ref.walls,
+        swipe = _ref.swipe,
         makeSquareThing = _ref.makeSquareThing;
 
     _classCallCheck(this, _class);
@@ -10242,6 +10481,7 @@ var _class = function (_RootSprite) {
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, { game: game, x: x, y: y, asset: 'octopus' }));
 
     _this.update = (0, _updater2.default)(_this);
+    _this.swipe = swipe;
     _this.anchor.setTo(0.5);
     _this.width = 200;
     _this.height = 150;
@@ -10369,7 +10609,7 @@ var _class = function (_RootSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 315 */
+/* 316 */
 /*!*******************************************!*\
   !*** ./src/sprites/Octopus/InkMissile.js ***!
   \*******************************************/
@@ -10439,7 +10679,7 @@ var _class = function (_RootSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 316 */
+/* 317 */
 /*!****************************************!*\
   !*** ./src/sprites/Octopus/updater.js ***!
   \****************************************/
@@ -10456,9 +10696,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _constants = __webpack_require__(/*! ./constants */ 119);
 
-var _downCheckers = __webpack_require__(/*! ./downCheckers */ 317);
+var _downCheckers = __webpack_require__(/*! ./downCheckers */ 318);
 
-var _colissionHelpers = __webpack_require__(/*! ./colissionHelpers */ 318);
+var _colissionHelpers = __webpack_require__(/*! ./colissionHelpers */ 319);
 
 var updater = function updater(_this) {
   return function () {
@@ -10485,7 +10725,7 @@ var updater = function updater(_this) {
     }
 
     // rotate left octopus style
-    if (_this.leftKeeper.size === 4) {
+    if (_this.leftKeeper.size === 4 || (0, _downCheckers.swipeLeft)(_this)) {
       _this.game.add.tween(_this).to({ angle: _this.angle - 45 }, 100, 'Linear', true);
       _this.clearLeft();
     }
@@ -10496,8 +10736,8 @@ var updater = function updater(_this) {
       _this.clearLeft();
     }
 
-    // rotate right
-    if (_this.rightKeeper.size === 4) {
+    // rotate octopus style right
+    if (_this.rightKeeper.size === 4 || (0, _downCheckers.swipeRight)(_this)) {
       _this.game.add.tween(_this).to({ angle: _this.angle + 45 }, 100, 'Linear', true);
       _this.clearRight();
     }
@@ -10613,7 +10853,7 @@ var updater = function updater(_this) {
 exports.default = updater;
 
 /***/ }),
-/* 317 */
+/* 318 */
 /*!*********************************************!*\
   !*** ./src/sprites/Octopus/downCheckers.js ***!
   \*********************************************/
@@ -10625,30 +10865,42 @@ exports.default = updater;
 
 
 Object.defineProperty(exports, "__esModule", {
-      value: true
+  value: true
 });
 var pinkiesDown = exports.pinkiesDown = function pinkiesDown(_this) {
-      return _this.A.isDown && !_this.S.isDown && !_this.D.isDown && !_this.F.isDown && _this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && !_this.J.isDown;
+  return _this.A.isDown && !_this.S.isDown && !_this.D.isDown && !_this.F.isDown && _this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && !_this.J.isDown;
 };
 
 var indexFingersDown = exports.indexFingersDown = function indexFingersDown(_this) {
-      return !_this.A.isDown && _this.S.isDown && !_this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && _this.L.isDown && !_this.K.isDown && !_this.J.isDown;
+  return !_this.A.isDown && _this.S.isDown && !_this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && _this.L.isDown && !_this.K.isDown && !_this.J.isDown;
 };
 
 var ringFingersDown = exports.ringFingersDown = function ringFingersDown(_this) {
-      return !_this.A.isDown && !_this.S.isDown && !_this.D.isDown && _this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && _this.J.isDown;
+  return !_this.A.isDown && !_this.S.isDown && !_this.D.isDown && _this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && _this.J.isDown;
 };
 
 var homeRowDown = exports.homeRowDown = function homeRowDown(_this) {
-      return _this.A.isDown && _this.S.isDown && _this.D.isDown && _this.F.isDown && _this.COLON.isDown && _this.L.isDown && _this.K.isDown && _this.J.isDown;
+  return _this.A.isDown && _this.S.isDown && _this.D.isDown && _this.F.isDown && _this.COLON.isDown && _this.L.isDown && _this.K.isDown && _this.J.isDown;
 };
 
 var middleFingersDown = exports.middleFingersDown = function middleFingersDown(_this) {
-      return !_this.A.isDown && !_this.S.isDown && _this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && _this.K.isDown && !_this.J.isDown;
+  return !_this.A.isDown && !_this.S.isDown && _this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && _this.K.isDown && !_this.J.isDown;
+};
+
+var swipeLeft = exports.swipeLeft = function swipeLeft(_this) {
+  if (_this.swipe.check() && _this.swipe.check() !== null && _this.swipe.check().direction) {
+    return _this.swipe.check().direction === _this.swipe.DIRECTION_LEFT;
+  }
+};
+
+var swipeRight = exports.swipeRight = function swipeRight(_this) {
+  if (_this.swipe.check() && _this.swipe.check() !== null && _this.swipe.check().direction) {
+    return _this.swipe.check().direction === _this.swipe.DIRECTION_RIGHT;
+  }
 };
 
 /***/ }),
-/* 318 */
+/* 319 */
 /*!*************************************************!*\
   !*** ./src/sprites/Octopus/colissionHelpers.js ***!
   \*************************************************/
@@ -10667,7 +10919,7 @@ var disableCollisionIfDead = exports.disableCollisionIfDead = function disableCo
 };
 
 /***/ }),
-/* 319 */
+/* 320 */
 /*!*****************************************!*\
   !*** ./src/sprites/Octopus/bindKeys.js ***!
   \*****************************************/
@@ -10716,7 +10968,7 @@ exports.default = function (_this) {
 };
 
 /***/ }),
-/* 320 */
+/* 321 */
 /*!***************************************!*\
   !*** ./src/sprites/Gettables/Coin.js ***!
   \***************************************/
@@ -10775,7 +11027,7 @@ var _class = function (_RootSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 321 */
+/* 322 */
 /*!***************************************!*\
   !*** ./src/sprites/Obstacles/Wall.js ***!
   \***************************************/
@@ -10838,7 +11090,7 @@ var _class = function (_RootSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 322 */
+/* 323 */
 /*!**********************************************!*\
   !*** ./src/sprites/Obstacles/SquareThing.js ***!
   \**********************************************/
@@ -10902,7 +11154,7 @@ var _class = function (_RootSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 323 */
+/* 324 */
 /*!*****************************************!*\
   !*** ./src/sprites/Decoration/Coral.js ***!
   \*****************************************/
@@ -10971,7 +11223,7 @@ var _class = function (_RootDecorationSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 324 */
+/* 325 */
 /*!*******************************************!*\
   !*** ./src/sprites/Decoration/Seaweed.js ***!
   \*******************************************/
@@ -11040,7 +11292,7 @@ var _class = function (_RootDecorationSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 325 */
+/* 326 */
 /*!***********************************!*\
   !*** ./src/states/Game/makers.js ***!
   \***********************************/
@@ -11056,11 +11308,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.makeBackgrounds = exports.makeRandomCorals = exports.makeBorderWallsAndDecoration = undefined;
 
-var _OceanBG = __webpack_require__(/*! ../../sprites/Backgrounds/OceanBG */ 326);
+var _OceanBG = __webpack_require__(/*! ../../sprites/Backgrounds/OceanBG */ 327);
 
 var _OceanBG2 = _interopRequireDefault(_OceanBG);
 
-var _CaveBG = __webpack_require__(/*! ../../sprites/Backgrounds/CaveBG */ 327);
+var _CaveBG = __webpack_require__(/*! ../../sprites/Backgrounds/CaveBG */ 328);
 
 var _CaveBG2 = _interopRequireDefault(_CaveBG);
 
@@ -11116,7 +11368,7 @@ var makeBackgrounds = exports.makeBackgrounds = function makeBackgrounds(_this) 
 };
 
 /***/ }),
-/* 326 */
+/* 327 */
 /*!********************************************!*\
   !*** ./src/sprites/Backgrounds/OceanBG.js ***!
   \********************************************/
@@ -11174,7 +11426,7 @@ var _class = function (_Phaser$Sprite) {
 exports.default = _class;
 
 /***/ }),
-/* 327 */
+/* 328 */
 /*!*******************************************!*\
   !*** ./src/sprites/Backgrounds/CaveBG.js ***!
   \*******************************************/
@@ -11228,7 +11480,7 @@ var _class = function (_Phaser$TileSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 328 */
+/* 329 */
 /*!***********************************!*\
   !*** ./src/states/Game/camera.js ***!
   \***********************************/
@@ -11255,7 +11507,7 @@ var makeCamera = exports.makeCamera = function makeCamera(_this) {
 };
 
 /***/ }),
-/* 329 */
+/* 330 */
 /*!*****************************!*\
   !*** ./src/timers/index.js ***!
   \*****************************/
