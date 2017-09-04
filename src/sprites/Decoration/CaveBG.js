@@ -5,7 +5,6 @@ export default class extends Phaser.TileSprite {
     super(game, 0, 0, game.world.width, game.world.height, 'cave')
 
     this.game.add.existing(this)
-    console.log(this)
   }
 
   update () {

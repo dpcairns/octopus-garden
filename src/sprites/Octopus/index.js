@@ -19,9 +19,9 @@ export default class extends RootSprite {
     world,
     coins,
     score,
-    corals,
+    squareThings,
     walls,
-    makeCoral
+    makeSquareThing
   }) {
     super({ game, x, y, asset: 'octopus' })
     this.update = updater(this)
@@ -47,10 +47,10 @@ export default class extends RootSprite {
     this.inkMissiles = this.game.add.group()
     this.coins = coins
     this.score = score
-    this.corals = corals
+    this.squareThings = squareThings
     this.walls = walls
     this.velocityFactor = this.initialVelocityFactor
-    this.makeCoral = makeCoral
+    this.makeSquareThing = makeSquareThing
 
     this.game.octopus = this
     this.animations.add('octodynamic-shuffle')

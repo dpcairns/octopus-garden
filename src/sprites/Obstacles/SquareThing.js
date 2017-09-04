@@ -1,8 +1,8 @@
-import RootSprite from './RootSprite'
+import RootSprite from '../RootSprite'
 
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
-    super({ game, world, x, y, asset: 'coral' })
+    super({ game, world, x, y, asset: 'squareThings' })
     this.width = 50
     this.height = 50
     this.HP = 30

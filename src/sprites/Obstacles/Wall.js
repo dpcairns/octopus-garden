@@ -1,4 +1,4 @@
-import RootSprite from './RootSprite'
+import RootSprite from '../RootSprite'
 
 export default class extends RootSprite {
   constructor ({ game, world, x, y, destructable }) {

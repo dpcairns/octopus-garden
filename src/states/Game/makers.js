@@ -1,4 +1,4 @@
-export const makeBorderWalls = (_this) => {
+export const makeBorderWallsAndDecoration = (_this) => {
   const height = _this.game.oceanBackground.height
   const width = _this.game.oceanBackground.width
 
@@ -8,6 +8,14 @@ export const makeBorderWalls = (_this) => {
     } else {
       _this.makeWall(i, height)
     }
+
+    if (i % 2 === 0) {
+      _this.makeCoral(i, height - 80)
+    }
+  }
+
+  for (let i = 0; i < width; i += 50) {
+    _this.makeSeaweed(Math.random() * width, height - 200)
   }
 
   for (let i = 0; i < height; i += 50) {
@@ -21,6 +29,6 @@ export const makeBorderWalls = (_this) => {
 
 export const makeRandomCorals = (_this) => {
   for (let i = 0; i < 50; i++) {
-    _this.makeCoral((() => Math.random() * _this.world.width)(), (() => Math.random() * _this.world.height)())
+    _this.makeSquareThing((() => Math.random() * _this.world.width)(), (() => Math.random() * _this.world.height)())
   }
 }

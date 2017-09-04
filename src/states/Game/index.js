@@ -1,12 +1,14 @@
 /* globals __DEV__ */ // eslint-disable-line
 import Phaser from 'phaser'
 import Octopus from '../../sprites/Octopus/index'
-import Coin from '../../sprites/Coin'
-import Wall from '../../sprites/Wall'
-import Coral from '../../sprites/Coral'
-import OceanBG from '../../sprites/OceanBG'
-import CaveBG from '../../sprites/CaveBG'
-import { makeBorderWalls, makeRandomCorals } from './makers'
+import Coin from '../../sprites/Gettables/Coin'
+import Wall from '../../sprites/Obstacles/Wall'
+import SquareThing from '../../sprites/Obstacles/SquareThing'
+import Coral from '../../sprites/Decoration/Coral'
+import Seaweed from '../../sprites/Decoration/Seaweed'
+import OceanBG from '../../sprites/Decoration/OceanBG'
+import CaveBG from '../../sprites/Decoration/CaveBG'
+import { makeBorderWallsAndDecoration, makeRandomCorals } from './makers'
 import { makeCamera } from './camera'
 import setTimerActions from '../../timers/index'
 
@@ -30,6 +32,8 @@ export default class extends Phaser.State {
     this.game.physics.arcade.gravity.y = 10
 
     this.coins = this.game.add.group()
+    this.squareThings = this.game.add.group()
+    this.seaweeds = this.game.add.group()
     this.corals = this.game.add.group()
     this.walls = this.game.add.group()
 
@@ -45,14 +49,32 @@ export default class extends Phaser.State {
       world: this.world,
       coins: this.coins,
       score: this.score,
-      corals: this.corals,
+      squareThings: this.squareThings,
       walls: this.walls
     })
 
     makeCamera(this)
     makeRandomCorals(this)
-    makeBorderWalls(this)
+    makeBorderWallsAndDecoration(this)
     setTimerActions(this)
+  }
+
+  makeSquareThing (x, y) {
+    this.squareThings.add(new SquareThing({
+      game: this.game,
+      world: this.world,
+      x,
+      y
+    }))
+  }
+
+  makeSeaweed (x, y) {
+    this.seaweeds.add(new Seaweed({
+      game: this.game,
+      world: this.world,
+      x,
+      y
+    }))
   }
 
   makeCoral (x, y) {
