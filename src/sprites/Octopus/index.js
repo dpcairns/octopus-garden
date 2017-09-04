@@ -19,8 +19,9 @@ export default class extends RootSprite {
     world,
     coins,
     score,
+    corals,
     walls,
-    makeWall
+    makeCoral
   }) {
     super({ game, x, y, asset: 'octopus' })
     this.anchor.setTo(0.5)
@@ -45,9 +46,10 @@ export default class extends RootSprite {
     this.inkMissiles = this.game.add.group()
     this.coins = coins
     this.score = score
+    this.corals = corals
     this.walls = walls
     this.velocityFactor = this.initialVelocityFactor
-    this.makeWall = makeWall
+    this.makeCoral = makeCoral
     bindKeys(this)
   }
 
@@ -92,21 +94,23 @@ export default class extends RootSprite {
     this.score++
   }
 
-  destroyWall (destroyer, wall) {
-    if (destroyer.key === 'octopus' && destroyer.charged > 1000) {
-      wall.HP -= destroyer.charged
-    }
+  destroyThing (destroyer, destructable) {
+    if (destructable.destructable) {
+      if (destroyer.key === 'octopus' && destroyer.charged > 1000) {
+        destructable.HP -= destroyer.charged
+      }
 
-    if (destroyer.key === 'blob') {
-      wall.tint *= 100
-      wall.HP -= 3
-    }
+      if (destroyer.key === 'blob') {
+        destructable.tint *= 100
+        destructable.HP -= 3
+      }
 
-    if (wall.HP <= 0) {
-      wall.body.allowGravity = true
-      wall.body.immovable = false
-      wall.body.collideWorldBounds = false
-      wall.body.gravity.y = 10000
+      if (destructable.HP <= 0) {
+        destructable.body.allowGravity = true
+        destructable.body.immovable = false
+        destructable.body.collideWorldBounds = false
+        destructable.body.gravity.y = 10000
+      }
     }
   }
 

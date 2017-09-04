@@ -3,7 +3,10 @@ import Phaser from 'phaser'
 import Octopus from '../../sprites/Octopus/index'
 import Coin from '../../sprites/Coin'
 import Wall from '../../sprites/Wall'
+import Coral from '../../sprites/Coral'
 import Background from '../../sprites/Background'
+import { makeBorderWalls, makeRandomCorals } from './makers'
+import { makeCamera } from './camera'
 import setTimerActions from '../../timers/index'
 
 export default class extends Phaser.State {
@@ -23,6 +26,7 @@ export default class extends Phaser.State {
     this.game.physics.arcade.gravity.y = 10
 
     this.coins = this.game.add.group()
+    this.corals = this.game.add.group()
     this.walls = this.game.add.group()
 
     this.coins.add(new Coin({ // eslint-disable-line
@@ -37,28 +41,32 @@ export default class extends Phaser.State {
       world: this.world,
       coins: this.coins,
       score: this.score,
+      corals: this.corals,
       walls: this.walls
     })
 
-    this.game.camera.follow(this.octopus, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
-
-    for (let i = 0; i < 50; i++) {
-      this.makeWall((() => Math.random() * this.world.width)(), (() => Math.random() * this.world.height)())
-    }
-
+    makeCamera(this)
+    makeRandomCorals(this)
+    makeBorderWalls(this)
     setTimerActions(this)
-
-    this.filter = new Phaser.Filter(this.game, null, this.game.cache.getShader('cells'))
-
-    this.filter.addToWorld(0, 0, 800, 600)
   }
 
-  makeWall (x, y) {
-    this.walls.add(new Wall({
+  makeCoral (x, y) {
+    this.corals.add(new Coral({
       game: this.game,
       world: this.world,
       x,
       y
+    }))
+  }
+
+  makeWall (x, y, destructable) {
+    this.walls.add(new Wall({
+      game: this.game,
+      world: this.world,
+      x,
+      y,
+      destructable
     }))
   }
 
@@ -70,7 +78,7 @@ export default class extends Phaser.State {
   }
 
   update () {
-    this.filter.update()
+
   }
 
   render () {

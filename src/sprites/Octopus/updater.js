@@ -11,8 +11,10 @@ import { disableCollisionIfDead } from './colissionHelpers'
 const updater = (_this) => {
   _this.game.physics.arcade.overlap(_this.inkMissiles, _this.coins, _this.getCoin, null, _this)
   _this.game.physics.arcade.overlap(_this, _this.coins, _this.getCoin, null, _this)
-  _this.game.physics.arcade.overlap(_this.inkMissiles, _this.walls, _this.destroyWall, null, _this)
-  _this.game.physics.arcade.collide(_this, _this.walls, _this.destroyWall, disableCollisionIfDead, _this)
+  _this.game.physics.arcade.overlap(_this.inkMissiles, _this.corals, _this.destroyThing, null, _this)
+  _this.game.physics.arcade.collide(_this, _this.corals, _this.destroyThing, disableCollisionIfDead, _this)
+  _this.game.physics.arcade.collide(_this, _this.walls, _this.destroyThing, disableCollisionIfDead, _this)
+
   // manage bespoke max velocity, so it doesn't interefere with charge max
   if (_this.velocityFactor > _this.maxNormalVelocity) {
     _this.velocityFactor = _this.maxNormalVelocity
