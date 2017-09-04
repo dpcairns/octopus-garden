@@ -8,9 +8,8 @@ import {
 } from './downCheckers'
 import { disableCollisionIfDead } from './colissionHelpers'
 
-const updater = (_this) => {
-  console.log(_this.animations)
-  _this.animations.currentAnim.speed = _this.charged ? _this.charged / 30 : _this.velocityFactor / 30
+const updater = (_this) => () => {
+  _this.animations.currentAnim.speed = _this.charged ? _this.charged / 40 : _this.velocityFactor / 40
 
   _this.game.physics.arcade.overlap(_this.inkMissiles, _this.coins, _this.getCoin, null, _this)
   _this.game.physics.arcade.overlap(_this, _this.coins, _this.getCoin, null, _this)

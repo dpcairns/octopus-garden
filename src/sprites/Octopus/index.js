@@ -24,6 +24,7 @@ export default class extends RootSprite {
     makeCoral
   }) {
     super({ game, x, y, asset: 'octopus' })
+    this.update = updater(this)
     this.anchor.setTo(0.5)
     this.width = 200
     this.height = 150
@@ -100,7 +101,7 @@ export default class extends RootSprite {
 
   destroyThing (destroyer, destructable) {
     if (destructable.destructable) {
-      if (destroyer.key === 'octopus' && destroyer.charged > 1000) {
+      if (destroyer.key === 'octopus' && destroyer.charged > 1000 && this.goForward) {
         destructable.HP -= destroyer.charged
       }
 
@@ -127,9 +128,5 @@ export default class extends RootSprite {
       octoAngle: this.angle,
       octoSpeed: this.velocityFactor
     }))
-  }
-
-  update () {
-    updater(this)
   }
 }
