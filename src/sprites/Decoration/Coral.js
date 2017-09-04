@@ -2,8 +2,8 @@ import RootDecorationSprite from './RootDecorationSprite'
 
 export default class extends RootDecorationSprite {
   constructor ({ game, world, x, y }) {
-    const height = Math.random() * 120
-    const width = Math.random() * 120
+    const height = Math.random() * 100 + 20
+    const width = Math.random() * 100 + 20
     super({
       game,
       world,

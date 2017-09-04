@@ -6,9 +6,7 @@ import Wall from '../../sprites/Obstacles/Wall'
 import SquareThing from '../../sprites/Obstacles/SquareThing'
 import Coral from '../../sprites/Decoration/Coral'
 import Seaweed from '../../sprites/Decoration/Seaweed'
-import OceanBG from '../../sprites/Decoration/OceanBG'
-import CaveBG from '../../sprites/Decoration/CaveBG'
-import { makeBorderWallsAndDecoration, makeRandomCorals } from './makers'
+import { makeBorderWallsAndDecoration, makeRandomCorals, makeBackgrounds } from './makers'
 import { makeCamera } from './camera'
 import setTimerActions from '../../timers/index'
 
@@ -18,24 +16,20 @@ export default class extends Phaser.State {
 
   create () {
     this.score = 0
-
     this.game.world.setBounds(0, 0, 2500, 1500)
-
-    new CaveBG({ // eslint-disable-line
-      game: this.game
-    })
-
-    new OceanBG({ // eslint-disable-line
-      game: this.game
-    })
-
     this.game.physics.arcade.gravity.y = 10
+
+    makeBackgrounds(this)
 
     this.coins = this.game.add.group()
     this.squareThings = this.game.add.group()
     this.seaweeds = this.game.add.group()
     this.corals = this.game.add.group()
     this.walls = this.game.add.group()
+
+    window.screen.orientation.onchange = () => {
+      this.angleOverride = screen.orientation.angle
+    }
 
     this.coins.add(new Coin({ // eslint-disable-line
       game: this.game,
