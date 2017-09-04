@@ -10040,7 +10040,7 @@ var _Seaweed = __webpack_require__(/*! ../../sprites/Decoration/Seaweed */ 324);
 
 var _Seaweed2 = _interopRequireDefault(_Seaweed);
 
-var _makers = __webpack_require__(/*! ./makers */ 327);
+var _makers = __webpack_require__(/*! ./makers */ 325);
 
 var _camera = __webpack_require__(/*! ./camera */ 328);
 
@@ -10481,15 +10481,27 @@ var updater = function updater(_this) {
       _this.velocityFactor = _this.minNormalVelocity;
     }
 
-    // rotate left
+    // rotate left octopus style
     if (_this.leftKeeper.size === 4) {
       _this.game.add.tween(_this).to({ angle: _this.angle - 45 }, 100, 'Linear', true);
+      _this.clearLeft();
+    }
+
+    // rotate left human style
+    if (_this.LEFT.isDown && !_this.RIGHT.isDown) {
+      _this.game.add.tween(_this).to({ angle: _this.angle - 20 }, 100, 'Linear', true);
       _this.clearLeft();
     }
 
     // rotate right
     if (_this.rightKeeper.size === 4) {
       _this.game.add.tween(_this).to({ angle: _this.angle + 45 }, 100, 'Linear', true);
+      _this.clearRight();
+    }
+
+    // rotate right human style
+    if (_this.RIGHT.isDown && !_this.LEFT.isDown) {
+      _this.game.add.tween(_this).to({ angle: _this.angle + 20 }, 100, 'Linear', true);
       _this.clearRight();
     }
 
@@ -10500,35 +10512,8 @@ var updater = function updater(_this) {
       _this.game.physics.arcade.velocityFromAngle(_this.angle - 90, 0, _this.body.velocity);
     }
 
-    // stop A ; (pinkies)
-    if ((0, _downCheckers.pinkiesDown)(_this)) {
-      _this.clearLeft();
-      _this.clearRight();
-      _this.velocityFactor = 0;
-      _this.stopGoingForward();
-    }
-
-    // slow down / reverse: F J (ring fingers)
-    if ((0, _downCheckers.indexFingersDown)(_this)) {
-      _this.clearLeft();
-      _this.clearRight();
-      _this.velocityFactor -= 50;
-      _this.goForward = true;
-    }
-
-    // pew pew: S L (index fingers)
-    if ((0, _downCheckers.ringFingersDown)(_this)) {
-      _this.clearLeft();
-      _this.clearRight();
-      if (_this.shotCounter > _constants.SHOT_COUNTER_LIMIT) {
-        _this.shotCounter = 0;
-        _this.shootInk();
-      }
-      _this.shotCounter++;
-    }
-
     // speed up: K D (middle fingers)
-    if ((0, _downCheckers.middleFingersDown)(_this)) {
+    if ((0, _downCheckers.middleFingersDown)(_this) || _this.UP.isDown) {
       _this.clearLeft();
       _this.clearRight();
       if (_this.velocityFactor < 0) {
@@ -10538,8 +10523,35 @@ var updater = function updater(_this) {
       _this.goForward = true;
     }
 
+    // stop A ; (pinkies)
+    if ((0, _downCheckers.pinkiesDown)(_this) || _this.Z.isDown) {
+      _this.clearLeft();
+      _this.clearRight();
+      _this.velocityFactor = 0;
+      _this.stopGoingForward();
+    }
+
+    // slow down / reverse: F J (ring fingers)
+    if ((0, _downCheckers.indexFingersDown)(_this) || _this.DOWN.isDown) {
+      _this.clearLeft();
+      _this.clearRight();
+      _this.velocityFactor -= 50;
+      _this.goForward = true;
+    }
+
+    // pew pew: S L (index fingers)
+    if ((0, _downCheckers.ringFingersDown)(_this) || _this.SPACEBAR.isDown) {
+      _this.clearLeft();
+      _this.clearRight();
+      if (_this.shotCounter > _constants.SHOT_COUNTER_LIMIT) {
+        _this.shotCounter = 0;
+        _this.shootInk();
+      }
+      _this.shotCounter++;
+    }
+
     // charge up!: ALL HOME KEYS
-    if ((0, _downCheckers.homeRowDown)(_this)) {
+    if ((0, _downCheckers.homeRowDown)(_this) || _this.LEFT.isDown && _this.RIGHT.isDown || _this.X.isDown) {
       _this.charging = true;
       _this.clearLeft();
       _this.clearRight();
@@ -10682,6 +10694,13 @@ exports.default = function (_this) {
   _this.L = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.L);
   _this.K = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.K);
   _this.J = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.J);
+  _this.LEFT = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.LEFT);
+  _this.RIGHT = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.RIGHT);
+  _this.DOWN = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.DOWN);
+  _this.UP = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.UP);
+  _this.SPACEBAR = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.SPACEBAR);
+  _this.Z = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.Z);
+  _this.X = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.X);
 
   _this.A.onDown.add(_this.incrementLeft, _this);
   _this.S.onDown.add(_this.incrementLeft, _this);
@@ -11018,9 +11037,7 @@ var _class = function (_RootDecorationSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 325 */,
-/* 326 */,
-/* 327 */
+/* 325 */
 /*!***********************************!*\
   !*** ./src/states/Game/makers.js ***!
   \***********************************/
@@ -11036,11 +11053,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.makeBackgrounds = exports.makeRandomCorals = exports.makeBorderWallsAndDecoration = undefined;
 
-var _OceanBG = __webpack_require__(/*! ../../sprites/Backgrounds/OceanBG */ 331);
+var _OceanBG = __webpack_require__(/*! ../../sprites/Backgrounds/OceanBG */ 326);
 
 var _OceanBG2 = _interopRequireDefault(_OceanBG);
 
-var _CaveBG = __webpack_require__(/*! ../../sprites/Backgrounds/CaveBG */ 332);
+var _CaveBG = __webpack_require__(/*! ../../sprites/Backgrounds/CaveBG */ 327);
 
 var _CaveBG2 = _interopRequireDefault(_CaveBG);
 
@@ -11096,59 +11113,7 @@ var makeBackgrounds = exports.makeBackgrounds = function makeBackgrounds(_this) 
 };
 
 /***/ }),
-/* 328 */
-/*!***********************************!*\
-  !*** ./src/states/Game/camera.js ***!
-  \***********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.makeCamera = undefined;
-
-var _phaser = __webpack_require__(/*! phaser */ 24);
-
-var _phaser2 = _interopRequireDefault(_phaser);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var makeCamera = exports.makeCamera = function makeCamera(_this) {
-  _this.game.camera.follow(_this.octopus, _phaser2.default.Camera.FOLLOW_LOCKON, 0.1, 0.1);
-};
-
-/***/ }),
-/* 329 */
-/*!*****************************!*\
-  !*** ./src/timers/index.js ***!
-  \*****************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function (_this) {
-  _this.timer = _this.game.time.create(false);
-
-  _this.timer.loop(3000, _this.makeCoin, _this);
-
-  _this.timer.start();
-};
-
-/***/ }),
-/* 330 */,
-/* 331 */
+/* 326 */
 /*!********************************************!*\
   !*** ./src/sprites/Backgrounds/OceanBG.js ***!
   \********************************************/
@@ -11206,7 +11171,7 @@ var _class = function (_Phaser$Sprite) {
 exports.default = _class;
 
 /***/ }),
-/* 332 */
+/* 327 */
 /*!*******************************************!*\
   !*** ./src/sprites/Backgrounds/CaveBG.js ***!
   \*******************************************/
@@ -11258,6 +11223,57 @@ var _class = function (_Phaser$TileSprite) {
 }(_phaser2.default.TileSprite);
 
 exports.default = _class;
+
+/***/ }),
+/* 328 */
+/*!***********************************!*\
+  !*** ./src/states/Game/camera.js ***!
+  \***********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.makeCamera = undefined;
+
+var _phaser = __webpack_require__(/*! phaser */ 24);
+
+var _phaser2 = _interopRequireDefault(_phaser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var makeCamera = exports.makeCamera = function makeCamera(_this) {
+  _this.game.camera.follow(_this.octopus, _phaser2.default.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+};
+
+/***/ }),
+/* 329 */
+/*!*****************************!*\
+  !*** ./src/timers/index.js ***!
+  \*****************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_this) {
+  _this.timer = _this.game.time.create(false);
+
+  _this.timer.loop(3000, _this.makeCoin, _this);
+
+  _this.timer.start();
+};
 
 /***/ })
 ],[121]);

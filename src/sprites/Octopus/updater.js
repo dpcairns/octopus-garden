@@ -31,15 +31,27 @@ const updater = (_this) => () => {
     _this.velocityFactor = _this.minNormalVelocity
   }
 
-  // rotate left
+  // rotate left octopus style
   if (_this.leftKeeper.size === 4) {
     _this.game.add.tween(_this).to({ angle: _this.angle - 45 }, 100, 'Linear', true)
+    _this.clearLeft()
+  }
+
+  // rotate left human style
+  if (_this.LEFT.isDown && !_this.RIGHT.isDown) {
+    _this.game.add.tween(_this).to({ angle: _this.angle - 20 }, 100, 'Linear', true)
     _this.clearLeft()
   }
 
   // rotate right
   if (_this.rightKeeper.size === 4) {
     _this.game.add.tween(_this).to({ angle: _this.angle + 45 }, 100, 'Linear', true)
+    _this.clearRight()
+  }
+
+  // rotate right human style
+  if (_this.RIGHT.isDown && !_this.LEFT.isDown) {
+    _this.game.add.tween(_this).to({ angle: _this.angle + 20 }, 100, 'Linear', true)
     _this.clearRight()
   }
 
@@ -50,35 +62,8 @@ const updater = (_this) => () => {
     _this.game.physics.arcade.velocityFromAngle(_this.angle - 90, 0, _this.body.velocity)
   }
 
-  // stop A ; (pinkies)
-  if ((pinkiesDown(_this))) {
-    _this.clearLeft()
-    _this.clearRight()
-    _this.velocityFactor = 0
-    _this.stopGoingForward()
-  }
-
-  // slow down / reverse: F J (ring fingers)
-  if (indexFingersDown(_this)) {
-    _this.clearLeft()
-    _this.clearRight()
-    _this.velocityFactor -= 50
-    _this.goForward = true
-  }
-
-  // pew pew: S L (index fingers)
-  if (ringFingersDown(_this)) {
-    _this.clearLeft()
-    _this.clearRight()
-    if (_this.shotCounter > SHOT_COUNTER_LIMIT) {
-      _this.shotCounter = 0
-      _this.shootInk()
-    }
-    _this.shotCounter++
-  }
-
   // speed up: K D (middle fingers)
-  if (middleFingersDown(_this)) {
+  if (middleFingersDown(_this) || _this.UP.isDown) {
     _this.clearLeft()
     _this.clearRight()
     if (_this.velocityFactor < 0) {
@@ -88,8 +73,35 @@ const updater = (_this) => () => {
     _this.goForward = true
   }
 
+  // stop A ; (pinkies)
+  if ((pinkiesDown(_this) || _this.Z.isDown)) {
+    _this.clearLeft()
+    _this.clearRight()
+    _this.velocityFactor = 0
+    _this.stopGoingForward()
+  }
+
+  // slow down / reverse: F J (ring fingers)
+  if (indexFingersDown(_this) || _this.DOWN.isDown) {
+    _this.clearLeft()
+    _this.clearRight()
+    _this.velocityFactor -= 50
+    _this.goForward = true
+  }
+
+  // pew pew: S L (index fingers)
+  if (ringFingersDown(_this) || _this.SPACEBAR.isDown) {
+    _this.clearLeft()
+    _this.clearRight()
+    if (_this.shotCounter > SHOT_COUNTER_LIMIT) {
+      _this.shotCounter = 0
+      _this.shootInk()
+    }
+    _this.shotCounter++
+  }
+
   // charge up!: ALL HOME KEYS
-  if (homeRowDown(_this)) {
+  if (homeRowDown(_this) || (_this.LEFT.isDown && _this.RIGHT.isDown) || _this.X.isDown) {
     _this.charging = true
     _this.clearLeft()
     _this.clearRight()
