@@ -20,6 +20,7 @@ export default class extends RootSprite {
     coins,
     score,
     squareThings,
+    mobileHolding,
     walls,
     makeSquareThing
   }) {

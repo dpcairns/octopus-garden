@@ -10078,7 +10078,6 @@ var _class = function (_Phaser$State) {
       var _this2 = this;
 
       this.score = 0;
-      this.mobileHolding = false;
       this.game.world.setBounds(0, 0, 2500, 1500);
       this.game.physics.arcade.gravity.y = 10;
 
@@ -10114,11 +10113,6 @@ var _class = function (_Phaser$State) {
       (0, _makers.makeRandomCorals)(this);
       (0, _makers.makeBorderWallsAndDecoration)(this);
       (0, _index4.default)(this);
-
-      var canvas = document.getElementsByTagName('canvas')[0];
-      canvas.style['touch-action'] = '';
-      canvas.addEventListener('touchstart', this.mobileTapped, false);
-      canvas.addEventListener('touchend', this.mobileUntapped, false);
     }
   }, {
     key: 'makeSquareThing',
@@ -10168,16 +10162,6 @@ var _class = function (_Phaser$State) {
         game: this.game,
         world: this.world
       }));
-    }
-  }, {
-    key: 'mobileTapped',
-    value: function mobileTapped() {
-      this.mobileHolding = true;
-    }
-  }, {
-    key: 'mobileUntapped',
-    value: function mobileUntapped() {
-      this.mobileHolding = false;
     }
   }, {
     key: 'update',
@@ -10249,6 +10233,7 @@ var _class = function (_RootSprite) {
         coins = _ref.coins,
         score = _ref.score,
         squareThings = _ref.squareThings,
+        mobileHolding = _ref.mobileHolding,
         walls = _ref.walls,
         makeSquareThing = _ref.makeSquareThing;
 
@@ -10558,7 +10543,7 @@ var updater = function updater(_this) {
     }
 
     // pew pew: S L (index fingers)
-    if ((0, _downCheckers.ringFingersDown)(_this) || _this.SPACEBAR.isDown) {
+    if ((0, _downCheckers.ringFingersDown)(_this) || _this.SPACEBAR.isDown || _this.game.input.pointer1.isDown && !_this.game.input.pointer2.isDown) {
       _this.clearLeft();
       _this.clearRight();
       if (_this.shotCounter > _constants.SHOT_COUNTER_LIMIT) {
@@ -10569,7 +10554,7 @@ var updater = function updater(_this) {
     }
 
     // charge up!: ALL HOME KEYS
-    if ((0, _downCheckers.homeRowDown)(_this) || _this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown || _this.X.isDown || _this.game.mobileHolding) {
+    if ((0, _downCheckers.homeRowDown)(_this) || _this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown || _this.X.isDown || _this.game.input.pointer1.isDown && _this.game.input.pointer2.isDown) {
       _this.charging = true;
       _this.clearLeft();
       _this.clearRight();

@@ -90,7 +90,10 @@ const updater = (_this) => () => {
   }
 
   // pew pew: S L (index fingers)
-  if (ringFingersDown(_this) || _this.SPACEBAR.isDown) {
+  if (ringFingersDown(_this) ||
+    _this.SPACEBAR.isDown ||
+    (_this.game.input.pointer1.isDown && !_this.game.input.pointer2.isDown)
+  ) {
     _this.clearLeft()
     _this.clearRight()
     if (_this.shotCounter > SHOT_COUNTER_LIMIT) {
@@ -104,7 +107,7 @@ const updater = (_this) => () => {
   if (homeRowDown(_this) ||
   (_this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown) ||
   _this.X.isDown ||
-  _this.game.mobileHolding
+  (_this.game.input.pointer1.isDown && _this.game.input.pointer2.isDown)
   ) {
     _this.charging = true
     _this.clearLeft()
