@@ -17,7 +17,7 @@ export default (_this) => {
   _this.Z = _this.game.input.keyboard.addKey(Phaser.KeyCode.Z)
   _this.X = _this.game.input.keyboard.addKey(Phaser.KeyCode.X)
 
-  const canvas = document.getElementsByTagName('canvas')[0]
+  const canvas = document.getElementById('content')
   canvas.addEventListener('touchstart', _this.mobileTapped, false)
   canvas.addEventListener('touchend', _this.mobileUntapped, false)
 

@@ -9,8 +9,8 @@ import {
 import { disableCollisionIfDead } from './colissionHelpers'
 
 const updater = (_this) => () => {
-  if (_this.angleOverride) {
-    _this.angle = _this.angleOverride
+  if (_this.game.angleOverride) {
+    _this.angle = _this.game.angleOverride
   }
 
   _this.animations.currentAnim.speed = _this.charged ? _this.charged / 40 : _this.velocityFactor / 40
