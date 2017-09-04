@@ -1,17 +1,20 @@
 export const makeBorderWalls = (_this) => {
-  for (let i = 0; i < _this.world.width; i += 50) {
-    if (i < (_this.world.width / 2) + 200 && i > (_this.world.width / 2) - 200) {
-      _this.makeWall(i, _this.world.height, true)
+  const height = _this.game.oceanBackground.height
+  const width = _this.game.oceanBackground.width
+
+  for (let i = 0; i < width; i += 50) {
+    if (i < (width / 2) + 200 && i > (width / 2) - 200) {
+      _this.makeWall(i, height, true)
     } else {
-      _this.makeWall(i, _this.world.height)
+      _this.makeWall(i, height)
     }
   }
 
-  for (let i = 0; i < _this.world.height; i += 50) {
-    if (i < (_this.world.height / 2) + 200 && i > (_this.world.height / 2) - 200) {
-      _this.makeWall(_this.world.width, i, true)
+  for (let i = 0; i < height; i += 50) {
+    if (i < (height / 2) + 200 && i > (height / 2) - 200) {
+      _this.makeWall(width, i, true)
     } else {
-      _this.makeWall(_this.world.width, i)
+      _this.makeWall(width, i)
     }
   }
 }

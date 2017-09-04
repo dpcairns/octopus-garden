@@ -52,6 +52,7 @@ export default class extends RootSprite {
     this.velocityFactor = this.initialVelocityFactor
     this.makeCoral = makeCoral
 
+    this.game.octopus = this
     this.animations.add('octodynamic-shuffle')
     this.animations.play('octodynamic-shuffle', 15, true)
 

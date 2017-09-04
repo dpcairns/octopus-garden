@@ -4,7 +4,8 @@ import Octopus from '../../sprites/Octopus/index'
 import Coin from '../../sprites/Coin'
 import Wall from '../../sprites/Wall'
 import Coral from '../../sprites/Coral'
-import Background from '../../sprites/Background'
+import OceanBG from '../../sprites/OceanBG'
+import CaveBG from '../../sprites/CaveBG'
 import { makeBorderWalls, makeRandomCorals } from './makers'
 import { makeCamera } from './camera'
 import setTimerActions from '../../timers/index'
@@ -16,12 +17,15 @@ export default class extends Phaser.State {
   create () {
     this.score = 0
 
-    this.background = new Background({
-      game: this.game,
-      asset: 'ocean'
+    this.game.world.setBounds(0, 0, 2500, 1500)
+
+    new CaveBG({ // eslint-disable-line
+      game: this.game
     })
 
-    this.game.world.setBounds(0, 0, 2000, 1000)
+    new OceanBG({ // eslint-disable-line
+      game: this.game
+    })
 
     this.game.physics.arcade.gravity.y = 10
 
