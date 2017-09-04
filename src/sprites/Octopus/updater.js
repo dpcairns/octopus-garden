@@ -4,11 +4,9 @@ import {
   homeRowDown,
   indexFingersDown,
   ringFingersDown,
-  middleFingersDown,
-  swipeLeft,
-  swipeRight
+  middleFingersDown
 } from './downCheckers'
-import { disableCollisionIfDead } from './colissionHelpers'
+import { disableCollisionIfDead, rotate } from './helpers'
 
 const updater = (_this) => () => {
   if (_this.game.angleOverride) {
@@ -33,31 +31,47 @@ const updater = (_this) => () => {
     _this.velocityFactor = _this.minNormalVelocity
   }
 
-  // rotate left octopus style
-  if (_this.leftKeeper.size === 4 ||
-    swipeLeft(_this)
-  ) {
-    _this.game.add.tween(_this).to({ angle: _this.angle - 45 }, 100, 'Linear', true)
-    _this.clearLeft()
-  }
-
   // rotate left human style
   if (_this.LEFT.isDown && !_this.RIGHT.isDown) {
-    _this.game.add.tween(_this).to({ angle: _this.angle - 30 }, 100, 'Linear', true)
+    rotate(_this, -30)
     _this.clearLeft()
   }
 
   // rotate octopus style right
-  if (_this.rightKeeper.size === 4 ||
-    swipeRight(_this)
-  ) {
-    _this.game.add.tween(_this).to({ angle: _this.angle + 45 }, 100, 'Linear', true)
+  if (_this.rightKeeper.size === 4) {
+    rotate(_this, 45)
     _this.clearRight()
+  }
+
+  // rotate left octopus style
+  if (_this.leftKeeper.size === 4) {
+    rotate(_this, -45)
+    _this.clearLeft()
+  }
+
+  const swipeCheck = _this.swipe.check()
+
+  if (swipeCheck !== null && swipeCheck.direction &&
+    (swipeCheck.direction === _this.swipe.DIRECTION_RIGHT ||
+    swipeCheck.direction === _this.swipe.DIRECTION_UP_RIGHT ||
+    swipeCheck.direction === _this.swipe.DIRECTION_DOWN_RIGHT)
+  ) {
+    rotate(_this, 45)
+    _this.clearRight()
+  }
+
+  if (swipeCheck !== null && swipeCheck.direction &&
+    (swipeCheck.direction === _this.swipe.DIRECTION_LEFT ||
+    swipeCheck.direction === _this.swipe.DIRECTION_UP_LEFT ||
+    swipeCheck.direction === _this.swipe.DIRECTION_DOWN_LEFT)
+  ) {
+    rotate(_this, -45)
+    _this.clearLeft()
   }
 
   // rotate right human style
   if (_this.RIGHT.isDown && !_this.LEFT.isDown) {
-    _this.game.add.tween(_this).to({ angle: _this.angle + 30 }, 100, 'Linear', true)
+    rotate(_this, 30)
     _this.clearRight()
   }
 

@@ -52,20 +52,3 @@ export const middleFingersDown = (_this) => (
         _this.K.isDown &&
         !_this.J.isDown
 )
-
-export const swipeLeft = (_this) => {
-  const check = _this.swipe.check()
-
-  console.log()
-  if (check !== null && check.direction) {
-    return check.direction === _this.swipe.DIRECTION_LEFT
-  }
-}
-
-export const swipeRight = (_this) => {
-  const check = _this.swipe.check()
-
-  if (check !== null && check.direction) {
-    return check.direction === _this.swipe.DIRECTION_RIGHT
-  }
-}

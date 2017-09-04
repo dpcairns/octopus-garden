@@ -10692,7 +10692,7 @@ var _constants = __webpack_require__(/*! ./constants */ 119);
 
 var _downCheckers = __webpack_require__(/*! ./downCheckers */ 318);
 
-var _colissionHelpers = __webpack_require__(/*! ./colissionHelpers */ 319);
+var _helpers = __webpack_require__(/*! ./helpers */ 332);
 
 var updater = function updater(_this) {
   return function () {
@@ -10705,8 +10705,8 @@ var updater = function updater(_this) {
     _this.game.physics.arcade.overlap(_this.inkMissiles, _this.coins, _this.getCoin, null, _this);
     _this.game.physics.arcade.overlap(_this, _this.coins, _this.getCoin, null, _this);
     _this.game.physics.arcade.overlap(_this.inkMissiles, _this.squareThings, _this.destroyThing, null, _this);
-    _this.game.physics.arcade.collide(_this, _this.squareThings, _this.destroyThing, _colissionHelpers.disableCollisionIfDead, _this);
-    _this.game.physics.arcade.collide(_this, _this.walls, _this.destroyThing, _colissionHelpers.disableCollisionIfDead, _this);
+    _this.game.physics.arcade.collide(_this, _this.squareThings, _this.destroyThing, _helpers.disableCollisionIfDead, _this);
+    _this.game.physics.arcade.collide(_this, _this.walls, _this.destroyThing, _helpers.disableCollisionIfDead, _this);
 
     // manage bespoke max velocity, so it doesn't interefere with charge max
     if (_this.velocityFactor > _this.maxNormalVelocity) {
@@ -10718,27 +10718,39 @@ var updater = function updater(_this) {
       _this.velocityFactor = _this.minNormalVelocity;
     }
 
-    // rotate left octopus style
-    if (_this.leftKeeper.size === 4 || (0, _downCheckers.swipeLeft)(_this)) {
-      _this.game.add.tween(_this).to({ angle: _this.angle - 45 }, 100, 'Linear', true);
-      _this.clearLeft();
-    }
-
     // rotate left human style
     if (_this.LEFT.isDown && !_this.RIGHT.isDown) {
-      _this.game.add.tween(_this).to({ angle: _this.angle - 30 }, 100, 'Linear', true);
+      (0, _helpers.rotate)(_this, -30);
       _this.clearLeft();
     }
 
     // rotate octopus style right
-    if (_this.rightKeeper.size === 4 || (0, _downCheckers.swipeRight)(_this)) {
-      _this.game.add.tween(_this).to({ angle: _this.angle + 45 }, 100, 'Linear', true);
+    if (_this.rightKeeper.size === 4) {
+      (0, _helpers.rotate)(_this, 45);
       _this.clearRight();
+    }
+
+    // rotate left octopus style
+    if (_this.leftKeeper.size === 4) {
+      (0, _helpers.rotate)(_this, -45);
+      _this.clearLeft();
+    }
+
+    var swipeCheck = _this.swipe.check();
+
+    if (swipeCheck !== null && swipeCheck.direction && (swipeCheck.direction === _this.swipe.DIRECTION_RIGHT || swipeCheck.direction === _this.swipe.DIRECTION_UP_RIGHT || swipeCheck.direction === _this.swipe.DIRECTION_DOWN_RIGHT)) {
+      (0, _helpers.rotate)(_this, 45);
+      _this.clearRight();
+    }
+
+    if (swipeCheck !== null && swipeCheck.direction && (swipeCheck.direction === _this.swipe.DIRECTION_LEFT || swipeCheck.direction === _this.swipe.DIRECTION_UP_LEFT || swipeCheck.direction === _this.swipe.DIRECTION_DOWN_LEFT)) {
+      (0, _helpers.rotate)(_this, -45);
+      _this.clearLeft();
     }
 
     // rotate right human style
     if (_this.RIGHT.isDown && !_this.LEFT.isDown) {
-      _this.game.add.tween(_this).to({ angle: _this.angle + 30 }, 100, 'Linear', true);
+      (0, _helpers.rotate)(_this, 30);
       _this.clearRight();
     }
 
@@ -10859,65 +10871,30 @@ exports.default = updater;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+      value: true
 });
 var pinkiesDown = exports.pinkiesDown = function pinkiesDown(_this) {
-  return _this.A.isDown && !_this.S.isDown && !_this.D.isDown && !_this.F.isDown && _this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && !_this.J.isDown;
+      return _this.A.isDown && !_this.S.isDown && !_this.D.isDown && !_this.F.isDown && _this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && !_this.J.isDown;
 };
 
 var indexFingersDown = exports.indexFingersDown = function indexFingersDown(_this) {
-  return !_this.A.isDown && _this.S.isDown && !_this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && _this.L.isDown && !_this.K.isDown && !_this.J.isDown;
+      return !_this.A.isDown && _this.S.isDown && !_this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && _this.L.isDown && !_this.K.isDown && !_this.J.isDown;
 };
 
 var ringFingersDown = exports.ringFingersDown = function ringFingersDown(_this) {
-  return !_this.A.isDown && !_this.S.isDown && !_this.D.isDown && _this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && _this.J.isDown;
+      return !_this.A.isDown && !_this.S.isDown && !_this.D.isDown && _this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && !_this.K.isDown && _this.J.isDown;
 };
 
 var homeRowDown = exports.homeRowDown = function homeRowDown(_this) {
-  return _this.A.isDown && _this.S.isDown && _this.D.isDown && _this.F.isDown && _this.COLON.isDown && _this.L.isDown && _this.K.isDown && _this.J.isDown;
+      return _this.A.isDown && _this.S.isDown && _this.D.isDown && _this.F.isDown && _this.COLON.isDown && _this.L.isDown && _this.K.isDown && _this.J.isDown;
 };
 
 var middleFingersDown = exports.middleFingersDown = function middleFingersDown(_this) {
-  return !_this.A.isDown && !_this.S.isDown && _this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && _this.K.isDown && !_this.J.isDown;
-};
-
-var swipeLeft = exports.swipeLeft = function swipeLeft(_this) {
-  var check = _this.swipe.check();
-
-  console.log();
-  if (check !== null && check.direction) {
-    return check.direction === _this.swipe.DIRECTION_LEFT;
-  }
-};
-
-var swipeRight = exports.swipeRight = function swipeRight(_this) {
-  var check = _this.swipe.check();
-
-  if (check !== null && check.direction) {
-    return check.direction === _this.swipe.DIRECTION_RIGHT;
-  }
+      return !_this.A.isDown && !_this.S.isDown && _this.D.isDown && !_this.F.isDown && !_this.COLON.isDown && !_this.L.isDown && _this.K.isDown && !_this.J.isDown;
 };
 
 /***/ }),
-/* 319 */
-/*!*************************************************!*\
-  !*** ./src/sprites/Octopus/colissionHelpers.js ***!
-  \*************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var disableCollisionIfDead = exports.disableCollisionIfDead = function disableCollisionIfDead(mover, obstacle) {
-  if (obstacle.HP <= 0) return false;
-};
-
-/***/ }),
+/* 319 */,
 /* 320 */
 /*!*****************************************!*\
   !*** ./src/sprites/Octopus/bindKeys.js ***!
@@ -11527,6 +11504,30 @@ exports.default = function (_this) {
   _this.timer.loop(3000, _this.makeCoin, _this);
 
   _this.timer.start();
+};
+
+/***/ }),
+/* 331 */,
+/* 332 */
+/*!****************************************!*\
+  !*** ./src/sprites/Octopus/helpers.js ***!
+  \****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var disableCollisionIfDead = exports.disableCollisionIfDead = function disableCollisionIfDead(mover, obstacle) {
+  if (obstacle.HP <= 0) return false;
+};
+
+var rotate = exports.rotate = function rotate(_this, degrees) {
+  return _this.game.add.tween(_this).to({ angle: _this.angle + degrees }, 100, 'Linear', true);
 };
 
 /***/ })
