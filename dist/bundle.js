@@ -9788,8 +9788,10 @@ var Game = function (_Phaser$Game) {
     _classCallCheck(this, Game);
 
     var docElement = document.documentElement;
-    var width = docElement.clientWidth;
-    var height = docElement.clientHeight;
+    var maxWidth = 1400;
+    var maxHeight = 800;
+    var width = docElement.clientWidth > maxWidth ? maxWidth : docElement.clientWidth;
+    var height = docElement.clientHeight > maxHeight ? maxHeight : docElement.clientHeight;
 
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, width, height, _phaser2.default.CANVAS, 'content', null));
 
@@ -9950,7 +9952,6 @@ var _class = function (_Phaser$State) {
       //
       // load your assets
       //
-      this.load.shader('cells', 'assets/shaders/cells.frag');
       this.load.image('ocean', 'assets/images/ocean.png');
       this.load.image('cave', 'assets/images/cave.png');
       this.load.image('blob', 'assets/images/blob.png');
@@ -10058,7 +10059,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* globals __DEV__ */ // eslint-disable-line
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // /* globals __DEV__ */
 
 
 var _class = function (_Phaser$State) {
@@ -10165,7 +10166,9 @@ var _class = function (_Phaser$State) {
     }
   }, {
     key: 'update',
-    value: function update() {}
+    value: function update() {
+      this.game.debug.cameraInfo(this.camera, 500, 500);
+    }
   }, {
     key: 'render',
     value: function render() {}

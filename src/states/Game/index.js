@@ -1,4 +1,4 @@
-/* globals __DEV__ */ // eslint-disable-line
+// /* globals __DEV__ */
 import Phaser from 'phaser'
 import Swipe from 'phaser-swipe'
 import Octopus from '../../sprites/Octopus/index'
@@ -97,7 +97,7 @@ export default class extends Phaser.State {
   }
 
   update () {
-
+    this.game.debug.cameraInfo(this.camera, 500, 500)
   }
 
   render () {

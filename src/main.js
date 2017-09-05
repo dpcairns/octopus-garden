@@ -10,8 +10,10 @@ import GameState from './states/Game/index'
 class Game extends Phaser.Game {
   constructor () {
     const docElement = document.documentElement
-    const width = docElement.clientWidth
-    const height = docElement.clientHeight
+    const maxWidth = 1400
+    const maxHeight = 800
+    const width = docElement.clientWidth > maxWidth ? maxWidth : docElement.clientWidth
+    const height = docElement.clientHeight > maxHeight ? maxHeight : docElement.clientHeight
 
     super(width, height, Phaser.CANVAS, 'content', null)
 

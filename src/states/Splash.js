@@ -13,7 +13,6 @@ export default class extends Phaser.State {
     //
     // load your assets
     //
-    this.load.shader('cells', 'assets/shaders/cells.frag')
     this.load.image('ocean', 'assets/images/ocean.png')
     this.load.image('cave', 'assets/images/cave.png')
     this.load.image('blob', 'assets/images/blob.png')
