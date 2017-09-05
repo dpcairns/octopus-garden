@@ -14,6 +14,7 @@ import {
   makeBackgrounds,
   makeCrabs
 } from './makers'
+import { makeGroups } from './groups'
 import { makeCamera } from './camera'
 import setTimerActions from '../../timers/index'
 
@@ -29,27 +30,18 @@ export default class extends Phaser.State {
 
     makeBackgrounds(this)
 
-    this.coins = this.game.add.group()
-    this.squareThings = this.game.add.group()
-    this.seaweeds = this.game.add.group()
-    this.corals = this.game.add.group()
-    this.walls = this.game.add.group()
-    this.crabs = this.game.add.group()
-
     this.octopus = new Octopus({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
       world: this.world,
-      coins: this.coins,
       score: this.score,
-      squareThings: this.squareThings,
-      walls: this.walls,
       swipe: this.swipe
     })
 
-    console.log('groups', this.world.children.filter((item) => item instanceof Phaser.Group))
+    this.game.octopus = this.octopus
 
+    makeGroups(this)
     makeCamera(this)
     makeRandomCorals(this)
     makeCrabs(this)
@@ -65,7 +57,7 @@ export default class extends Phaser.State {
       y
     })
 
-    this.squareThings.add(newSquareThing)
+    this.game.squareThings.add(newSquareThing)
   }
 
   makeSeaweed (x, y) {
@@ -76,7 +68,7 @@ export default class extends Phaser.State {
       y
     })
 
-    this.seaweeds.add(newSeaweed)
+    this.game.seaweeds.add(newSeaweed)
   }
 
   makeCoral (x, y) {
@@ -87,7 +79,7 @@ export default class extends Phaser.State {
       y
     })
 
-    this.corals.add(newCoral)
+    this.game.corals.add(newCoral)
   }
 
   makeWall (x, y, destructable) {
@@ -99,7 +91,7 @@ export default class extends Phaser.State {
       destructable
     })
 
-    this.walls.add(newWall)
+    this.game.walls.add(newWall)
   }
 
   makeCoin () {
@@ -108,7 +100,7 @@ export default class extends Phaser.State {
       world: this.world
     })
 
-    this.coins.add(newCoin)
+    this.game.coins.add(newCoin)
   }
 
   makeCrab (x, y) {
@@ -119,7 +111,7 @@ export default class extends Phaser.State {
       y
     })
 
-    this.crabs.add(newCrab)
+    this.game.crabs.add(newCrab)
   }
 
   update () {

@@ -208,7 +208,7 @@ g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<
 
 /***/ }),
 
-/***/ 24:
+/***/ 21:
 /*!*************************************************************!*\
   !*** ./node_modules/phaser-ce/build/custom/phaser-split.js ***!
   \*************************************************************/
@@ -106175,7 +106175,7 @@ process.umask = function() { return 0; };
 
 __webpack_require__(/*! pixi */116);
 __webpack_require__(/*! p2 */117);
-__webpack_require__(/*! phaser */24);
+__webpack_require__(/*! phaser */21);
 module.exports = __webpack_require__(/*! webfontloader */118);
 
 

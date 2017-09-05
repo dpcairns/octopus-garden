@@ -47,7 +47,6 @@ export default class extends RootSprite {
     this.shotCounter = 0
     this.leftKeeper = new Set()
     this.rightKeeper = new Set()
-    this.inkMissiles = this.game.add.group()
     this.coins = coins
     this.score = score
     this.squareThings = squareThings
@@ -124,13 +123,15 @@ export default class extends RootSprite {
   }
 
   shootInk () {
-    this.inkMissiles.add(new InkMissile({ // eslint-disable-line
+    const newMissile = new InkMissile({
       game: this.game,
       world: this.world,
       x: this.x,
       y: this.y,
       octoAngle: this.angle,
       octoSpeed: this.velocityFactor
-    }))
+    })
+
+    this.game.inkMissiles.add(newMissile)
   }
 }
