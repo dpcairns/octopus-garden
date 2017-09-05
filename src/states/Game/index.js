@@ -36,11 +36,6 @@ export default class extends Phaser.State {
     this.walls = this.game.add.group()
     this.crabs = this.game.add.group()
 
-    this.coins.add(new Coin({
-      game: this.game,
-      world: this.world
-    }))
-
     this.octopus = new Octopus({
       game: this.game,
       x: this.world.centerX,
@@ -52,6 +47,8 @@ export default class extends Phaser.State {
       walls: this.walls,
       swipe: this.swipe
     })
+
+    console.log('groups', this.world.children.filter((item) => item instanceof Phaser.Group))
 
     makeCamera(this)
     makeRandomCorals(this)
