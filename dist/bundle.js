@@ -613,7 +613,7 @@ if(__webpack_require__(/*! ./_descriptors */ 6)){
     , createArrayIncludes = __webpack_require__(/*! ./_array-includes */ 52)
     , speciesConstructor  = __webpack_require__(/*! ./_species-constructor */ 84)
     , ArrayIterators      = __webpack_require__(/*! ./es6.array.iterator */ 83)
-    , Iterators           = __webpack_require__(/*! ./_iterators */ 43)
+    , Iterators           = __webpack_require__(/*! ./_iterators */ 44)
     , $iterDetect         = __webpack_require__(/*! ./_iter-detect */ 56)
     , setSpecies          = __webpack_require__(/*! ./_set-species */ 38)
     , arrayFill           = __webpack_require__(/*! ./_array-fill */ 82)
@@ -1403,126 +1403,6 @@ module.exports = function(target, src, safe){
 
 /***/ }),
 /* 41 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/_set-to-string-tag.js ***!
-  \************************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-var def = __webpack_require__(/*! ./_object-dp */ 7).f
-  , has = __webpack_require__(/*! ./_has */ 10)
-  , TAG = __webpack_require__(/*! ./_wks */ 5)('toStringTag');
-
-module.exports = function(it, tag, stat){
-  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
-};
-
-/***/ }),
-/* 42 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-trim.js ***!
-  \******************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(/*! ./_export */ 0)
-  , defined = __webpack_require__(/*! ./_defined */ 19)
-  , fails   = __webpack_require__(/*! ./_fails */ 3)
-  , spaces  = __webpack_require__(/*! ./_string-ws */ 69)
-  , space   = '[' + spaces + ']'
-  , non     = '\u200b\u0085'
-  , ltrim   = RegExp('^' + space + space + '*')
-  , rtrim   = RegExp(space + space + '*$');
-
-var exporter = function(KEY, exec, ALIAS){
-  var exp   = {};
-  var FORCE = fails(function(){
-    return !!spaces[KEY]() || non[KEY]() != non;
-  });
-  var fn = exp[KEY] = FORCE ? exec(trim) : spaces[KEY];
-  if(ALIAS)exp[ALIAS] = fn;
-  $export($export.P + $export.F * FORCE, 'String', exp);
-};
-
-// 1 -> String#trimLeft
-// 2 -> String#trimRight
-// 3 -> String#trim
-var trim = exporter.trim = function(string, TYPE){
-  string = String(defined(string));
-  if(TYPE & 1)string = string.replace(ltrim, '');
-  if(TYPE & 2)string = string.replace(rtrim, '');
-  return string;
-};
-
-module.exports = exporter;
-
-/***/ }),
-/* 43 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_iterators.js ***!
-  \****************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-/***/ }),
-/* 44 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/_add-to-unscopables.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 22.1.3.31 Array.prototype[@@unscopables]
-var UNSCOPABLES = __webpack_require__(/*! ./_wks */ 5)('unscopables')
-  , ArrayProto  = Array.prototype;
-if(ArrayProto[UNSCOPABLES] == undefined)__webpack_require__(/*! ./_hide */ 11)(ArrayProto, UNSCOPABLES, {});
-module.exports = function(key){
-  ArrayProto[UNSCOPABLES][key] = true;
-};
-
-/***/ }),
-/* 45 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/_for-of.js ***!
-  \*************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ctx         = __webpack_require__(/*! ./_ctx */ 26)
-  , call        = __webpack_require__(/*! ./_iter-call */ 101)
-  , isArrayIter = __webpack_require__(/*! ./_is-array-iter */ 79)
-  , anObject    = __webpack_require__(/*! ./_an-object */ 1)
-  , toLength    = __webpack_require__(/*! ./_to-length */ 8)
-  , getIterFn   = __webpack_require__(/*! ./core.get-iterator-method */ 81)
-  , BREAK       = {}
-  , RETURN      = {};
-var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
-  var iterFn = ITERATOR ? function(){ return iterable; } : getIterFn(iterable)
-    , f      = ctx(fn, that, entries ? 2 : 1)
-    , index  = 0
-    , length, step, iterator, result;
-  if(typeof iterFn != 'function')throw TypeError(iterable + ' is not iterable!');
-  // fast case for arrays with default iterator
-  if(isArrayIter(iterFn))for(length = toLength(iterable.length); length > index; index++){
-    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
-    if(result === BREAK || result === RETURN)return result;
-  } else for(iterator = iterFn.call(iterable); !(step = iterator.next()).done; ){
-    result = call(iterator, f, step.value, entries);
-    if(result === BREAK || result === RETURN)return result;
-  }
-};
-exports.BREAK  = BREAK;
-exports.RETURN = RETURN;
-
-/***/ }),
-/* 46 */
 /*!***********************************!*\
   !*** ./src/sprites/RootSprite.js ***!
   \***********************************/
@@ -1584,6 +1464,126 @@ var _class = function (_Phaser$Sprite) {
 }(_phaser2.default.Sprite);
 
 exports.default = _class;
+
+/***/ }),
+/* 42 */
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/modules/_set-to-string-tag.js ***!
+  \************************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var def = __webpack_require__(/*! ./_object-dp */ 7).f
+  , has = __webpack_require__(/*! ./_has */ 10)
+  , TAG = __webpack_require__(/*! ./_wks */ 5)('toStringTag');
+
+module.exports = function(it, tag, stat){
+  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+};
+
+/***/ }),
+/* 43 */
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/_string-trim.js ***!
+  \******************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(/*! ./_export */ 0)
+  , defined = __webpack_require__(/*! ./_defined */ 19)
+  , fails   = __webpack_require__(/*! ./_fails */ 3)
+  , spaces  = __webpack_require__(/*! ./_string-ws */ 69)
+  , space   = '[' + spaces + ']'
+  , non     = '\u200b\u0085'
+  , ltrim   = RegExp('^' + space + space + '*')
+  , rtrim   = RegExp(space + space + '*$');
+
+var exporter = function(KEY, exec, ALIAS){
+  var exp   = {};
+  var FORCE = fails(function(){
+    return !!spaces[KEY]() || non[KEY]() != non;
+  });
+  var fn = exp[KEY] = FORCE ? exec(trim) : spaces[KEY];
+  if(ALIAS)exp[ALIAS] = fn;
+  $export($export.P + $export.F * FORCE, 'String', exp);
+};
+
+// 1 -> String#trimLeft
+// 2 -> String#trimRight
+// 3 -> String#trim
+var trim = exporter.trim = function(string, TYPE){
+  string = String(defined(string));
+  if(TYPE & 1)string = string.replace(ltrim, '');
+  if(TYPE & 2)string = string.replace(rtrim, '');
+  return string;
+};
+
+module.exports = exporter;
+
+/***/ }),
+/* 44 */
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/_iterators.js ***!
+  \****************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+/***/ }),
+/* 45 */
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/modules/_add-to-unscopables.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 22.1.3.31 Array.prototype[@@unscopables]
+var UNSCOPABLES = __webpack_require__(/*! ./_wks */ 5)('unscopables')
+  , ArrayProto  = Array.prototype;
+if(ArrayProto[UNSCOPABLES] == undefined)__webpack_require__(/*! ./_hide */ 11)(ArrayProto, UNSCOPABLES, {});
+module.exports = function(key){
+  ArrayProto[UNSCOPABLES][key] = true;
+};
+
+/***/ }),
+/* 46 */
+/*!*************************************************!*\
+  !*** ./node_modules/core-js/modules/_for-of.js ***!
+  \*************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ctx         = __webpack_require__(/*! ./_ctx */ 26)
+  , call        = __webpack_require__(/*! ./_iter-call */ 101)
+  , isArrayIter = __webpack_require__(/*! ./_is-array-iter */ 79)
+  , anObject    = __webpack_require__(/*! ./_an-object */ 1)
+  , toLength    = __webpack_require__(/*! ./_to-length */ 8)
+  , getIterFn   = __webpack_require__(/*! ./core.get-iterator-method */ 81)
+  , BREAK       = {}
+  , RETURN      = {};
+var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
+  var iterFn = ITERATOR ? function(){ return iterable; } : getIterFn(iterable)
+    , f      = ctx(fn, that, entries ? 2 : 1)
+    , index  = 0
+    , length, step, iterator, result;
+  if(typeof iterFn != 'function')throw TypeError(iterable + ' is not iterable!');
+  // fast case for arrays with default iterator
+  if(isArrayIter(iterFn))for(length = toLength(iterable.length); length > index; index++){
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if(result === BREAK || result === RETURN)return result;
+  } else for(iterator = iterFn.call(iterable); !(step = iterator.next()).done; ){
+    result = call(iterator, f, step.value, entries);
+    if(result === BREAK || result === RETURN)return result;
+  }
+};
+exports.BREAK  = BREAK;
+exports.RETURN = RETURN;
 
 /***/ }),
 /* 47 */,
@@ -1857,12 +1857,12 @@ var global            = __webpack_require__(/*! ./_global */ 2)
   , redefine          = __webpack_require__(/*! ./_redefine */ 12)
   , redefineAll       = __webpack_require__(/*! ./_redefine-all */ 40)
   , meta              = __webpack_require__(/*! ./_meta */ 30)
-  , forOf             = __webpack_require__(/*! ./_for-of */ 45)
+  , forOf             = __webpack_require__(/*! ./_for-of */ 46)
   , anInstance        = __webpack_require__(/*! ./_an-instance */ 39)
   , isObject          = __webpack_require__(/*! ./_is-object */ 4)
   , fails             = __webpack_require__(/*! ./_fails */ 3)
   , $iterDetect       = __webpack_require__(/*! ./_iter-detect */ 56)
-  , setToStringTag    = __webpack_require__(/*! ./_set-to-string-tag */ 41)
+  , setToStringTag    = __webpack_require__(/*! ./_set-to-string-tag */ 42)
   , inheritIfRequired = __webpack_require__(/*! ./_inherit-if-required */ 70);
 
 module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
@@ -2246,9 +2246,9 @@ var LIBRARY        = __webpack_require__(/*! ./_library */ 33)
   , redefine       = __webpack_require__(/*! ./_redefine */ 12)
   , hide           = __webpack_require__(/*! ./_hide */ 11)
   , has            = __webpack_require__(/*! ./_has */ 10)
-  , Iterators      = __webpack_require__(/*! ./_iterators */ 43)
+  , Iterators      = __webpack_require__(/*! ./_iterators */ 44)
   , $iterCreate    = __webpack_require__(/*! ./_iter-create */ 76)
-  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 41)
+  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 42)
   , getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 17)
   , ITERATOR       = __webpack_require__(/*! ./_wks */ 5)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
@@ -2324,7 +2324,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 
 var create         = __webpack_require__(/*! ./_object-create */ 36)
   , descriptor     = __webpack_require__(/*! ./_property-desc */ 29)
-  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 41)
+  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 42)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -2385,7 +2385,7 @@ module.exports = function(KEY){
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators  = __webpack_require__(/*! ./_iterators */ 43)
+var Iterators  = __webpack_require__(/*! ./_iterators */ 44)
   , ITERATOR   = __webpack_require__(/*! ./_wks */ 5)('iterator')
   , ArrayProto = Array.prototype;
 
@@ -2423,7 +2423,7 @@ module.exports = function(object, index, value){
 
 var classof   = __webpack_require__(/*! ./_classof */ 50)
   , ITERATOR  = __webpack_require__(/*! ./_wks */ 5)('iterator')
-  , Iterators = __webpack_require__(/*! ./_iterators */ 43);
+  , Iterators = __webpack_require__(/*! ./_iterators */ 44);
 module.exports = __webpack_require__(/*! ./_core */ 25).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
     || it['@@iterator']
@@ -2467,9 +2467,9 @@ module.exports = function fill(value /*, start = 0, end = @length */){
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(/*! ./_add-to-unscopables */ 44)
+var addToUnscopables = __webpack_require__(/*! ./_add-to-unscopables */ 45)
   , step             = __webpack_require__(/*! ./_iter-step */ 104)
-  , Iterators        = __webpack_require__(/*! ./_iterators */ 43)
+  , Iterators        = __webpack_require__(/*! ./_iterators */ 44)
   , toIObject        = __webpack_require__(/*! ./_to-iobject */ 14);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -2706,7 +2706,7 @@ var global         = __webpack_require__(/*! ./_global */ 2)
   , gOPN           = __webpack_require__(/*! ./_object-gopn */ 37).f
   , dP             = __webpack_require__(/*! ./_object-dp */ 7).f
   , arrayFill      = __webpack_require__(/*! ./_array-fill */ 82)
-  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 41)
+  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 42)
   , ARRAY_BUFFER   = 'ArrayBuffer'
   , DATA_VIEW      = 'DataView'
   , PROTOTYPE      = 'prototype'
@@ -3173,7 +3173,7 @@ module.exports = Function.bind || function bind(that /*, args... */){
 /***/ (function(module, exports, __webpack_require__) {
 
 var $parseInt = __webpack_require__(/*! ./_global */ 2).parseInt
-  , $trim     = __webpack_require__(/*! ./_string-trim */ 42).trim
+  , $trim     = __webpack_require__(/*! ./_string-trim */ 43).trim
   , ws        = __webpack_require__(/*! ./_string-ws */ 69)
   , hex       = /^[\-+]?0[xX]/;
 
@@ -3192,7 +3192,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 /***/ (function(module, exports, __webpack_require__) {
 
 var $parseFloat = __webpack_require__(/*! ./_global */ 2).parseFloat
-  , $trim       = __webpack_require__(/*! ./_string-trim */ 42).trim;
+  , $trim       = __webpack_require__(/*! ./_string-trim */ 43).trim;
 
 module.exports = 1 / $parseFloat(__webpack_require__(/*! ./_string-ws */ 69) + '-0') !== -Infinity ? function parseFloat(str){
   var string = $trim(String(str), 3)
@@ -3415,7 +3415,7 @@ var dP          = __webpack_require__(/*! ./_object-dp */ 7).f
   , ctx         = __webpack_require__(/*! ./_ctx */ 26)
   , anInstance  = __webpack_require__(/*! ./_an-instance */ 39)
   , defined     = __webpack_require__(/*! ./_defined */ 19)
-  , forOf       = __webpack_require__(/*! ./_for-of */ 45)
+  , forOf       = __webpack_require__(/*! ./_for-of */ 46)
   , $iterDefine = __webpack_require__(/*! ./_iter-define */ 75)
   , step        = __webpack_require__(/*! ./_iter-step */ 104)
   , setSpecies  = __webpack_require__(/*! ./_set-species */ 38)
@@ -3657,7 +3657,7 @@ var redefineAll       = __webpack_require__(/*! ./_redefine-all */ 40)
   , anObject          = __webpack_require__(/*! ./_an-object */ 1)
   , isObject          = __webpack_require__(/*! ./_is-object */ 4)
   , anInstance        = __webpack_require__(/*! ./_an-instance */ 39)
-  , forOf             = __webpack_require__(/*! ./_for-of */ 45)
+  , forOf             = __webpack_require__(/*! ./_for-of */ 46)
   , createArrayMethod = __webpack_require__(/*! ./_array-methods */ 23)
   , $has              = __webpack_require__(/*! ./_has */ 10)
   , arrayFind         = createArrayMethod(5)
@@ -3836,7 +3836,7 @@ module.exports = function(NAME){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var forOf = __webpack_require__(/*! ./_for-of */ 45);
+var forOf = __webpack_require__(/*! ./_for-of */ 46);
 
 module.exports = function(iter, ITERATOR){
   var result = [];
@@ -3889,7 +3889,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 46);
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
 
 var _RootSprite3 = _interopRequireDefault(_RootSprite2);
 
@@ -4196,7 +4196,7 @@ var global         = __webpack_require__(/*! ./_global */ 2)
   , META           = __webpack_require__(/*! ./_meta */ 30).KEY
   , $fails         = __webpack_require__(/*! ./_fails */ 3)
   , shared         = __webpack_require__(/*! ./_shared */ 51)
-  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 41)
+  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 42)
   , uid            = __webpack_require__(/*! ./_uid */ 32)
   , wks            = __webpack_require__(/*! ./_wks */ 5)
   , wksExt         = __webpack_require__(/*! ./_wks-ext */ 89)
@@ -4870,7 +4870,7 @@ var global            = __webpack_require__(/*! ./_global */ 2)
   , gOPN              = __webpack_require__(/*! ./_object-gopn */ 37).f
   , gOPD              = __webpack_require__(/*! ./_object-gopd */ 16).f
   , dP                = __webpack_require__(/*! ./_object-dp */ 7).f
-  , $trim             = __webpack_require__(/*! ./_string-trim */ 42).trim
+  , $trim             = __webpack_require__(/*! ./_string-trim */ 43).trim
   , NUMBER            = 'Number'
   , $Number           = global[NUMBER]
   , Base              = $Number
@@ -5663,7 +5663,7 @@ $export($export.S, 'String', {
 "use strict";
 
 // 21.1.3.25 String.prototype.trim()
-__webpack_require__(/*! ./_string-trim */ 42)('trim', function($trim){
+__webpack_require__(/*! ./_string-trim */ 43)('trim', function($trim){
   return function trim(){
     return $trim(this, 3);
   };
@@ -6635,7 +6635,7 @@ var $export = __webpack_require__(/*! ./_export */ 0);
 
 $export($export.P, 'Array', {copyWithin: __webpack_require__(/*! ./_array-copy-within */ 103)});
 
-__webpack_require__(/*! ./_add-to-unscopables */ 44)('copyWithin');
+__webpack_require__(/*! ./_add-to-unscopables */ 45)('copyWithin');
 
 /***/ }),
 /* 224 */
@@ -6651,7 +6651,7 @@ var $export = __webpack_require__(/*! ./_export */ 0);
 
 $export($export.P, 'Array', {fill: __webpack_require__(/*! ./_array-fill */ 82)});
 
-__webpack_require__(/*! ./_add-to-unscopables */ 44)('fill');
+__webpack_require__(/*! ./_add-to-unscopables */ 45)('fill');
 
 /***/ }),
 /* 225 */
@@ -6676,7 +6676,7 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(/*! ./_add-to-unscopables */ 44)(KEY);
+__webpack_require__(/*! ./_add-to-unscopables */ 45)(KEY);
 
 /***/ }),
 /* 226 */
@@ -6701,7 +6701,7 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(/*! ./_add-to-unscopables */ 44)(KEY);
+__webpack_require__(/*! ./_add-to-unscopables */ 45)(KEY);
 
 /***/ }),
 /* 227 */
@@ -6964,7 +6964,7 @@ var LIBRARY            = __webpack_require__(/*! ./_library */ 33)
   , isObject           = __webpack_require__(/*! ./_is-object */ 4)
   , aFunction          = __webpack_require__(/*! ./_a-function */ 13)
   , anInstance         = __webpack_require__(/*! ./_an-instance */ 39)
-  , forOf              = __webpack_require__(/*! ./_for-of */ 45)
+  , forOf              = __webpack_require__(/*! ./_for-of */ 46)
   , speciesConstructor = __webpack_require__(/*! ./_species-constructor */ 84)
   , task               = __webpack_require__(/*! ./_task */ 85).set
   , microtask          = __webpack_require__(/*! ./_microtask */ 86)()
@@ -7185,7 +7185,7 @@ if(!USE_NATIVE){
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: $Promise});
-__webpack_require__(/*! ./_set-to-string-tag */ 41)($Promise, PROMISE);
+__webpack_require__(/*! ./_set-to-string-tag */ 42)($Promise, PROMISE);
 __webpack_require__(/*! ./_set-species */ 38)(PROMISE);
 Wrapper = __webpack_require__(/*! ./_core */ 25)[PROMISE];
 
@@ -7894,7 +7894,7 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(/*! ./_add-to-unscopables */ 44)('includes');
+__webpack_require__(/*! ./_add-to-unscopables */ 45)('includes');
 
 /***/ }),
 /* 262 */
@@ -7971,7 +7971,7 @@ $export($export.P, 'String', {
 "use strict";
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-__webpack_require__(/*! ./_string-trim */ 42)('trimLeft', function($trim){
+__webpack_require__(/*! ./_string-trim */ 43)('trimLeft', function($trim){
   return function trimLeft(){
     return $trim(this, 1);
   };
@@ -7989,7 +7989,7 @@ __webpack_require__(/*! ./_string-trim */ 42)('trimLeft', function($trim){
 "use strict";
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-__webpack_require__(/*! ./_string-trim */ 42)('trimRight', function($trim){
+__webpack_require__(/*! ./_string-trim */ 43)('trimRight', function($trim){
   return function trimRight(){
     return $trim(this, 2);
   };
@@ -8634,7 +8634,7 @@ var $export     = __webpack_require__(/*! ./_export */ 0)
   , anInstance  = __webpack_require__(/*! ./_an-instance */ 39)
   , redefineAll = __webpack_require__(/*! ./_redefine-all */ 40)
   , hide        = __webpack_require__(/*! ./_hide */ 11)
-  , forOf       = __webpack_require__(/*! ./_for-of */ 45)
+  , forOf       = __webpack_require__(/*! ./_for-of */ 46)
   , RETURN      = forOf.RETURN;
 
 var getMethod = function(fn){
@@ -8926,7 +8926,7 @@ var $iterators    = __webpack_require__(/*! ./es6.array.iterator */ 83)
   , redefine      = __webpack_require__(/*! ./_redefine */ 12)
   , global        = __webpack_require__(/*! ./_global */ 2)
   , hide          = __webpack_require__(/*! ./_hide */ 11)
-  , Iterators     = __webpack_require__(/*! ./_iterators */ 43)
+  , Iterators     = __webpack_require__(/*! ./_iterators */ 44)
   , wks           = __webpack_require__(/*! ./_wks */ 5)
   , ITERATOR      = wks('iterator')
   , TO_STRING_TAG = wks('toStringTag')
@@ -9956,9 +9956,12 @@ var _class = function (_Phaser$State) {
       this.load.image('cave', 'assets/images/cave.png');
       this.load.image('blob', 'assets/images/blob.png');
       this.load.image('squareThings', 'assets/images/shell.png');
-      this.load.spritesheet('octopus', 'assets/images/OCTOONE.png', 160, 120);
+
       this.load.spritesheet('coral', 'assets/images/coral.png', 465, 465);
+      this.load.spritesheet('octopus', 'assets/images/OCTOONE.png', 160, 120);
+      this.load.spritesheet('crab', 'assets/images/crab.png', 200, 136);
       this.load.spritesheet('seaweed', 'assets/images/seaweed-small.png', 75, 300);
+
       this.load.image('wall', 'assets/images/wall.png');
       this.load.spritesheet('coin', 'assets/images/coin.png', 100, 100);
     }
@@ -10033,23 +10036,27 @@ var _Wall = __webpack_require__(/*! ../../sprites/Obstacles/Wall */ 322);
 
 var _Wall2 = _interopRequireDefault(_Wall);
 
-var _SquareThing = __webpack_require__(/*! ../../sprites/Obstacles/SquareThing */ 323);
+var _Crab = __webpack_require__(/*! ../../sprites/Enemies/Crab */ 323);
+
+var _Crab2 = _interopRequireDefault(_Crab);
+
+var _SquareThing = __webpack_require__(/*! ../../sprites/Obstacles/SquareThing */ 324);
 
 var _SquareThing2 = _interopRequireDefault(_SquareThing);
 
-var _Coral = __webpack_require__(/*! ../../sprites/Decoration/Coral */ 324);
+var _Coral = __webpack_require__(/*! ../../sprites/Decoration/Coral */ 325);
 
 var _Coral2 = _interopRequireDefault(_Coral);
 
-var _Seaweed = __webpack_require__(/*! ../../sprites/Decoration/Seaweed */ 325);
+var _Seaweed = __webpack_require__(/*! ../../sprites/Decoration/Seaweed */ 326);
 
 var _Seaweed2 = _interopRequireDefault(_Seaweed);
 
-var _makers = __webpack_require__(/*! ./makers */ 326);
+var _makers = __webpack_require__(/*! ./makers */ 327);
 
-var _camera = __webpack_require__(/*! ./camera */ 329);
+var _camera = __webpack_require__(/*! ./camera */ 330);
 
-var _index3 = __webpack_require__(/*! ../../timers/index */ 330);
+var _index3 = __webpack_require__(/*! ../../timers/index */ 331);
 
 var _index4 = _interopRequireDefault(_index3);
 
@@ -10092,13 +10099,14 @@ var _class = function (_Phaser$State) {
       this.seaweeds = this.game.add.group();
       this.corals = this.game.add.group();
       this.walls = this.game.add.group();
+      this.crabs = this.game.add.group();
 
-      this.coins.add(new _Coin2.default({ // eslint-disable-line
+      this.coins.add(new _Coin2.default({
         game: this.game,
         world: this.world
       }));
 
-      this.octopus = new _index2.default({ // eslint-disable-line
+      this.octopus = new _index2.default({
         game: this.game,
         x: this.world.centerX,
         y: this.world.centerY,
@@ -10112,63 +10120,84 @@ var _class = function (_Phaser$State) {
 
       (0, _camera.makeCamera)(this);
       (0, _makers.makeRandomCorals)(this);
+      (0, _makers.makeCrabs)(this);
       (0, _makers.makeBorderWallsAndDecoration)(this);
       (0, _index4.default)(this);
     }
   }, {
     key: 'makeSquareThing',
     value: function makeSquareThing(x, y) {
-      this.squareThings.add(new _SquareThing2.default({
+      var newSquareThing = new _SquareThing2.default({
         game: this.game,
         world: this.world,
         x: x,
         y: y
-      }));
+      });
+
+      this.squareThings.add(newSquareThing);
     }
   }, {
     key: 'makeSeaweed',
     value: function makeSeaweed(x, y) {
-      this.seaweeds.add(new _Seaweed2.default({
+      var newSeaweed = new _Seaweed2.default({
         game: this.game,
         world: this.world,
         x: x,
         y: y
-      }));
+      });
+
+      this.seaweeds.add(newSeaweed);
     }
   }, {
     key: 'makeCoral',
     value: function makeCoral(x, y) {
-      this.corals.add(new _Coral2.default({
+      var newCoral = new _Coral2.default({
         game: this.game,
         world: this.world,
         x: x,
         y: y
-      }));
+      });
+
+      this.corals.add(newCoral);
     }
   }, {
     key: 'makeWall',
     value: function makeWall(x, y, destructable) {
-      this.walls.add(new _Wall2.default({
+      var newWall = new _Wall2.default({
         game: this.game,
         world: this.world,
         x: x,
         y: y,
         destructable: destructable
-      }));
+      });
+
+      this.walls.add(newWall);
     }
   }, {
     key: 'makeCoin',
     value: function makeCoin() {
-      this.coins.add(new _Coin2.default({ // eslint-disable-line
+      var newCoin = new _Coin2.default({
         game: this.game,
         world: this.world
-      }));
+      });
+
+      this.coins.add(newCoin);
+    }
+  }, {
+    key: 'makeCrab',
+    value: function makeCrab(x, y) {
+      var newCrab = new _Crab2.default({
+        game: this.game,
+        world: this.world,
+        x: x,
+        y: y
+      });
+
+      this.crabs.add(newCrab);
     }
   }, {
     key: 'update',
-    value: function update() {
-      this.game.debug.cameraInfo(this.camera, 500, 500);
-    }
+    value: function update() {}
   }, {
     key: 'render',
     value: function render() {}
@@ -10431,7 +10460,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 46);
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
 
 var _RootSprite3 = _interopRequireDefault(_RootSprite2);
 
@@ -10623,7 +10652,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 46);
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
 
 var _RootSprite3 = _interopRequireDefault(_RootSprite2);
 
@@ -10994,7 +11023,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 46);
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
 
 var _RootSprite3 = _interopRequireDefault(_RootSprite2);
 
@@ -11053,7 +11082,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 46);
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
 
 var _RootSprite3 = _interopRequireDefault(_RootSprite2);
 
@@ -11100,6 +11129,69 @@ exports.default = _class;
 
 /***/ }),
 /* 323 */
+/*!*************************************!*\
+  !*** ./src/sprites/Enemies/Crab.js ***!
+  \*************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
+
+var _RootSprite3 = _interopRequireDefault(_RootSprite2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_RootSprite) {
+  _inherits(_class, _RootSprite);
+
+  function _class(_ref) {
+    var game = _ref.game,
+        world = _ref.world,
+        x = _ref.x,
+        y = _ref.y;
+
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, { game: game, world: world, x: x, y: y, asset: 'crab' }));
+
+    var walkDistance = Math.random() * 1000 + 500;
+    var duration = Math.random() * 3000 + 1000;
+    _this.width = 100;
+    _this.height = 75;
+    _this.animations.add('walk');
+    _this.animations.play('walk', 5, true);
+    _this.game.add.tween(_this).to({ x: Math.random() < 0.5 ? x + Math.random() * walkDistance : x - Math.random() * walkDistance }, duration, 'Linear', true, null, null, true);
+    return _this;
+  }
+
+  _createClass(_class, [{
+    key: 'update',
+    value: function update() {}
+  }]);
+
+  return _class;
+}(_RootSprite3.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 324 */
 /*!**********************************************!*\
   !*** ./src/sprites/Obstacles/SquareThing.js ***!
   \**********************************************/
@@ -11116,7 +11208,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 46);
+var _RootSprite2 = __webpack_require__(/*! ../RootSprite */ 41);
 
 var _RootSprite3 = _interopRequireDefault(_RootSprite2);
 
@@ -11163,7 +11255,7 @@ var _class = function (_RootSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 324 */
+/* 325 */
 /*!*****************************************!*\
   !*** ./src/sprites/Decoration/Coral.js ***!
   \*****************************************/
@@ -11232,7 +11324,7 @@ var _class = function (_RootDecorationSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 325 */
+/* 326 */
 /*!*******************************************!*\
   !*** ./src/sprites/Decoration/Seaweed.js ***!
   \*******************************************/
@@ -11301,7 +11393,7 @@ var _class = function (_RootDecorationSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 326 */
+/* 327 */
 /*!***********************************!*\
   !*** ./src/states/Game/makers.js ***!
   \***********************************/
@@ -11315,13 +11407,13 @@ exports.default = _class;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeBackgrounds = exports.makeRandomCorals = exports.makeBorderWallsAndDecoration = undefined;
+exports.makeBackgrounds = exports.makeCrabs = exports.makeRandomCorals = exports.makeBorderWallsAndDecoration = undefined;
 
-var _OceanBG = __webpack_require__(/*! ../../sprites/Backgrounds/OceanBG */ 327);
+var _OceanBG = __webpack_require__(/*! ../../sprites/Backgrounds/OceanBG */ 328);
 
 var _OceanBG2 = _interopRequireDefault(_OceanBG);
 
-var _CaveBG = __webpack_require__(/*! ../../sprites/Backgrounds/CaveBG */ 328);
+var _CaveBG = __webpack_require__(/*! ../../sprites/Backgrounds/CaveBG */ 329);
 
 var _CaveBG2 = _interopRequireDefault(_CaveBG);
 
@@ -11357,12 +11449,20 @@ var makeBorderWallsAndDecoration = exports.makeBorderWallsAndDecoration = functi
 };
 
 var makeRandomCorals = exports.makeRandomCorals = function makeRandomCorals(_this) {
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 20; i++) {
     _this.makeSquareThing(function () {
       return Math.random() * _this.world.width;
     }(), function () {
       return Math.random() * _this.world.height;
     }());
+  }
+};
+
+var makeCrabs = exports.makeCrabs = function makeCrabs(_this) {
+  for (var i = 0; i < 10; i++) {
+    _this.makeCrab(function () {
+      return Math.random() * _this.world.width;
+    }(), _this.world.height);
   }
 };
 
@@ -11377,7 +11477,7 @@ var makeBackgrounds = exports.makeBackgrounds = function makeBackgrounds(_this) 
 };
 
 /***/ }),
-/* 327 */
+/* 328 */
 /*!********************************************!*\
   !*** ./src/sprites/Backgrounds/OceanBG.js ***!
   \********************************************/
@@ -11435,7 +11535,7 @@ var _class = function (_Phaser$Sprite) {
 exports.default = _class;
 
 /***/ }),
-/* 328 */
+/* 329 */
 /*!*******************************************!*\
   !*** ./src/sprites/Backgrounds/CaveBG.js ***!
   \*******************************************/
@@ -11489,7 +11589,7 @@ var _class = function (_Phaser$TileSprite) {
 exports.default = _class;
 
 /***/ }),
-/* 329 */
+/* 330 */
 /*!***********************************!*\
   !*** ./src/states/Game/camera.js ***!
   \***********************************/
@@ -11516,7 +11616,7 @@ var makeCamera = exports.makeCamera = function makeCamera(_this) {
 };
 
 /***/ }),
-/* 330 */
+/* 331 */
 /*!*****************************!*\
   !*** ./src/timers/index.js ***!
   \*****************************/

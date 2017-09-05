@@ -4,10 +4,16 @@ import Swipe from 'phaser-swipe'
 import Octopus from '../../sprites/Octopus/index'
 import Coin from '../../sprites/Gettables/Coin'
 import Wall from '../../sprites/Obstacles/Wall'
+import Crab from '../../sprites/Enemies/Crab'
 import SquareThing from '../../sprites/Obstacles/SquareThing'
 import Coral from '../../sprites/Decoration/Coral'
 import Seaweed from '../../sprites/Decoration/Seaweed'
-import { makeBorderWallsAndDecoration, makeRandomCorals, makeBackgrounds } from './makers'
+import {
+  makeBorderWallsAndDecoration,
+  makeRandomCorals,
+  makeBackgrounds,
+  makeCrabs
+} from './makers'
 import { makeCamera } from './camera'
 import setTimerActions from '../../timers/index'
 
@@ -28,13 +34,14 @@ export default class extends Phaser.State {
     this.seaweeds = this.game.add.group()
     this.corals = this.game.add.group()
     this.walls = this.game.add.group()
+    this.crabs = this.game.add.group()
 
-    this.coins.add(new Coin({ // eslint-disable-line
+    this.coins.add(new Coin({
       game: this.game,
       world: this.world
     }))
 
-    this.octopus = new Octopus({ // eslint-disable-line
+    this.octopus = new Octopus({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
@@ -48,56 +55,78 @@ export default class extends Phaser.State {
 
     makeCamera(this)
     makeRandomCorals(this)
+    makeCrabs(this)
     makeBorderWallsAndDecoration(this)
     setTimerActions(this)
   }
 
   makeSquareThing (x, y) {
-    this.squareThings.add(new SquareThing({
+    const newSquareThing = new SquareThing({
       game: this.game,
       world: this.world,
       x,
       y
-    }))
+    })
+
+    this.squareThings.add(newSquareThing)
   }
 
   makeSeaweed (x, y) {
-    this.seaweeds.add(new Seaweed({
+    const newSeaweed = new Seaweed({
       game: this.game,
       world: this.world,
       x,
       y
-    }))
+    })
+
+    this.seaweeds.add(newSeaweed)
   }
 
   makeCoral (x, y) {
-    this.corals.add(new Coral({
+    const newCoral = new Coral({
       game: this.game,
       world: this.world,
       x,
       y
-    }))
+    })
+
+    this.corals.add(newCoral)
   }
 
   makeWall (x, y, destructable) {
-    this.walls.add(new Wall({
+    const newWall = new Wall({
       game: this.game,
       world: this.world,
       x,
       y,
       destructable
-    }))
+    })
+
+    this.walls.add(newWall)
   }
 
   makeCoin () {
-    this.coins.add(new Coin({ // eslint-disable-line
+    const newCoin = new Coin({
       game: this.game,
       world: this.world
-    }))
+    })
+
+    this.coins.add(newCoin)
+  }
+
+  makeCrab (x, y) {
+    const newCrab = new Crab({
+      game: this.game,
+      world: this.world,
+      x,
+      y
+    })
+
+    this.crabs.add(newCrab)
   }
 
   update () {
-    this.game.debug.cameraInfo(this.camera, 500, 500)
+
   }
 
   render () {

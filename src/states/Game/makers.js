@@ -31,8 +31,14 @@ export const makeBorderWallsAndDecoration = (_this) => {
 }
 
 export const makeRandomCorals = (_this) => {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 20; i++) {
     _this.makeSquareThing((() => Math.random() * _this.world.width)(), (() => Math.random() * _this.world.height)())
+  }
+}
+
+export const makeCrabs = (_this) => {
+  for (let i = 0; i < 10; i++) {
+    _this.makeCrab((() => Math.random() * _this.world.width)(), _this.world.height)
   }
 }
 
