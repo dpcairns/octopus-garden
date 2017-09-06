@@ -1,4 +1,5 @@
 import RootSprite from '../RootSprite'
+import Bangers from '../Texts/Bangers'
 
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
@@ -9,6 +10,7 @@ export default class extends RootSprite {
     this.destructable = true
     this.body.allowGravity = false
     this.body.immovable = true
+    this.outOfBoundsKill = true
     this.text = ''
   }
 
@@ -16,15 +18,20 @@ export default class extends RootSprite {
     this.angle += Math.random() * 4 * (Math.random() * 100 < 50 ? 1 : -1)
 
     if (this.HP <= 0) {
-      this.text = this.game.shells.children.length.toString()
-      // const numberLeft = this.game.add.text(this.x + 10, this.y + 10, this.text)
-      // const numberTween = this.game.add.tween(numberLeft).to({ alpha: 0 }, 2000,
-      //   'Linear',
-      //   false,
-      //   500,
-      //   null,
-      //   false)
-      // numberTween.onComplete.add(() => numberLeft.destroy())
+      this.text = this.game.shells.children.length.toString() - 1
+      const numberLeft = new Bangers({
+        game: this.game,
+        x: this.x + 10,
+        y: this.y + 10,
+        text: this.text
+      })
+
+      const numberTween = this.game.add.tween(numberLeft)
+        .to({ alpha: 0 },
+          2000,
+          'Linear',
+          true)
+      numberTween.onComplete.add(() => numberLeft.destroy())
       this.destroy()
     }
   }

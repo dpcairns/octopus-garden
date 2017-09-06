@@ -15,6 +15,6 @@ export default class extends RootSprite {
   }
 
   update () {
-    this.game.physics.arcade.velocityFromAngle(this.octoAngle - 90, this.octoSpeed + 1000, this.body.velocity)
+    this.game.physics.arcade.velocityFromAngle(this.octoAngle - 90, this.octoSpeed + 300, this.body.velocity)
   }
 }

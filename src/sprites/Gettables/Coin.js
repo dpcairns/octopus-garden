@@ -5,6 +5,8 @@ export default class extends RootSprite {
     const x = Math.random() * world.width
     const y = 0
     super({ game, world, x, y, asset: 'coin' })
+
+    this.angle = Math.random() * 360
     this.game.add.tween(this).to({ width: 0 },
       500,
       'Linear',

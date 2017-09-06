@@ -8,7 +8,7 @@ export default class extends Phaser.Sprite {
 
     this.body.bounce.setTo(0.5, 0.5)
     this.body.collideWorldBounds = true
-    this.body.gravity.y = 100
+    this.body.gravity.y = 50
 
     this.game.add.existing(this)
   }
