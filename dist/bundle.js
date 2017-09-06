@@ -203,7 +203,8 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 10 */
+/* 10 */,
+/* 11 */
 /*!**********************************************!*\
   !*** ./node_modules/core-js/modules/_has.js ***!
   \**********************************************/
@@ -217,7 +218,6 @@ module.exports = function(it, key){
 };
 
 /***/ }),
-/* 11 */,
 /* 12 */
 /*!***********************************************!*\
   !*** ./node_modules/core-js/modules/_hide.js ***!
@@ -246,7 +246,7 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 6) ? function(object,
 
 var global    = __webpack_require__(/*! ./_global */ 2)
   , hide      = __webpack_require__(/*! ./_hide */ 12)
-  , has       = __webpack_require__(/*! ./_has */ 10)
+  , has       = __webpack_require__(/*! ./_has */ 11)
   , SRC       = __webpack_require__(/*! ./_uid */ 32)('src')
   , TO_STRING = 'toString'
   , $toString = Function[TO_STRING]
@@ -349,7 +349,7 @@ var pIE            = __webpack_require__(/*! ./_object-pie */ 49)
   , createDesc     = __webpack_require__(/*! ./_property-desc */ 29)
   , toIObject      = __webpack_require__(/*! ./_to-iobject */ 15)
   , toPrimitive    = __webpack_require__(/*! ./_to-primitive */ 22)
-  , has            = __webpack_require__(/*! ./_has */ 10)
+  , has            = __webpack_require__(/*! ./_has */ 11)
   , IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 88)
   , gOPD           = Object.getOwnPropertyDescriptor;
 
@@ -372,7 +372,7 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 6) ? gOPD : function getOw
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has         = __webpack_require__(/*! ./_has */ 10)
+var has         = __webpack_require__(/*! ./_has */ 11)
   , toObject    = __webpack_require__(/*! ./_to-object */ 9)
   , IE_PROTO    = __webpack_require__(/*! ./_shared-key */ 64)('IE_PROTO')
   , ObjectProto = Object.prototype;
@@ -597,7 +597,7 @@ if(__webpack_require__(/*! ./_descriptors */ 6)){
     , toLength            = __webpack_require__(/*! ./_to-length */ 8)
     , toIndex             = __webpack_require__(/*! ./_to-index */ 35)
     , toPrimitive         = __webpack_require__(/*! ./_to-primitive */ 22)
-    , has                 = __webpack_require__(/*! ./_has */ 10)
+    , has                 = __webpack_require__(/*! ./_has */ 11)
     , same                = __webpack_require__(/*! ./_same-value */ 94)
     , classof             = __webpack_require__(/*! ./_classof */ 50)
     , isObject            = __webpack_require__(/*! ./_is-object */ 4)
@@ -1150,7 +1150,7 @@ module.exports = function(bitmap, value){
 
 var META     = __webpack_require__(/*! ./_uid */ 32)('meta')
   , isObject = __webpack_require__(/*! ./_is-object */ 4)
-  , has      = __webpack_require__(/*! ./_has */ 10)
+  , has      = __webpack_require__(/*! ./_has */ 11)
   , setDesc  = __webpack_require__(/*! ./_object-dp */ 7).f
   , id       = 0;
 var isExtensible = Object.isExtensible || function(){
@@ -1419,7 +1419,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -1475,7 +1475,7 @@ exports.default = _class;
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(/*! ./_object-dp */ 7).f
-  , has = __webpack_require__(/*! ./_has */ 10)
+  , has = __webpack_require__(/*! ./_has */ 11)
   , TAG = __webpack_require__(/*! ./_wks */ 5)('toStringTag');
 
 module.exports = function(it, tag, stat){
@@ -2245,7 +2245,7 @@ var LIBRARY        = __webpack_require__(/*! ./_library */ 33)
   , $export        = __webpack_require__(/*! ./_export */ 0)
   , redefine       = __webpack_require__(/*! ./_redefine */ 13)
   , hide           = __webpack_require__(/*! ./_hide */ 12)
-  , has            = __webpack_require__(/*! ./_has */ 10)
+  , has            = __webpack_require__(/*! ./_has */ 11)
   , Iterators      = __webpack_require__(/*! ./_iterators */ 44)
   , $iterCreate    = __webpack_require__(/*! ./_iter-create */ 76)
   , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 42)
@@ -2999,7 +2999,7 @@ exports.f = __webpack_require__(/*! ./_wks */ 5);
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has          = __webpack_require__(/*! ./_has */ 10)
+var has          = __webpack_require__(/*! ./_has */ 11)
   , toIObject    = __webpack_require__(/*! ./_to-iobject */ 15)
   , arrayIndexOf = __webpack_require__(/*! ./_array-includes */ 52)(false)
   , IE_PROTO     = __webpack_require__(/*! ./_shared-key */ 64)('IE_PROTO');
@@ -3659,7 +3659,7 @@ var redefineAll       = __webpack_require__(/*! ./_redefine-all */ 40)
   , anInstance        = __webpack_require__(/*! ./_an-instance */ 39)
   , forOf             = __webpack_require__(/*! ./_for-of */ 46)
   , createArrayMethod = __webpack_require__(/*! ./_array-methods */ 24)
-  , $has              = __webpack_require__(/*! ./_has */ 10)
+  , $has              = __webpack_require__(/*! ./_has */ 11)
   , arrayFind         = createArrayMethod(5)
   , arrayFindIndex    = createArrayMethod(6)
   , id                = 0;
@@ -4189,7 +4189,7 @@ module.exports = __webpack_require__(/*! ./modules/_core */ 25);
 
 // ECMAScript 6 symbols shim
 var global         = __webpack_require__(/*! ./_global */ 2)
-  , has            = __webpack_require__(/*! ./_has */ 10)
+  , has            = __webpack_require__(/*! ./_has */ 11)
   , DESCRIPTORS    = __webpack_require__(/*! ./_descriptors */ 6)
   , $export        = __webpack_require__(/*! ./_export */ 0)
   , redefine       = __webpack_require__(/*! ./_redefine */ 13)
@@ -4774,7 +4774,7 @@ $export($export.P, 'Function', {bind: __webpack_require__(/*! ./_bind */ 95)});
 
 var dP         = __webpack_require__(/*! ./_object-dp */ 7).f
   , createDesc = __webpack_require__(/*! ./_property-desc */ 29)
-  , has        = __webpack_require__(/*! ./_has */ 10)
+  , has        = __webpack_require__(/*! ./_has */ 11)
   , FProto     = Function.prototype
   , nameRE     = /^\s*function ([^ (]*)/
   , NAME       = 'name';
@@ -4862,7 +4862,7 @@ $export($export.G + $export.F * (parseFloat != $parseFloat), {parseFloat: $parse
 "use strict";
 
 var global            = __webpack_require__(/*! ./_global */ 2)
-  , has               = __webpack_require__(/*! ./_has */ 10)
+  , has               = __webpack_require__(/*! ./_has */ 11)
   , cof               = __webpack_require__(/*! ./_cof */ 19)
   , inheritIfRequired = __webpack_require__(/*! ./_inherit-if-required */ 70)
   , toPrimitive       = __webpack_require__(/*! ./_to-primitive */ 22)
@@ -7669,7 +7669,7 @@ $export($export.S, 'Reflect', {
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
 var gOPD           = __webpack_require__(/*! ./_object-gopd */ 17)
   , getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 18)
-  , has            = __webpack_require__(/*! ./_has */ 10)
+  , has            = __webpack_require__(/*! ./_has */ 11)
   , $export        = __webpack_require__(/*! ./_export */ 0)
   , isObject       = __webpack_require__(/*! ./_is-object */ 4)
   , anObject       = __webpack_require__(/*! ./_an-object */ 1);
@@ -7820,7 +7820,7 @@ $export($export.S, 'Reflect', {
 var dP             = __webpack_require__(/*! ./_object-dp */ 7)
   , gOPD           = __webpack_require__(/*! ./_object-gopd */ 17)
   , getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 18)
-  , has            = __webpack_require__(/*! ./_has */ 10)
+  , has            = __webpack_require__(/*! ./_has */ 11)
   , $export        = __webpack_require__(/*! ./_export */ 0)
   , createDesc     = __webpack_require__(/*! ./_property-desc */ 29)
   , anObject       = __webpack_require__(/*! ./_an-object */ 1)
@@ -9755,7 +9755,7 @@ __webpack_require__(/*! pixi */ 116);
 
 __webpack_require__(/*! p2 */ 117);
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -9830,7 +9830,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -9915,7 +9915,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -10019,7 +10019,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -10960,7 +10960,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getGroup = exports.rotate = exports.disableCollisionIfDead = undefined;
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -10996,7 +10996,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -11048,7 +11048,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -11113,7 +11113,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -11650,7 +11650,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -11708,7 +11708,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -11806,7 +11806,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.makeCamera = undefined;
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 
@@ -11832,7 +11832,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _phaser = __webpack_require__(/*! phaser */ 11);
+var _phaser = __webpack_require__(/*! phaser */ 10);
 
 var _phaser2 = _interopRequireDefault(_phaser);
 

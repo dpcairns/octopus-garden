@@ -152,7 +152,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 11:
+/***/ 10:
 /*!*************************************************************!*\
   !*** ./node_modules/phaser-ce/build/custom/phaser-split.js ***!
   \*************************************************************/
@@ -106175,7 +106175,7 @@ process.umask = function() { return 0; };
 
 __webpack_require__(/*! pixi */116);
 __webpack_require__(/*! p2 */117);
-__webpack_require__(/*! phaser */11);
+__webpack_require__(/*! phaser */10);
 module.exports = __webpack_require__(/*! webfontloader */118);
 
 
