@@ -16,6 +16,7 @@ export default (_this) => {
   _this.SPACEBAR = _this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR)
   _this.Z = _this.game.input.keyboard.addKey(Phaser.KeyCode.Z)
   _this.X = _this.game.input.keyboard.addKey(Phaser.KeyCode.X)
+  _this.CONTROL = _this.game.input.keyboard.addKey(Phaser.KeyCode.CONTROL)
 
   _this.A.onDown.add(_this.incrementLeft, _this)
   _this.S.onDown.add(_this.incrementLeft, _this)

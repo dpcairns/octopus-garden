@@ -91,7 +91,8 @@ const updater = (_this) => () => {
 
   // pew pew: S L (index fingers)
   if (ringFingersDown(_this) ||
-    _this.SPACEBAR.isDown ||
+    _this.X.isDown ||
+    _this.CONTROL.isDown ||
     (_this.game.input.pointer1.isDown && !_this.game.input.pointer2.isDown)
   ) {
     _this.clearLeft()
@@ -106,7 +107,7 @@ const updater = (_this) => () => {
   // charge up!: ALL HOME KEYS
   if (homeRowDown(_this) ||
   (_this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown) ||
-  _this.X.isDown ||
+  _this.SPACEBAR.isDown ||
   (_this.game.input.pointer1.isDown && _this.game.input.pointer2.isDown)
   ) {
     _this.charging = true

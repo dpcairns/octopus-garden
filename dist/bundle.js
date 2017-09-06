@@ -10819,7 +10819,7 @@ var updater = function updater(_this) {
     }
 
     // pew pew: S L (index fingers)
-    if ((0, _downCheckers.ringFingersDown)(_this) || _this.SPACEBAR.isDown || _this.game.input.pointer1.isDown && !_this.game.input.pointer2.isDown) {
+    if ((0, _downCheckers.ringFingersDown)(_this) || _this.X.isDown || _this.CONTROL.isDown || _this.game.input.pointer1.isDown && !_this.game.input.pointer2.isDown) {
       _this.clearLeft();
       _this.clearRight();
       if (_this.shotCounter > _constants.SHOT_COUNTER_LIMIT) {
@@ -10830,7 +10830,7 @@ var updater = function updater(_this) {
     }
 
     // charge up!: ALL HOME KEYS
-    if ((0, _downCheckers.homeRowDown)(_this) || _this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown || _this.X.isDown || _this.game.input.pointer1.isDown && _this.game.input.pointer2.isDown) {
+    if ((0, _downCheckers.homeRowDown)(_this) || _this.LEFT.isDown && _this.RIGHT.isDown && _this.DOWN.isDown || _this.SPACEBAR.isDown || _this.game.input.pointer1.isDown && _this.game.input.pointer2.isDown) {
       _this.charging = true;
       _this.clearLeft();
       _this.clearRight();
@@ -11015,6 +11015,7 @@ exports.default = function (_this) {
   _this.SPACEBAR = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.SPACEBAR);
   _this.Z = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.Z);
   _this.X = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.X);
+  _this.CONTROL = _this.game.input.keyboard.addKey(_phaser2.default.KeyCode.CONTROL);
 
   _this.A.onDown.add(_this.incrementLeft, _this);
   _this.S.onDown.add(_this.incrementLeft, _this);
@@ -11066,7 +11067,7 @@ var _class = function (_Phaser$Text) {
 
     _classCallCheck(this, _class);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, game, 1000, 500, 'Arrow keys to move. \nSpacebar to shoot. \nHold X to charge'));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, game, 1000, 500, 'Arrow keys to move and change speed.\nX or Ctrl to shoot.\nHold spacebar to charge.\nZ to stop.'));
 
     _this.font = 'Bangers';
     _this.align = 'center';

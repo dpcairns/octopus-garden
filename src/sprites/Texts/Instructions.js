@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 export default class extends Phaser.Text {
   constructor ({ game, world, bannerText }) {
-    super(game, 1000, 500, 'Arrow keys to move. \nSpacebar to shoot. \nHold X to charge')
+    super(game, 1000, 500, 'Arrow keys to move and change speed.\nX or Ctrl to shoot.\nHold spacebar to charge.\nZ to stop.')
     this.font = 'Bangers'
     this.align = 'center'
     this.padding.set(10, 16)
