@@ -14,9 +14,11 @@ const updater = (_this) => () => {
 
   _this.game.physics.arcade.overlap(_this.game.protagonistParts, _this.game.coins, _this.getCoin, null, _this)
   _this.game.physics.arcade.overlap(_this.game.inkMissiles, _this.game.shells, _this.destroyThing, null, _this)
+  _this.game.physics.arcade.overlap(_this.game.inkMissiles, _this.game.crabs, _this.destroyThing, null, _this)
   _this.game.physics.arcade.collide(_this.game.protagonistParts, _this.game.obstacles, _this.destroyThing, disableCollisionIfDead, _this)
   _this.game.physics.arcade.collide(_this, _this.game.shells, _this.destroyThing, disableCollisionIfDead, _this)
   _this.game.physics.arcade.collide(_this, _this.game.walls, _this.destroyThing, disableCollisionIfDead, _this)
+  _this.game.physics.arcade.collide(_this, _this.game.crabs, _this.destroyThing, disableCollisionIfDead, _this)
 
   // manage bespoke max velocity, so it doesn't interefere with charge max
   if (_this.velocityFactor > _this.maxNormalVelocity) {

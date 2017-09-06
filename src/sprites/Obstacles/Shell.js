@@ -6,6 +6,7 @@ export default class extends RootSprite {
     super({ game, world, x, y, asset: 'shell' })
     this.width = 66
     this.height = 90
+    this.initialHP = 30
     this.HP = 30
     this.destructable = true
     this.body.allowGravity = false

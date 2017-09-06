@@ -105,11 +105,11 @@ export default class extends RootSprite {
   destroyThing (destroyer, destructable) {
     if (destructable.destructable) {
       if (destroyer.key === 'octopus' && destroyer.charged > 1000 && this.goForward) {
-        destructable.HP -= destroyer.charged
+        destructable.HP -= destroyer.charged / 100
       }
 
       if (destroyer.key === 'blob') {
-        destructable.tint *= 10
+        if (destructable.key === 'shell') destructable.tint *= 10
         destructable.width = destructable.width * 0.9
         destructable.height = destructable.height * 0.9
         destructable.HP -= 3

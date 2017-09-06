@@ -7,6 +7,9 @@ export default class extends RootSprite {
     const duration = Math.random() * 3000 + 1000
     this.width = 100
     this.height = 75
+    this.initialHP = 30
+    this.HP = 30
+    this.destructable = true
     this.animations.add('walk')
     this.animations.play('walk', 5, true)
     this.game.add.tween(this)
