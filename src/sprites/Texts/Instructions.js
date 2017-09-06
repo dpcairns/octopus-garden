@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 
 export default class extends Phaser.Text {
-  constructor ({ game, world, bannerText }) {
-    super(game, 1000, 500, 'Arrow keys to move and change speed.\nX or Ctrl to shoot.\nHold spacebar to charge.\nZ to stop.')
+  constructor ({ game, world, text }) {
+    super(game, 1000, 500, text)
     this.font = 'Bangers'
     this.align = 'center'
     this.padding.set(10, 16)
@@ -11,7 +11,7 @@ export default class extends Phaser.Text {
     this.smoothed = false
     this.anchor.setTo(0.5)
 
-    this.game.add.sprite(900, 200, 'arrow-keys')
+    this.game.arrowKeys = this.game.add.sprite(900, 200, 'arrow-keys')
     this.game.add.existing(this)
   }
 

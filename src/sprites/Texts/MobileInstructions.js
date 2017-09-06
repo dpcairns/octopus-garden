@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 
 export default class extends Phaser.Text {
-  constructor ({ game, world, bannerText }) {
-    super(game, 1550, 500, 'Swipe to rotate. \nOne finger to shoot. \nTwo fingers to charge.')
+  constructor ({ game, world, text }) {
+    super(game, 1550, 500, text)
     this.font = 'Bangers'
     this.align = 'center'
     this.padding.set(10, 16)
@@ -11,9 +11,9 @@ export default class extends Phaser.Text {
     this.smoothed = false
     this.anchor.setTo(0.5)
 
-    const mobile = this.game.add.sprite(1450, 200, 'mobile')
-    mobile.width = 200
-    mobile.height = 200
+    this.game.mobile = this.game.add.sprite(1450, 200, 'mobile')
+    this.game.mobile.width = 200
+    this.game.mobile.height = 200
     this.game.add.existing(this)
   }
 

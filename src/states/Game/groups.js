@@ -7,6 +7,14 @@ export const makeGroups = (_this) => {
   _this.game.walls = _this.game.add.group()
   _this.game.crabs = _this.game.add.group()
 
+  _this.game.guideposts = _this.game.add.group()
+  _this.game.guideposts.addMultiple([
+    _this.game.instructions,
+    _this.game.mobileInstructions,
+    _this.game.arrowKeys,
+    _this.game.mobile
+  ])
+
   _this.game.protagonistParts = _this.game.add.group()
 
   // add protagonsit and extensions thereof
