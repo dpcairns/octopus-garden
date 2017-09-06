@@ -1,4 +1,5 @@
 import RootSprite from '../RootSprite'
+import constants from '../../constants'
 
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
@@ -14,7 +15,8 @@ export default class extends RootSprite {
     this.destructable = true
     this.animations.add('walk')
     this.animations.play('walk', 5, true)
-    this.game.add.tween(this)
+    this.outOfBoundsKill = true
+    this.crabWalk = this.game.add.tween(this)
       .to({ x: Math.random() < 0.5 ? x + Math.random() * walkDistance : x - Math.random() * walkDistance },
         duration,
         'Linear',
@@ -26,12 +28,26 @@ export default class extends RootSprite {
   }
 
   whenHit (missile) {
-    this.width = this.width > (this.initialWidth / 1.3) ? (this.initialWidth * (this.HP / this.initialHP)) : this.initialWidth / 1.3
-    this.height = this.height > (this.initialHeight / 1.3) ? (this.initialHeight * (this.HP / this.initialHP)) : this.initialHeight / 1.3
+    this.tint = constants.RED
+    this.crabWalk.stop()
+    this.body.velocity.x = missile.body.velocity.x
+    this.body.velocity.y = -missile.body.velocity.y
     this.HP -= missile.power
   }
 
-  update () {
+  whenCharged (charger) {
+    this.crabWalk.stop()
+    this.tint = constants.RED
+    this.body.velocity.x = charger.body.velocity.x / 2
+    this.body.velocity.y = charger.body.velocity.y / 2
+    this.HP -= charger.charged / 100
+  }
 
+  update () {
+    if (this.tint !== 16777215) this.tint = 16777215
+    if (this.HP <= 0) {
+      this.angle += 100
+      setTimeout(() => this.destroy(), 200)
+    }
   }
 }

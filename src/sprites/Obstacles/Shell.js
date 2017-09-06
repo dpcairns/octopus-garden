@@ -1,5 +1,6 @@
 import RootSprite from '../RootSprite'
 import Bangers from '../Texts/Bangers'
+import constants from '../../constants'
 
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
@@ -18,16 +19,21 @@ export default class extends RootSprite {
   }
 
   whenHit (missile) {
-    this.tint *= 10
+    this.tint = constants.TEAL
     this.width = this.width > (this.initialWidth / 1.3) ? (this.initialWidth * (this.HP / this.initialHP)) : this.initialWidth / 1.3
     this.height = this.height > (this.initialHeight / 1.3) ? (this.initialHeight * (this.HP / this.initialHP)) : this.initialHeight / 1.3
     this.HP -= missile.power
+  }
+  whenCharged (charger) {
+    this.HP -= charger.charged
   }
 
   update () {
     this.angle += Math.random() * 4 * (Math.random() * 100 < 50 ? 1 : -1)
 
     if (this.HP <= 0) {
+      this.angle += 100
+      setTimeout(() => this.destroy(), 200)
       this.text = this.game.shells.children.length.toString() - 1
       const numberLeft = new Bangers({
         game: this.game,
@@ -42,7 +48,6 @@ export default class extends RootSprite {
           'Linear',
           true)
       numberTween.onComplete.add(() => numberLeft.destroy())
-      this.destroy()
     }
   }
 }

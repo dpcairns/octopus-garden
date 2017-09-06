@@ -104,15 +104,15 @@ export default class extends RootSprite {
 
   destroyThing (destroyer, destructable) {
     if (destructable.destructable) {
-      if (destroyer.key === 'octopus' && destroyer.charged > 1000 && this.goForward) {
-        destructable.HP -= destroyer.charged / 10
+      if (destroyer.key === 'octopus' && destroyer.charged > 1000 && this.goForward && destructable.whenCharged) {
+        destructable.whenCharged(destroyer)
       }
 
       if (destroyer.key === 'blob' && destructable.whenHit) {
         destructable.whenHit(destroyer)
       }
 
-      if (destructable.HP <= 0) {
+      if (destructable.HP <= 0 && destructable.key === 'wall') {
         destructable.body.allowGravity = true
         destructable.body.immovable = false
         destructable.body.collideWorldBounds = false

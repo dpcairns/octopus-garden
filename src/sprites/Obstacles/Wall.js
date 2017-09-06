@@ -11,6 +11,10 @@ export default class extends RootSprite {
     this.destructable = !!destructable
   }
 
+  whenCharged (charger) {
+    this.HP -= charger.charged
+  }
+
   update () {
 
   }
