@@ -1,6 +1,6 @@
 export const makeGroups = (_this) => {
   _this.game.coins = _this.game.add.group()
-  _this.game.squareThings = _this.game.add.group()
+  _this.game.shells = _this.game.add.group()
   _this.game.seaweeds = _this.game.add.group()
   _this.game.inkMissiles = _this.game.add.group()
   _this.game.corals = _this.game.add.group()
@@ -33,7 +33,7 @@ export const makeGroups = (_this) => {
   // add obstacles
   _this.game.obstacles = _this.game.add.group()
   _this.game.obstacles.addMultiple([
-    _this.game.squareThings,
+    _this.game.shells,
     _this.game.walls
   ])
 

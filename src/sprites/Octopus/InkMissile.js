@@ -10,12 +10,11 @@ export default class extends RootSprite {
     this.body.collideWorldBounds = false
     this.game = game
     this.outOfBoundsKill = true
-
-    this.body.gravity.y = 0
+    this.animations.add('blobby')
+    this.animations.play('blobby', 10, true)
   }
 
   update () {
-    this.angle += 100
     this.game.physics.arcade.velocityFromAngle(this.octoAngle - 90, this.octoSpeed + 1000, this.body.velocity)
   }
 }

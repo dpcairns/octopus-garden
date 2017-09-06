@@ -19,7 +19,7 @@ export default class extends RootSprite {
     world,
     coins,
     score,
-    squareThings,
+    shells,
     mobileHolding,
     walls,
     swipe,
@@ -49,7 +49,7 @@ export default class extends RootSprite {
     this.rightKeeper = new Set()
     this.coins = coins
     this.score = score
-    this.squareThings = squareThings
+    this.shells = shells
     this.walls = walls
     this.velocityFactor = this.initialVelocityFactor
     this.makeSquareThing = makeSquareThing

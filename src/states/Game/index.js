@@ -71,7 +71,7 @@ export default class extends Phaser.State {
       y
     })
 
-    this.game.squareThings.add(newShell)
+    this.game.shells.add(newShell)
   }
 
   makeSeaweed (x, y) {
