@@ -9956,6 +9956,8 @@ var _class = function (_Phaser$State) {
       this.load.image('cave', 'assets/images/cave.png');
       this.load.image('blob', 'assets/images/blob.png');
       this.load.image('squareThings', 'assets/images/shell.png');
+      this.load.image('arrow-keys', 'assets/images/arrow-keys.png');
+      this.load.image('mobile', 'assets/images/mobile.png');
 
       this.load.spritesheet('coral', 'assets/images/coral.png', 465, 465);
       this.load.spritesheet('octopus', 'assets/images/OCTOONE.png', 160, 120);
@@ -10028,6 +10030,14 @@ var _index = __webpack_require__(/*! ../../sprites/Octopus/index */ 315);
 
 var _index2 = _interopRequireDefault(_index);
 
+var _Instructions = __webpack_require__(/*! ../../sprites/Texts/Instructions */ 335);
+
+var _Instructions2 = _interopRequireDefault(_Instructions);
+
+var _MobileInstructions = __webpack_require__(/*! ../../sprites/Texts/MobileInstructions */ 336);
+
+var _MobileInstructions2 = _interopRequireDefault(_MobileInstructions);
+
 var _Coin = __webpack_require__(/*! ../../sprites/Gettables/Coin */ 321);
 
 var _Coin2 = _interopRequireDefault(_Coin);
@@ -10054,11 +10064,11 @@ var _Seaweed2 = _interopRequireDefault(_Seaweed);
 
 var _makers = __webpack_require__(/*! ./makers */ 327);
 
-var _groups = __webpack_require__(/*! ./groups */ 333);
+var _groups = __webpack_require__(/*! ./groups */ 330);
 
-var _camera = __webpack_require__(/*! ./camera */ 330);
+var _camera = __webpack_require__(/*! ./camera */ 331);
 
-var _index3 = __webpack_require__(/*! ../../timers/index */ 331);
+var _index3 = __webpack_require__(/*! ../../timers/index */ 332);
 
 var _index4 = _interopRequireDefault(_index3);
 
@@ -10103,6 +10113,16 @@ var _class = function (_Phaser$State) {
         world: this.world,
         score: this.score,
         swipe: this.swipe
+      });
+
+      this.game.instructions = new _Instructions2.default({
+        game: this.game,
+        world: this.world
+      });
+
+      this.game.mobileInstructions = new _MobileInstructions2.default({
+        game: this.game,
+        world: this.world
       });
 
       this.game.octopus = this.octopus;
@@ -11592,58 +11612,6 @@ exports.default = _class;
 /***/ }),
 /* 330 */
 /*!***********************************!*\
-  !*** ./src/states/Game/camera.js ***!
-  \***********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.makeCamera = undefined;
-
-var _phaser = __webpack_require__(/*! phaser */ 21);
-
-var _phaser2 = _interopRequireDefault(_phaser);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var makeCamera = exports.makeCamera = function makeCamera(_this) {
-  _this.game.camera.follow(_this.octopus, _phaser2.default.Camera.FOLLOW_LOCKON, 0.1, 0.1);
-};
-
-/***/ }),
-/* 331 */
-/*!*****************************!*\
-  !*** ./src/timers/index.js ***!
-  \*****************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function (_this) {
-  _this.timer = _this.game.time.create(false);
-
-  _this.timer.loop(3000, _this.makeCoin, _this);
-
-  _this.timer.start();
-};
-
-/***/ }),
-/* 332 */,
-/* 333 */
-/*!***********************************!*\
   !*** ./src/states/Game/groups.js ***!
   \***********************************/
 /*! no static exports found */
@@ -11682,6 +11650,191 @@ var makeGroups = exports.makeGroups = function makeGroups(_this) {
   _this.game.enemies = _this.game.add.group();
   _this.game.enemies.addMultiple([_this.game.crabs]);
 };
+
+/***/ }),
+/* 331 */
+/*!***********************************!*\
+  !*** ./src/states/Game/camera.js ***!
+  \***********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.makeCamera = undefined;
+
+var _phaser = __webpack_require__(/*! phaser */ 21);
+
+var _phaser2 = _interopRequireDefault(_phaser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var makeCamera = exports.makeCamera = function makeCamera(_this) {
+  _this.game.camera.follow(_this.octopus, _phaser2.default.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+};
+
+/***/ }),
+/* 332 */
+/*!*****************************!*\
+  !*** ./src/timers/index.js ***!
+  \*****************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_this) {
+  _this.timer = _this.game.time.create(false);
+
+  _this.timer.loop(3000, _this.makeCoin, _this);
+
+  _this.timer.start();
+};
+
+/***/ }),
+/* 333 */,
+/* 334 */,
+/* 335 */
+/*!*******************************************!*\
+  !*** ./src/sprites/Texts/Instructions.js ***!
+  \*******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _phaser = __webpack_require__(/*! phaser */ 21);
+
+var _phaser2 = _interopRequireDefault(_phaser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Phaser$Text) {
+  _inherits(_class, _Phaser$Text);
+
+  function _class(_ref) {
+    var game = _ref.game,
+        world = _ref.world,
+        bannerText = _ref.bannerText;
+
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, game, 1000, 500, 'Arrow keys to move. \nSpacebar to shoot. \nHold X to charge'));
+
+    _this.font = 'Bangers';
+    _this.align = 'center';
+    _this.padding.set(10, 16);
+    _this.fontSize = 40;
+    _this.fill = '#000000';
+    _this.smoothed = false;
+    _this.anchor.setTo(0.5);
+
+    _this.game.add.sprite(900, 200, 'arrow-keys');
+    _this.game.add.existing(_this);
+    return _this;
+  }
+
+  _createClass(_class, [{
+    key: 'update',
+    value: function update() {}
+  }]);
+
+  return _class;
+}(_phaser2.default.Text);
+
+exports.default = _class;
+
+/***/ }),
+/* 336 */
+/*!*************************************************!*\
+  !*** ./src/sprites/Texts/MobileInstructions.js ***!
+  \*************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _phaser = __webpack_require__(/*! phaser */ 21);
+
+var _phaser2 = _interopRequireDefault(_phaser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Phaser$Text) {
+  _inherits(_class, _Phaser$Text);
+
+  function _class(_ref) {
+    var game = _ref.game,
+        world = _ref.world,
+        bannerText = _ref.bannerText;
+
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, game, 1550, 500, 'Swipe to rotate. \nOne finger to shoot. \nTwo fingers to charge.'));
+
+    _this.font = 'Bangers';
+    _this.align = 'center';
+    _this.padding.set(10, 16);
+    _this.fontSize = 40;
+    _this.fill = '#000000';
+    _this.smoothed = false;
+    _this.anchor.setTo(0.5);
+
+    var mobile = _this.game.add.sprite(1450, 200, 'mobile');
+    mobile.width = 200;
+    mobile.height = 200;
+    _this.game.add.existing(_this);
+    return _this;
+  }
+
+  _createClass(_class, [{
+    key: 'update',
+    value: function update() {}
+  }]);
+
+  return _class;
+}(_phaser2.default.Text);
+
+exports.default = _class;
 
 /***/ })
 ],[121]);

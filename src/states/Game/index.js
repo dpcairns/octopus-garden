@@ -2,6 +2,8 @@
 import Phaser from 'phaser'
 import Swipe from 'phaser-swipe'
 import Octopus from '../../sprites/Octopus/index'
+import Instructions from '../../sprites/Texts/Instructions'
+import MobileInstructions from '../../sprites/Texts/MobileInstructions'
 import Coin from '../../sprites/Gettables/Coin'
 import Wall from '../../sprites/Obstacles/Wall'
 import Crab from '../../sprites/Enemies/Crab'
@@ -37,6 +39,16 @@ export default class extends Phaser.State {
       world: this.world,
       score: this.score,
       swipe: this.swipe
+    })
+
+    this.game.instructions = new Instructions({
+      game: this.game,
+      world: this.world
+    })
+
+    this.game.mobileInstructions = new MobileInstructions({
+      game: this.game,
+      world: this.world
     })
 
     this.game.octopus = this.octopus
