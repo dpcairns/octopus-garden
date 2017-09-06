@@ -4,6 +4,8 @@ import Bangers from '../Texts/Bangers'
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
     super({ game, world, x, y, asset: 'shell' })
+    this.initialWidth = 66
+    this.initialHeight = 90
     this.width = 66
     this.height = 90
     this.initialHP = 30
@@ -13,6 +15,13 @@ export default class extends RootSprite {
     this.body.immovable = true
     this.outOfBoundsKill = true
     this.text = ''
+  }
+
+  whenHit (missile) {
+    this.tint *= 10
+    this.width = this.width > (this.initialWidth / 1.3) ? (this.initialWidth * (this.HP / this.initialHP)) : this.initialWidth / 1.3
+    this.height = this.height > (this.initialHeight / 1.3) ? (this.initialHeight * (this.HP / this.initialHP)) : this.initialHeight / 1.3
+    this.HP -= missile.power
   }
 
   update () {

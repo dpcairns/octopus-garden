@@ -10,6 +10,7 @@ export default class extends RootSprite {
     this.octoSpeed = octoSpeed
     this.body.collideWorldBounds = false
     this.game = game
+    this.power = 3
     this.outOfBoundsKill = true
     this.animations.add('blobby')
     this.animations.play('blobby', 10, true)
