@@ -3,8 +3,9 @@ import RootSprite from '../RootSprite'
 export default class extends RootSprite {
   constructor ({ game, world, x, y, octoAngle, octoSpeed }) {
     super({ game, world, x, y, asset: 'blob' })
-    this.width = Math.random() * 30 + 10
-    this.height = Math.random() * 30 + 10
+    const blobFactor = Math.random()
+    this.width = blobFactor * 80
+    this.height = blobFactor * 72
     this.octoAngle = octoAngle
     this.octoSpeed = octoSpeed
     this.body.collideWorldBounds = false
