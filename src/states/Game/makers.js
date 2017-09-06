@@ -30,9 +30,9 @@ export const makeBorderWallsAndDecoration = (_this) => {
   }
 }
 
-export const makeRandomCorals = (_this) => {
+export const makeRandomShells = (_this) => {
   for (let i = 0; i < 20; i++) {
-    _this.makeSquareThing((() => Math.random() * _this.world.width)(), (() => Math.random() * _this.world.height)())
+    _this.makeShell((() => Math.random() * _this.world.width)(), (() => Math.random() * _this.world.height)())
   }
 }
 

@@ -2,7 +2,7 @@ import RootSprite from '../RootSprite'
 
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
-    super({ game, world, x, y, asset: 'squareThings' })
+    super({ game, world, x, y, asset: 'shell' })
     this.width = 66
     this.height = 90
     this.HP = 30

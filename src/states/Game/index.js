@@ -7,12 +7,12 @@ import MobileInstructions from '../../sprites/Texts/MobileInstructions'
 import Coin from '../../sprites/Gettables/Coin'
 import Wall from '../../sprites/Obstacles/Wall'
 import Crab from '../../sprites/Enemies/Crab'
-import SquareThing from '../../sprites/Obstacles/SquareThing'
+import Shell from '../../sprites/Obstacles/Shell'
 import Coral from '../../sprites/Decoration/Coral'
 import Seaweed from '../../sprites/Decoration/Seaweed'
 import {
   makeBorderWallsAndDecoration,
-  makeRandomCorals,
+  makeRandomShells,
   makeBackgrounds,
   makeCrabs
 } from './makers'
@@ -57,21 +57,21 @@ export default class extends Phaser.State {
 
     makeGroups(this)
     makeCamera(this)
-    makeRandomCorals(this)
+    makeRandomShells(this)
     makeCrabs(this)
     makeBorderWallsAndDecoration(this)
     setTimerActions(this)
   }
 
-  makeSquareThing (x, y) {
-    const newSquareThing = new SquareThing({
+  makeShell (x, y) {
+    const newShell = new Shell({
       game: this.game,
       world: this.world,
       x,
       y
     })
 
-    this.game.squareThings.add(newSquareThing)
+    this.game.squareThings.add(newShell)
   }
 
   makeSeaweed (x, y) {
