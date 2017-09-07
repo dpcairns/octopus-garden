@@ -59,7 +59,7 @@ export default class extends RootSprite {
     if (this.tint !== 16777215) this.tint = 16777215
     if (this.HP <= 0) {
       this.angle += 100
-      setTimeout(() => this.destroy(), 200)
+      setTimeout(() => this.destroy(), 500)
     }
   }
 }
