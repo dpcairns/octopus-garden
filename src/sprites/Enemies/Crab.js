@@ -55,9 +55,6 @@ export default class extends RootSprite {
     this.HP -= charger.charged / 100
   }
 
-  render () {
-    this.game.debug.body(this)
-  }
   update () {
     if (this.tint !== 16777215) this.tint = 16777215
     if (this.HP <= 0) {
