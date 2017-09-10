@@ -13,9 +13,6 @@ export default class extends RootDecorationSprite {
       width: width,
       height
     })
-
-    this.animations.add('seaweed')
-    this.animations.play('seaweed', 3, true)
   }
 
   update () {

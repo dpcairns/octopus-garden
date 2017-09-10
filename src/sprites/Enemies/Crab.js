@@ -4,7 +4,7 @@ import constants from '../../constants'
 export default class extends RootSprite {
   constructor ({ game, world, x, y }) {
     super({ game, world, x, y, asset: 'crab' })
-    const walkDistance = Math.random() * 1000 + 500
+    const walkDistance = Math.random() * 200 + 500
     const duration = Math.random() * 3000 + 1000
     this.initialWidth = 100
     this.initialHeight = 75
@@ -15,7 +15,7 @@ export default class extends RootSprite {
     this.HP = 300
     this.destructable = true
     this.animations.add('walk')
-    this.animations.play('walk', 5, true)
+    this.animations.play('walk', Math.random() * 10, true)
     this.outOfBoundsKill = true
     this.body.gravity.y = 100
     this.crabWalk = this.game.add.tween(this)
@@ -62,7 +62,7 @@ export default class extends RootSprite {
       }
       this.body = false
       this.angle += 100
-      setTimeout(() => this.destroy(), 500)
+      setTimeout(() => this.destroy(), 1000)
     }
   }
 }

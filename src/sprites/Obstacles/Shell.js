@@ -9,6 +9,8 @@ export default class extends RootSprite {
     this.initialHeight = 90
     this.width = 66
     this.height = 90
+    this.anchor.setTo(0.5)
+    this.body.setSize(50, 50, 50, 400)
     this.initialHP = 30
     this.HP = 30
     this.destructable = true

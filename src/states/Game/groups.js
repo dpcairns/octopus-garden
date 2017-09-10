@@ -43,4 +43,13 @@ export const makeGroups = (_this) => {
     _this.game.shells,
     _this.game.crabs
   ])
+
+  // add enemies
+  _this.game.foregrounders = _this.game.add.group()
+  _this.game.foregrounders.addMultiple([
+    _this.game.enemies,
+    _this.game.obstacles,
+    _this.game.decorations,
+    _this.game.protagonistParts
+  ])
 }

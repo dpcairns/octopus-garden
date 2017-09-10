@@ -14,7 +14,6 @@ import Seaweed from '../../sprites/Decoration/Seaweed'
 import {
   makeBorderRocksAndDecoration,
   makeRandomShells,
-  makeBackgrounds,
   makeCrabs
 } from './makers'
 import { makeGroups } from './groups'
@@ -24,7 +23,18 @@ import setTimerActions from '../../timers/index'
 export default class extends Phaser.State {
   init () {}
   preload () {
-    // this.time.advancedTiming = true
+    this.game.physics.arcade.TILE_BIAS = 3000
+    this.caveMap = this.game.add.tilemap('cave')
+    this.caveMap.addTilesetImage('snow-tileset', 'snow-tiles')
+    this.caveMap.addTilesetImage('ocean-bg', 'ocean')
+    this.caveMap.addTilesetImage('cave-bg', 'cave')
+    this.caveMap.addTilesetImage('rocks', 'rocks')
+    this.caveMap.addTilesetImage('rock2', 'rocks')
+    this.caveMap.setCollisionByExclusion([], true, 'cave2')
+
+    this.bgLayer = this.caveMap.createLayer('bg')
+    this.caveLayer = this.caveMap.createLayer('cave2')
+    this.game.caveLayer = this.caveLayer
   }
 
   create () {
@@ -32,8 +42,6 @@ export default class extends Phaser.State {
     this.game.world.setBounds(0, 0, 2500, 1500)
     this.game.physics.arcade.gravity.y = 10
     this.swipe = new Swipe(this.game)
-
-    makeBackgrounds(this)
 
     this.octopus = new Octopus({
       game: this.game,
@@ -59,6 +67,7 @@ export default class extends Phaser.State {
     this.game.octopus = this.octopus
 
     makeGroups(this)
+    this.caveLayer.resizeWorld()
     makeCamera(this)
     makeRandomShells(this)
     makeCrabs(this)
@@ -144,7 +153,7 @@ export default class extends Phaser.State {
   }
 
   update () {
-    // console.log(this.time.fps)
+
   }
 
   render () {

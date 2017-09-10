@@ -5,9 +5,13 @@ export default class extends RootSprite {
     super({ game, world, x, y, asset })
     this.width = width
     this.height = height
-    this.body = false
+    this.body.gravity.y = 500
+
+    this.animations.add('boogie')
+    this.animations.play('boogie', Math.random() * 10, true)
   }
 
   update () {
+
   }
 }

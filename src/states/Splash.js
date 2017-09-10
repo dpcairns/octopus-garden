@@ -13,8 +13,6 @@ export default class extends Phaser.State {
     //
     // load your assets
     //
-    this.load.image('ocean', 'assets/images/ocean.png')
-    this.load.image('cave', 'assets/images/cave.png')
     this.load.image('shell', 'assets/images/shell.png')
     this.load.image('arrow-keys', 'assets/images/arrow-keys.png')
     this.load.image('mobile', 'assets/images/mobile.png')
@@ -30,6 +28,11 @@ export default class extends Phaser.State {
 
     this.load.image('rocks', 'assets/images/rocks.png')
     this.load.spritesheet('coin', 'assets/images/coin-temp.png')
+
+    this.load.tilemap('cave', 'assets/maps/cave4.json', null, Phaser.Tilemap.TILED_JSON)
+    this.load.image('snow-tiles', 'assets/maps/snow-tile.png')
+    this.load.image('ocean', 'assets/images/ocean.png')
+    this.load.image('cave', 'assets/images/cave.png')
   }
 
   create () {
