@@ -50,14 +50,17 @@ export default class extends RootSprite {
       )
 
     this.tint = constants.RED
-    this.body.velocity.x = charger.body.velocity.x / 1.3
-    this.body.velocity.y = -Math.abs(charger.body.velocity.y / 1.3)
     this.HP -= charger.charged / 100
   }
 
   update () {
     if (this.tint !== 16777215) this.tint = 16777215
     if (this.HP <= 0) {
+      this.HP = 0
+      if (this.crabTilt) {
+        this.crabTilt.stop()
+      }
+      this.body = false
       this.angle += 100
       setTimeout(() => this.destroy(), 500)
     }

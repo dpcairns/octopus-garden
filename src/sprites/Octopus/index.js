@@ -21,9 +21,7 @@ export default class extends RootSprite {
     score,
     shells,
     mobileHolding,
-    walls,
-    swipe,
-    makeSquareThing
+    swipe
   }) {
     super({ game, x, y, asset: 'octopus' })
     this.update = updater(this)
@@ -47,12 +45,7 @@ export default class extends RootSprite {
     this.shotCounter = 0
     this.leftKeeper = new Set()
     this.rightKeeper = new Set()
-    this.coins = coins
-    this.score = score
-    this.shells = shells
-    this.walls = walls
     this.velocityFactor = this.initialVelocityFactor
-    this.makeSquareThing = makeSquareThing
 
     this.game.octopus = this
     this.animations.add('octodynamic-shuffle')
@@ -104,15 +97,17 @@ export default class extends RootSprite {
 
   destroyThing (destroyer, destructable) {
     if (destructable.destructable) {
-      if (destroyer.key === 'octopus' && destroyer.charged > 1000 && this.goForward && destructable.whenCharged) {
-        destructable.whenCharged(destroyer)
+      if (destroyer.key === 'octopus') {
+        if (destroyer.charged > 1000 && this.goForward && destructable.whenCharged) {
+          destructable.whenCharged(destroyer)
+        }
       }
 
       if (destroyer.key === 'blob' && destructable.whenHit) {
         destructable.whenHit(destroyer)
       }
 
-      if (destructable.HP <= 0 && destructable.key === 'wall') {
+      if (destructable.HP <= 0 && destructable.key === 'rocks') {
         destructable.body.allowGravity = true
         destructable.body.immovable = false
         destructable.body.collideWorldBounds = false

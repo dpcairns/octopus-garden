@@ -17,8 +17,8 @@ const updater = (_this) => () => {
   _this.game.physics.arcade.collide(_this.game.inkMissiles, _this.game.crabs, _this.destroyThing, null, _this)
   _this.game.physics.arcade.collide(_this.game.protagonistParts, _this.game.obstacles, _this.destroyThing, disableCollisionIfDead, _this)
   _this.game.physics.arcade.collide(_this, _this.game.shells, _this.destroyThing, disableCollisionIfDead, _this)
-  _this.game.physics.arcade.collide(_this.game.crabs, _this.game.walls, null, disableCollisionIfDead, _this)
-  _this.game.physics.arcade.collide(_this, _this.game.walls, _this.destroyThing, disableCollisionIfDead, _this)
+  _this.game.physics.arcade.collide(_this.game.crabs, _this.game.rocks, null, disableCollisionIfDead, _this)
+  _this.game.physics.arcade.collide(_this, _this.game.rocks, _this.destroyThing, disableCollisionIfDead, _this)
   _this.game.physics.arcade.collide(_this, _this.game.crabs, _this.destroyThing, disableCollisionIfDead, _this)
 
   // manage bespoke max velocity, so it doesn't interefere with charge max
@@ -153,8 +153,8 @@ const updater = (_this) => () => {
   // manage colors and stretch while charging or moving while charged
   if (_this.charging || _this.charged) {
     const chargeProps = {
-      tint: Math.random() * _this.initialTint,
-      width: _this.width * 0.993
+      tint: Math.random() * _this.initialTint
+      // width: _this.width * 0.993
     }
 
     _this.game.add.tween(_this).to(chargeProps, 10, 'Linear', true, 0, 2)
@@ -163,8 +163,8 @@ const updater = (_this) => () => {
   // remove charge colors and stretch
   if (!_this.charged &&
     !_this.charging &&
-    _this.tint !== _this.initialTint &&
-    _this.width !== _this.initialWidth
+    _this.tint !== _this.initialTint
+    // _this.width !== _this.initialWidth
   ) {
     _this.resetWidthAndColor()
     _this.resetMovingWhileChargedCounter()

@@ -1,32 +1,32 @@
 import OceanBG from '../../sprites/Backgrounds/OceanBG'
 import CaveBG from '../../sprites/Backgrounds/CaveBG'
 
-export const makeBorderWallsAndDecoration = (_this) => {
-  const height = _this.game.oceanBackground.height
+export const makeBorderRocksAndDecoration = (_this) => {
+  const height = _this.game.oceanBackground.height - 50
   const width = _this.game.oceanBackground.width
 
-  for (let i = 0; i < width; i += 45) {
+  // horixontal walls
+  for (let i = 0; i < width - 150; i += 100) {
     if (i < (width / 2) + 200 && i > (width / 2) - 200) {
-      _this.makeWall(i, height, true)
+      _this.makeRocks(i, height, true)
     } else {
-      _this.makeWall(i, height)
+      _this.makeRocks(i, height)
     }
+  }
 
-    if (i % 2 === 0) {
-      _this.makeCoral(i, height)
+  // vertical walls
+  for (let i = 0; i < height; i += 100) {
+    if (i < (height / 2) + 200 && i > (height / 2) - 200) {
+      _this.makeRocks(width, i, true, true)
+    } else {
+      _this.makeRocks(width, i, false, true)
     }
   }
 
   for (let i = 0; i < width; i += 50) {
     _this.makeSeaweed(Math.random() * width, height)
-  }
-
-  for (let i = 0; i < height; i += 45) {
-    if (i < (height / 2) + 200 && i > (height / 2) - 200) {
-      _this.makeWall(width, i, true)
-    } else {
-      _this.makeWall(width, i)
-    }
+    _this.makeCoral(i, height)
+    _this.makeVine(Math.random() * width, height + 50)
   }
 }
 

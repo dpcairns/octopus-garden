@@ -7,6 +7,7 @@ export default class extends Phaser.Sprite {
     this.game.physics.arcade.enable(this)
 
     this.body.bounce.setTo(0.5, 0.5)
+    this.body.autoCull = true
     this.body.collideWorldBounds = true
     this.body.gravity.y = 50
 

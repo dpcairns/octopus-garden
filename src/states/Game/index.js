@@ -5,13 +5,14 @@ import Octopus from '../../sprites/Octopus/index'
 import Instructions from '../../sprites/Texts/Instructions'
 import MobileInstructions from '../../sprites/Texts/MobileInstructions'
 import Coin from '../../sprites/Gettables/Coin'
-import Wall from '../../sprites/Obstacles/Wall'
+import Rocks from '../../sprites/Obstacles/Rocks'
 import Crab from '../../sprites/Enemies/Crab'
 import Shell from '../../sprites/Obstacles/Shell'
 import Coral from '../../sprites/Decoration/Coral'
+import Vine from '../../sprites/Decoration/Vine'
 import Seaweed from '../../sprites/Decoration/Seaweed'
 import {
-  makeBorderWallsAndDecoration,
+  makeBorderRocksAndDecoration,
   makeRandomShells,
   makeBackgrounds,
   makeCrabs
@@ -22,7 +23,9 @@ import setTimerActions from '../../timers/index'
 
 export default class extends Phaser.State {
   init () {}
-  preload () {}
+  preload () {
+    // this.time.advancedTiming = true
+  }
 
   create () {
     this.score = 0
@@ -59,7 +62,7 @@ export default class extends Phaser.State {
     makeCamera(this)
     makeRandomShells(this)
     makeCrabs(this)
-    makeBorderWallsAndDecoration(this)
+    makeBorderRocksAndDecoration(this)
     setTimerActions(this)
   }
 
@@ -96,16 +99,17 @@ export default class extends Phaser.State {
     this.game.corals.add(newCoral)
   }
 
-  makeWall (x, y, destructable) {
-    const newWall = new Wall({
+  makeRocks (x, y, destructable, vertical) {
+    const newRocks = new Rocks({
       game: this.game,
       world: this.world,
       x,
       y,
-      destructable
+      destructable,
+      vertical
     })
 
-    this.game.walls.add(newWall)
+    this.game.rocks.add(newRocks)
   }
 
   makeCoin () {
@@ -128,8 +132,19 @@ export default class extends Phaser.State {
     this.game.crabs.add(newCrab)
   }
 
-  update () {
+  makeVine (x, y) {
+    const newVine = new Vine({
+      game: this.game,
+      world: this.world,
+      x,
+      y
+    })
 
+    this.game.crabs.add(newVine)
+  }
+
+  update () {
+    // console.log(this.time.fps)
   }
 
   render () {
