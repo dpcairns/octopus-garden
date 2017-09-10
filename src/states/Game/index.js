@@ -149,7 +149,7 @@ export default class extends Phaser.State {
       y
     })
 
-    this.game.crabs.add(newVine)
+    this.game.vines.add(newVine)
   }
 
   update () {

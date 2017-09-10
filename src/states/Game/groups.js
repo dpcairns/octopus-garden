@@ -5,6 +5,7 @@ export const makeGroups = (_this) => {
   _this.game.inkMissiles = _this.game.add.group()
   _this.game.corals = _this.game.add.group()
   _this.game.rocks = _this.game.add.group()
+  _this.game.vines = _this.game.add.group()
   _this.game.crabs = _this.game.add.group()
 
   _this.game.guideposts = _this.game.add.group()
