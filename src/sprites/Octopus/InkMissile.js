@@ -7,7 +7,7 @@ export default class extends RootSprite {
     this.width = blobFactor * 80
     this.height = blobFactor * 72
     this.octoAngle = octoAngle
-    this.octoSpeed = octoSpeed
+    this.octoSpeed = octoSpeed < 150 ? 150 : octoSpeed
     this.body.collideWorldBounds = false
     this.game = game
     this.power = 3

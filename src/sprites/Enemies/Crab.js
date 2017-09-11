@@ -8,10 +8,11 @@ export default class extends RootSprite {
     const duration = Math.random() * 3000 + 1000
     this.initialWidth = 100
     this.initialHeight = 75
+    this.initialTint = this.tint
     this.width = 100
     this.height = 75
     this.initialHP = 300
-    this.body.setSize(75, 80, 50, 50)
+    this.body.setSize(100, 80, 50, 50)
     this.HP = 300
     this.destructable = true
     this.animations.add('walk')
@@ -30,37 +31,29 @@ export default class extends RootSprite {
   }
 
   whenHit (missile) {
-    this.tint = constants.RED
     this.crabWalk.stop()
+    this.tint = constants.RED
+    this.angle += Math.random() < 0.5 ? Math.random() * 5 + 10 : Math.random() * -5 - 10
     this.body.velocity.x = missile.body.velocity.x
     this.body.velocity.y = -Math.abs(missile.body.velocity.y)
     this.HP -= missile.power
+    setTimeout(() => { if (this.tint !== this.initialTint) this.tint = this.initialTint }, 500)
   }
 
   whenCharged (charger) {
     this.crabWalk.stop()
-    this.crabTilt = this.game.add.tween(this)
-      .to({ angle: this.angle + Math.random() < 0.5 ? 45 : -45 },
-        500,
-        'Linear',
-        true,
-        null,
-        null,
-        true
-      )
-
+    this.angle += Math.random() < 0.5 ? Math.random() * 15 : Math.random() * -15
     this.tint = constants.RED
+
+    this.body.velocity.x = charger.body.velocity.x
+    this.body.velocity.y = -Math.abs(charger.body.velocity.y)
+
     this.HP -= charger.charged / 100
+    setTimeout(() => { if (this.tint !== this.initialTint) this.tint = this.initialTint }, 500)
   }
 
   update () {
-    if (this.tint !== 16777215) this.tint = 16777215
     if (this.HP <= 0) {
-      this.HP = 0
-      if (this.crabTilt) {
-        this.crabTilt.stop()
-      }
-      this.body = false
       this.angle += 100
       setTimeout(() => this.destroy(), 1000)
     }
