@@ -53,13 +53,13 @@ export default class extends Phaser.State {
     this.game.instructions = new Instructions({
       game: this.game,
       world: this.world,
-      text: 'Arrow keys to move and change speed.\nX or Ctrl to shoot.\nHold spacebar to charge.\nZ to stop.'
+      text: 'Arrow keys to move and change speed.\nX or Ctrl to shoot ink.\nHold spacebar to charge.\nZ to stop.'
     })
 
     this.game.mobileInstructions = new MobileInstructions({
       game: this.game,
       world: this.world,
-      text: 'Tap to go there. \nTap to shoot there. \nTwo fingers to charge up.'
+      text: 'Tap to go there. \nHold to shoot ink there. \nBoth fingers to charge up.'
     })
 
     this.game.octopus = this.octopus
