@@ -53,29 +53,8 @@ export const middleFingersDown = (_this) => (
         !_this.J.isDown
 )
 
-export const mobileRotation = (_this, rotate) => {
-  // detect mobile swipe
-  const swipeCheck = _this.swipe.check()
-
-  // mobile rotation left
-  if (swipeCheck !== null && swipeCheck.direction &&
-    (swipeCheck.direction === _this.swipe.DIRECTION_LEFT ||
-      swipeCheck.direction === _this.swipe.DIRECTION_UP ||
-    swipeCheck.direction === _this.swipe.DIRECTION_UP_LEFT ||
-    swipeCheck.direction === _this.swipe.DIRECTION_DOWN_LEFT)
-  ) {
-    rotate(_this, -45)
-    _this.clearLeft()
-  }
-
-  // mobile rotation right
-  if (swipeCheck !== null && swipeCheck.direction &&
-    (swipeCheck.direction === _this.swipe.DIRECTION_RIGHT ||
-    swipeCheck.direction === _this.swipe.DIRECTION_DOWN ||
-    swipeCheck.direction === _this.swipe.DIRECTION_UP_RIGHT ||
-    swipeCheck.direction === _this.swipe.DIRECTION_DOWN_RIGHT)
-  ) {
-    rotate(_this, 45)
-    _this.clearRight()
+export const mobileRotation = (_this) => {
+  if ((_this.game.input.pointer1.isDown || _this.game.input.activePointer.leftButton.isDown) && !_this.game.input.pointer2.isDown) {
+    _this.rotation = _this.game.physics.arcade.angleToPointer(_this) + 1.5
   }
 }

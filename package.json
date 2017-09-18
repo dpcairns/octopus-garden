@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "phaser-ce": "^2.8.3",
-    "phaser-swipe": "^1.0.4",
     "webfontloader": "^1.6.28"
   }
 }

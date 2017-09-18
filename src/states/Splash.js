@@ -7,6 +7,7 @@ export default class extends Phaser.State {
   preload () {
     this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBg')
     this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBar')
+
     centerGameObjects([this.loaderBg, this.loaderBar])
 
     this.load.setPreloadSprite(this.loaderBar)
@@ -16,6 +17,7 @@ export default class extends Phaser.State {
     this.load.image('shell', 'assets/images/shell.png')
     this.load.image('arrow-keys', 'assets/images/arrow-keys.png')
     this.load.image('mobile', 'assets/images/mobile.png')
+    this.load.image('mouse', 'assets/images/mouse.png')
 
     this.load.spritesheet('blob', 'assets/images/blob.png', 80, 72)
     this.load.spritesheet('coral', 'assets/images/coral.png', 465, 465)

@@ -20,12 +20,10 @@ export default class extends RootSprite {
     coins,
     score,
     shells,
-    mobileHolding,
-    swipe
+    mobileHolding
   }) {
     super({ game, x, y, asset: 'octopus' })
     this.update = updater(this)
-    this.swipe = swipe
     this.width = 200
     this.height = 150
     this.anchor.setTo(0.5)
@@ -37,7 +35,7 @@ export default class extends RootSprite {
     this.maxVelocity = MAX_VELOCITY
     this.maxNormalVelocity = MAX_NORMAL_VELOCITY
     this.minNormalVelocity = MIN_NORMAL_VELOCITY
-    this.initialVelocityFactor = INITIAL_VELOCITY_FACTOR
+    this.initialVelocityFactor = INITIAL_VELOCITY_FACTOR(this)
     this.goForward = true
     this.charging = false
     this.charged = false

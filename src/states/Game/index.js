@@ -1,6 +1,5 @@
 // /* globals __DEV__ */
 import Phaser from 'phaser'
-import Swipe from 'phaser-swipe'
 import Octopus from '../../sprites/Octopus/index'
 import Instructions from '../../sprites/Texts/Instructions'
 import MobileInstructions from '../../sprites/Texts/MobileInstructions'
@@ -35,21 +34,20 @@ export default class extends Phaser.State {
     this.bgLayer = this.caveMap.createLayer('bg')
     this.caveLayer = this.caveMap.createLayer('cave2')
     this.game.caveLayer = this.caveLayer
+    this.game.canvas.oncontextmenu = function (e) { e.preventDefault() } // so right click doesnt annoy users?
   }
 
   create () {
     this.score = 0
     this.game.world.setBounds(0, 0, 2500, 1500)
     this.game.physics.arcade.gravity.y = 10
-    this.swipe = new Swipe(this.game)
 
     this.octopus = new Octopus({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
       world: this.world,
-      score: this.score,
-      swipe: this.swipe
+      score: this.score
     })
 
     this.game.instructions = new Instructions({
@@ -61,7 +59,7 @@ export default class extends Phaser.State {
     this.game.mobileInstructions = new MobileInstructions({
       game: this.game,
       world: this.world,
-      text: 'Swipe to rotate. \nOne finger to shoot. \nTwo fingers to charge.'
+      text: 'Tap to go there. \nTap to shoot there. \nTwo fingers to charge up.'
     })
 
     this.game.octopus = this.octopus
