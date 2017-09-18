@@ -11,7 +11,7 @@ class Game extends Phaser.Game {
   constructor () {
     const docElement = document.documentElement
     const maxWidth = 1400
-    const maxHeight = 800
+    const maxHeight = 1200
     const width = docElement.clientWidth > maxWidth ? maxWidth : docElement.clientWidth
     const height = docElement.clientHeight > maxHeight ? maxHeight : docElement.clientHeight
 

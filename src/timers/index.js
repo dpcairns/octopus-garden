@@ -9,7 +9,7 @@ export default (_this) => {
 
   _this.game.time.events.add(Phaser.Timer.SECOND * 20, () => {
     const instructionsFade = _this.game.add.tween(_this.game.guideposts).to({ alpha: 0 }, 3000, Phaser.Easing.Linear.None, true)
-    instructionsFade.onComplete.add(() => { _this.game.arrowKeys.destroy() })
+    instructionsFade.onComplete.add(() => { _this.game.arrowKeys.destroy(); _this.game.mobile.destroy(); _this.game.mouse.destroy() })
   })
 
   _this.game.time.events.add(Phaser.Timer.SECOND * 5, () => {

@@ -13,7 +13,8 @@ export const makeGroups = (_this) => {
     _this.game.instructions,
     _this.game.mobileInstructions,
     _this.game.arrowKeys,
-    _this.game.mobile
+    _this.game.mobile,
+    _this.game.mouse
   ])
 
   _this.game.protagonistParts = _this.game.add.group()
