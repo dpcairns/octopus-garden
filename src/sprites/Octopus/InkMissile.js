@@ -6,6 +6,7 @@ export default class extends RootSprite {
     const blobFactor = Math.random()
     this.width = blobFactor * 80
     this.height = blobFactor * 72
+    this.body.setSize(100, 100)
     this.octoAngle = octoAngle
     this.octoSpeed = octoSpeed < 150 ? 150 : octoSpeed
     this.body.collideWorldBounds = false
