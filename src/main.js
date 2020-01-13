@@ -5,10 +5,16 @@ import BootState from './states/Boot'
 import SplashState from './states/Splash'
 import GameState from './states/Game/index'
 
-// import config from './config'
+// import configuration from './config'
+
+
+
+
+
+
 
 class Game extends Phaser.Game {
-  constructor () {
+  constructor() {
     const docElement = document.documentElement
     const maxWidth = 1400
     const maxHeight = 1200
