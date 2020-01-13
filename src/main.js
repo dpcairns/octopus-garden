@@ -7,6 +7,12 @@ import GameState from './states/Game/index'
 
 // import configuration from './config'
 
+
+
+
+
+
+
 class Game extends Phaser.Game {
   constructor() {
     const docElement = document.documentElement
